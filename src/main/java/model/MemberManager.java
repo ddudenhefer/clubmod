@@ -14,8 +14,7 @@ public class MemberManager {
 	public ArrayList<MemberDTO> GetFeeds()throws Exception {
 		ArrayList<MemberDTO> feeds = null;
 		try {
-			    Database database= new Database();
-			    Connection connection = database.Get_Connection();
+			    Connection connection = Database.getConnection();
 				MemberDAO project= new MemberDAO();
 				feeds=project.GetFeeds(connection);
 		
