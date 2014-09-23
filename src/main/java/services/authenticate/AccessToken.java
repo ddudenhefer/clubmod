@@ -2,8 +2,6 @@ package services.authenticate;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -29,10 +27,6 @@ import dto.MemberDTO;
 @Path("/access")
 public class AccessToken {
 	
-	@Inject 
-	private EntityManager em; 
-
-
   // This method is called if TEXT_PLAIN is request
   @GET
   @Path("{id}")
