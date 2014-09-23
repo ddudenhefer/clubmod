@@ -1,5 +1,7 @@
 package services.authenticate;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.GET;
@@ -8,10 +10,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import model.Member;
+import model.MemberManager;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+
+import dto.MemberDTO;
 
 // Plain old Java Object it does not extend as class or implements 
 // an interface
@@ -32,13 +35,22 @@ public class AccessToken {
 
   // This method is called if TEXT_PLAIN is request
   @GET
-  @Path("/{id:[0-9][0-9]*}")
+  @Path("{id}")
   @Produces(MediaType.APPLICATION_JSON)
   public String lookupMemberById(@PathParam("id") long id) { 
-	  Member member = em.find(Member.class, id);
-	  JSONObject jObj = new JSONObject();
-	  jObj.put("token", member.getAccessToken());
-	  return jObj.toString();
+	  
+	  	ArrayList<MemberDTO> feedData = null;
+		MemberManager projectManager= new MemberManager();
+		try {
+			feedData = projectManager.GetFeeds();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Gson gson = new Gson();
+		System.out.println(gson.toJson(feedData));
+		String feeds = gson.toJson(feedData);	  
+		return feeds;
   }
 
 
