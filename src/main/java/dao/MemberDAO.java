@@ -15,7 +15,7 @@ public class MemberDAO {
 		ArrayList<MemberDTO> feedData = new ArrayList<MemberDTO>();
 		try
 		{
-			PreparedStatement ps = connection.prepareStatement("SELECT id,athleteId,accessToken FROM member ORDER BY id DESC");
+			PreparedStatement ps = connection.prepareStatement("SELECT id,athleteId,accessToken FROM members ORDER BY id DESC");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next())
 			{
