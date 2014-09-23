@@ -3,6 +3,7 @@ package services.authenticate;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -27,7 +28,7 @@ import com.google.gson.Gson;
 @RequestScoped
 public class AccessToken {
 	
-	@Inject
+	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
 	
   // This method is called if TEXT_PLAIN is request
