@@ -1,5 +1,6 @@
 package services.authenticate;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.GET;
@@ -23,6 +24,7 @@ import com.google.gson.Gson;
 
 //Sets the path to base URL + /hello
 @Path("/access")
+@RequestScoped
 public class AccessToken {
 	
 	@Inject
