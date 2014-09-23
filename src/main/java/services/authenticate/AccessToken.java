@@ -28,7 +28,7 @@ import com.google.gson.Gson;
 @RequestScoped
 public class AccessToken {
 	
-	@PersistenceContext(unitName = "primary")
+	@PersistenceContext
 	private EntityManager em;
 	
   // This method is called if TEXT_PLAIN is request
