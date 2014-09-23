@@ -32,7 +32,7 @@ public class AccessToken {
 
   // This method is called if TEXT_PLAIN is request
   @GET
-  @Path("{id}")
+  @Path("/{id:[0-9][0-9]*}")
   @Produces(MediaType.APPLICATION_JSON)
   public String lookupMemberById(@PathParam("id") long id) { 
 	  Member member = em.find(Member.class, id);
