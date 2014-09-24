@@ -1,10 +1,10 @@
 package services.authenticate;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.ejb.EJB;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -13,6 +13,8 @@ import javax.ws.rs.core.MediaType;
 import model.Member;
 
 import com.google.gson.Gson;
+
+import dao.MemberDAO;
 
 // Plain old Java Object it does not extend as class or implements 
 // an interface
@@ -25,18 +27,19 @@ import com.google.gson.Gson;
 
 //Sets the path to base URL + /hello
 @Path("/access")
-@RequestScoped
+@Stateless
+@LocalBean
 public class AccessToken {
 	
-	@PersistenceContext
-	private EntityManager em;
+	@EJB
+	private MemberDAO memberDAO;
 	
   // This method is called if TEXT_PLAIN is request
   @GET
   @Path("{id}")
   @Produces(MediaType.APPLICATION_JSON)
   public String lookupMemberById(@PathParam("id") long id) { 
-	  Member member = em.find(Member.class, id);
+	  Member member = memberDAO.getMember(id);
 	  Gson gson = new Gson();
 	  System.out.println(gson.toJson(member));
 	  String ret = gson.toJson(member);	  
