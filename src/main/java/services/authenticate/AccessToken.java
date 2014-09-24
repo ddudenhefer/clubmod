@@ -1,5 +1,7 @@
 package services.authenticate;
 
+import java.util.ArrayList;
+
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -27,19 +29,20 @@ import dao.MemberDAO;
 
 //Sets the path to base URL + /hello
 @Path("/access")
-@Stateless
-@LocalBean
 public class AccessToken {
-	
-	@EJB
-	private MemberDAO memberDAO;
 	
   // This method is called if TEXT_PLAIN is request
   @GET
   @Path("{id}")
   @Produces(MediaType.APPLICATION_JSON)
   public String lookupMemberById(@PathParam("id") long id) { 
-	  Members member = memberDAO.getMember(1);
+	  ArrayList<Members> member = null;
+	try {
+		member = new MemberDAO().GetFeeds();
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	  Gson gson = new Gson();
 	  System.out.println(gson.toJson(member));
 	  String ret = gson.toJson(member);	  
