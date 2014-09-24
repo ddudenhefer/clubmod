@@ -14,7 +14,8 @@ public class MemberDAO {
 	public Member getMemberByAthleteId(long athleteId)throws Exception {
 		Member member = null;
 		try {
-				PreparedStatement ps = connection.prepareStatement("SELECT id, athleteId, accessToken FROM members ORDER BY id DESC");
+				PreparedStatement ps = connection.prepareStatement("SELECT id, athleteId, accessToken FROM members where athleteId=?");
+				ps.setLong(1,athleteId);
 				ResultSet rs = ps.executeQuery();
 				if (rs.next()) {
 					member = new Member();
