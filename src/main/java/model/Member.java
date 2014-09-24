@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class Members implements Serializable {
+public class Member implements Serializable {
    private static final long serialVersionUID = 1L;
 
    private Long id;
