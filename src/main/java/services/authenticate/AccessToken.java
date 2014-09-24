@@ -39,7 +39,7 @@ public class AccessToken {
   @Path("{id}")
   @Produces(MediaType.APPLICATION_JSON)
   public String lookupMemberById(@PathParam("id") long id) { 
-	  Members member = memberDAO.getMember(id);
+	  Members member = memberDAO.getMember(1);
 	  Gson gson = new Gson();
 	  System.out.println(gson.toJson(member));
 	  String ret = gson.toJson(member);	  
