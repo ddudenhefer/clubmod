@@ -10,7 +10,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import model.Member;
+import model.Members;
 
 import com.google.gson.Gson;
 
@@ -39,7 +39,7 @@ public class AccessToken {
   @Path("{id}")
   @Produces(MediaType.APPLICATION_JSON)
   public String lookupMemberById(@PathParam("id") long id) { 
-	  Member member = memberDAO.getMember(id);
+	  Members member = memberDAO.getMember(id);
 	  Gson gson = new Gson();
 	  System.out.println(gson.toJson(member));
 	  String ret = gson.toJson(member);	  

@@ -9,7 +9,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import model.Member;
+import model.Members;
 
 @Stateless
 @LocalBean
@@ -18,13 +18,13 @@ public class MemberDAO {
     @PersistenceContext
     private EntityManager em;
     
-    public Member getMember(long id) {
-        return em.find(Member.class, id);
+    public Members getMember(long id) {
+        return em.find(Members.class, id);
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void addCustomers(List<Member> members) {
-        for (Member member : members) {
+    public void addCustomers(List<Members> members) {
+        for (Members member : members) {
             em.persist(member);
         }
     }
