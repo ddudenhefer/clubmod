@@ -36,7 +36,7 @@ public class AccessToken {
   @GET
   @Path("{id}")
   @Produces(MediaType.APPLICATION_JSON)
-  public Response lookupMemberByAthleteId(@PathParam("id") long id) { 
+  public String lookupMemberByAthleteId(@PathParam("id") long id) { 
 	  Member member = null;
 	
 	  try {
@@ -57,7 +57,7 @@ public class AccessToken {
 		  prop.put("Success", "false");
 		  ret = gson.toJson(prop);
 	  }
-	  return Response.status(200).type("application/json").entity(ret).build();
+	  return ret;
   }
   
   
@@ -65,7 +65,7 @@ public class AccessToken {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/create")
-  public Response saveMember(final Member member) {
+  public String saveMember(final Member member) {
 	  MemberDAO memberDAO = new MemberDAO();
 	  try {
 		memberDAO.saveMember(member);
@@ -73,31 +73,13 @@ public class AccessToken {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-    String json = "{'OK'}";  
-    return Response.status(200).type("application/json").entity(json).build(); 
+	  Gson gson = new Gson();
+	  String ret = "";
+	  Properties prop = new Properties();
+	  prop.put("Success", "true");
+	  ret = gson.toJson(prop);
+    
+    return ret; 
   }
-  
-  @GET
-  @Produces(MediaType.APPLICATION_JSON)
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Path("/")
-  public Response authorize(@PathParam("code") String code, @PathParam("state") String state) {
-	  // path to redirect after authorization
-	  URI uri = null;
-	  try {
-		uri = new URI("http://services-clubmod.rhcloud.com/index.jsp");
-	} catch (URISyntaxException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	  
-	  System.out.println ("code: " + code);
-	  System.out.println ("state: " + state);
-
-	  String json = "{'OK'}";  
-	  return Response.seeOther(uri).build();
-      }
-  
   	
-		
 } 
