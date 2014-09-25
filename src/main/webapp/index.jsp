@@ -16,7 +16,5 @@
         String result=results.postResult(URL);
 %>
 
-<%=result%>
-
 </BODY>
 </HTML>
