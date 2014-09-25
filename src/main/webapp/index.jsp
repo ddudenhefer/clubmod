@@ -7,4 +7,3 @@
 <H1>Thanks for authenticating</H1>
 </BODY>
 </HTML>
-
