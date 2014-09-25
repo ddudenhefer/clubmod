@@ -1,12 +1,9 @@
 package services.authenticate;
 
-import java.util.ArrayList;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
-import javax.ejb.EJB;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
-import javax.persistence.Persistence;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -39,7 +36,7 @@ public class AccessToken {
   @GET
   @Path("{id}")
   @Produces(MediaType.APPLICATION_JSON)
-  public String lookupMemberByAthleteId(@PathParam("id") long id) { 
+  public Response lookupMemberByAthleteId(@PathParam("id") long id) { 
 	  Member member = null;
 	
 	  try {
@@ -60,7 +57,7 @@ public class AccessToken {
 		  prop.put("Success", "false");
 		  ret = gson.toJson(prop);
 	  }
-	  return ret;
+	  return Response.status(200).type("application/json").entity(ret).build();
   }
   
   
@@ -68,7 +65,7 @@ public class AccessToken {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/create")
-  public Response saveBook(final Member member) {
+  public Response saveMember(final Member member) {
 	  MemberDAO memberDAO = new MemberDAO();
 	  try {
 		memberDAO.saveMember(member);
@@ -79,5 +76,28 @@ public class AccessToken {
     String json = "{'OK'}";  
     return Response.status(200).type("application/json").entity(json).build(); 
   }
+  
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("/token_exchange")
+  public Response authorize(@PathParam("code") String code, @PathParam("state") String state) {
+	  // path to redirect after authorization
+	  URI uri = null;
+	  try {
+		uri = new URI("http://services-clubmod.rhcloud.com/thanks.jsp");
+	} catch (URISyntaxException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	  
+	  System.out.println ("code: " + code);
+	  System.out.println ("state: " + state);
 
+	  String json = "{'OK'}";  
+	  return Response.seeOther(uri).build();
+      }
+  
+  	
+		
 } 
