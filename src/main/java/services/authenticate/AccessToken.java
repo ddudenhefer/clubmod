@@ -80,12 +80,12 @@ public class AccessToken {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  @Path("/token_exchange")
+  @Path("/")
   public Response authorize(@PathParam("code") String code, @PathParam("state") String state) {
 	  // path to redirect after authorization
 	  URI uri = null;
 	  try {
-		uri = new URI("http://services-clubmod.rhcloud.com/thanks.jsp");
+		uri = new URI("http://services-clubmod.rhcloud.com/index.jsp");
 	} catch (URISyntaxException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
