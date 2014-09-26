@@ -5,24 +5,24 @@ import java.io.Serializable;
 public class Member implements Serializable {
    private static final long serialVersionUID = 1L;
 
-   private Long id;
-   private Long athleteId;
+   private int id;
+   private int athleteId;
    private String accessToken;
 
 
-   public Long getId() {
+   public int getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(int id) {
       this.id = id;
    }
 
-   public Long getAthleteId() {
+   public int getAthleteId() {
 	      return athleteId;
 	   }
 
-   public void setAthleteId(Long athleteId) {
+   public void setAthleteId(int athleteId) {
 	      this.id = athleteId;
    }
 

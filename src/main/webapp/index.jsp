@@ -1,4 +1,4 @@
-<%@ page import="com.google.gson.Gson, utils.Results, entities.*" %>
+<%@ page import="com.google.gson.Gson, connector.JStravaV3, entities.athlete.*, model.Member, utils.Constants" %>
 
 <%
 		String code = request.getParameter("code");
@@ -6,11 +6,14 @@
 		Profile profile = null;
 
 		if (code != null) {
-			String URL="https://www.strava.com/oauth/token?client_id=2946&client_secret=4fb119f5ab894d0bf0c998c8d32577740ca6e316&code="+code;
-			Results results = new Results();
-	        String result=results.postResult(URL);
-	        Gson gson= new Gson();
-	        profile = gson.fromJson(result,Profile.class);
+			String URL="https://www.strava.com/oauth/token?client_id=" + Constants.CLIENT_ID + "&client_secret=" + Constants.CLIENT_SECRET + "4fb119f5ab894d0bf0c998c8d32577740ca6e316&code="+code;
+			JStravaV3 strava= new JStravaV3();
+			profile = strava.authenticateAccess(code);
+	        
+	        if (profile != null) {
+	        	Member member = new Member();
+	        	member.setAthleteId(profile.getAthlete().getId());
+	        }
 		}
 %>
 

@@ -1,4 +1,4 @@
-package entities;
+package entities.athlete;
 
 public class Profile {
 

@@ -1,4 +1,7 @@
-package entities;
+package entities.athlete;
+
+import entities.club.Club;
+import entities.gear.Gear;
 
 import java.util.List;
 
