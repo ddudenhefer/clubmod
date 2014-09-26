@@ -58,4 +58,21 @@ public class MemberDAO {
 		return false;
 	}
 
+	public boolean deleteMember(Member member)throws Exception {
+		
+		if (member == null || member.getId() == 0)
+			return false;
+		
+		Member memberDB = getMemberByAthleteId(member.getAthleteId());
+		if (memberDB != null) {
+			String sql = "delete from members where athleteId=?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setLong(1, member.getAthleteId());
+
+			int rowsAffected = preparedStatement.executeUpdate();
+			if (rowsAffected > 0)
+				return true;
+		}
+		return false;
+	}
 }

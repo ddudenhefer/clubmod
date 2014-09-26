@@ -23,7 +23,7 @@ public class Member implements Serializable {
 	   }
 
    public void setAthleteId(int athleteId) {
-	      this.id = athleteId;
+	      this.athleteId = athleteId;
    }
 
    public String getAccessToken() {
