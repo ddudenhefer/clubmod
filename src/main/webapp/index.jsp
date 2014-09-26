@@ -13,6 +13,7 @@
 	        if (profile != null) {
 	        	Member member = new Member();
 	        	member.setAthleteId(profile.getAthlete().getId());
+	        	member.setAccessToken(profile.getAccessToken());
 	        	AccessToken accessToken = new AccessToken();
 	        	accessToken.saveMember (member);
 	        }
