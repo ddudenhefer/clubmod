@@ -1,4 +1,4 @@
-<%@ page import="com.google.gson.Gson, connector.JStravaV3, entities.athlete.*, model.Member, utils.Constants" %>
+<%@ page import="com.google.gson.Gson, connector.JStravaV3, entities.athlete.*, model.Member, utils.Constants, services.authenticate.AccessToken" %>
 
 <%
 		String code = request.getParameter("code");
@@ -13,6 +13,8 @@
 	        if (profile != null) {
 	        	Member member = new Member();
 	        	member.setAthleteId(profile.getAthlete().getId());
+	        	AccessToken accessToken = new AccessToken();
+	        	accessToken.saveMember (member);
 	        }
 		}
 %>

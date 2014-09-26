@@ -36,7 +36,7 @@ public class AccessToken {
   @GET
   @Path("{id}")
   @Produces(MediaType.APPLICATION_JSON)
-  public String lookupMemberByAthleteId(@PathParam("id") long id) { 
+  public String lookupMemberByAthleteId(@PathParam("id") int id) { 
 	  Member member = null;
 	
 	  try {
