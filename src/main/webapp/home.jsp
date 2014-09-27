@@ -18,9 +18,9 @@
 		<script src="js/grid.locale-en.js"></script>
 		<script src="js/jquery.jqGrid.src.js"></script>
 
-		<link rel="stylesheet" href="css/jquery-ui.css" />
-		<link rel="stylesheet" href="css/jquery-ui.theme.css" />
-		<link rel="stylesheet" href="css/ui.jqgrid.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.theme.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
  		<link rel="stylesheet" href="css/skel.css" />
 		<link rel="stylesheet" href="css/style.css" />
 		<link rel="stylesheet" href="css/style-wide.css" />
@@ -30,7 +30,7 @@
 
 function getColumns () {
 	
-	var colArray = new Array("Id", "First Name", "Last Name", "City", "State", "Authenticated");
+	var colArray = new Array("Id", "First Name", "Last Name", "Profile", "City", "State", "Authenticated");
 	return colArray;
 }
 
@@ -76,8 +76,8 @@ $(document).ready(function(){
 		   	sortname: "lastname",
 		    sortorder: "asc",
 		    ignoreCase: true,
-			width: 500,
-	   		height: 200,
+			width: 580,
+	   		height: 300,
 			autowidth: false,
 			shrinkToFit: true,
 			onSelectRow: function(rowId, rowStatus, event) {
