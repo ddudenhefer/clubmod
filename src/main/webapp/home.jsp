@@ -116,7 +116,8 @@ $(document).ready(function(){
 								<li><a href="#" class="icon fa-users"></a></li>
 								<li><a href="#" class="icon fa-bicycle"></a></li>
 								<li><a href="#" class="icon fa-flag"></a></li>
-								<li><a href="#" class="icon fa-trophy"></a></li>								</ul>
+								<li><a href="#" class="icon fa-trophy"></a></li>
+							</ul>
 						</nav>
 					</header>
 
