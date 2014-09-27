@@ -34,11 +34,11 @@
 					modal: true,
 				    show: {
 				    	effect: "fade",
-				        duration: 500
+				        duration: 600
 				  	},
 				    hide: {
 				    	effect: "fade",
-				        duration: 500
+				        duration: 600
 				   	}
 				});
 
