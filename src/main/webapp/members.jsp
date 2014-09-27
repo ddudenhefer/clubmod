@@ -23,7 +23,7 @@
 
 			function getColumns () {
 	
-				var colArray = new Array("Id", "First Name", "Last Name", "Profile", "City", "State", "Authenticated");
+				var colArray = new Array("Id", "First Name", "Last Name", "Profile", "City", "State");
 				return colArray;
 			}
 
@@ -35,8 +35,7 @@
 				   		{name:"lastname",index:"lastname", width:200},
 				   		{name:"profile_medium",index:"profile_medium", hidden: true},
 				   		{name:"city",index:"city", width:100},
-				   		{name:"state",index:"state", width:100},
-				   		{name:"authenticated",index:"authenticated", hidden: true}
+				   		{name:"state",index:"state", width:100}
 				   	];	
 				return jsonModel;
 			}

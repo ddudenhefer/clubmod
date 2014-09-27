@@ -10,7 +10,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
-
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
 		<script src="js/skel.min.js"></script>
 		<script src="js/init.js"></script>
 		<script src="js/jquery.js"></script>
@@ -25,7 +25,9 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.theme.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
-
+		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+		
 		<script type="text/javascript">
 
 			$(document).ready(function(){	
