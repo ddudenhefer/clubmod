@@ -18,13 +18,15 @@
 		<script src="js/grid.locale-en.js"></script>
 		<script src="js/jquery.jqGrid.src.js"></script>
 
- 		<link rel="stylesheet" href="css/skel.css" />
-		<link rel="stylesheet" href="css/style.css" />
-		<link rel="stylesheet" href="css/style-wide.css" />
-		<link rel="stylesheet" href="css/style-noscript.css" />
-		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css" />
-		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.theme.css" />
-		<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+		<noscript>
+			<link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-wide.css" />
+			<link rel="stylesheet" href="css/style-noscript.css" />
+			<link rel="stylesheet" href="css/jquery-ui.css" />
+			<link rel="stylesheet" href="css/jquery-ui.theme.css" />
+			<link rel="stylesheet" href="css/ui.jqgrid.css" />
+		</noscript>
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 		
