@@ -1,3 +1,8 @@
+<%@ page language="java" pageEncoding="UTF-8" autoFlush="true" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<c:set var="rootName" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -19,18 +24,87 @@
 		</noscript>
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
-<style>
-#header {
-		top: 75px;
-		vertical-align: top;
-	}
-</style>
+
+<script>
+
+function getColumns () {
+	
+	var colArray = new Array("Id", "PID", "Name", "Number", "Survey");
+	return colArray;
+}
+
+function getModel () {
+
+	var jsonModel = [
+			{name:"id",index:"id", hidden: true },
+	   		{name:"pid",index:"pid", width:80},
+	   		{name:"name",index:"name", width:400},
+	   		{name:"number",index:"number", width:80},
+	   		{name:"survey",index:"survey", width:80}
+	   	];	
+	return jsonModel;
+}
+
+$(document).ready(function(){	
+		$("#subdivisionGrid").jqGrid({
+		   	url:"${rootName}/rest/club/members",
+			datatype: "json",
+		   	colNames: getColumns(),
+		   	colModel: getModel(),
+			jsonReader: {
+				repeatitems: false,
+				id: "id",
+				root: "subdivisions",
+				records: function (obj) {
+        			return obj.length;
+    			},
+    			page: function () {
+        			return 1;
+    			},
+    			total: function () {
+        			return 1;
+    			}
+	        },
+			gridview: true, 	        
+	        loadonce: true,
+		   	rowNum: 10,
+		   	rowList: [10,20,30],
+		   	pager: "#pager",
+		    viewrecords: true,
+		   	sortname: "name",
+		    sortorder: "asc",
+		    ignoreCase: true,
+			width: 721,
+	   		height: 231,
+			autowidth: false,
+			shrinkToFit: true,
+			onSelectRow: function(rowId, rowStatus, event) {
+				var rowData = $(this).getRowData(rowId);
+   			}
+		});
+	
+		$("#subdivisionGrid").jqGrid("navGrid","#pager",
+			{edit:false,add:false,del:false,search:false,refresh:false},
+			{}, 
+			{}, 
+			{}, 
+			{closeAfterSearch:true,closeOnEscape:true,modal:true}, 
+			{}
+		);
+	});
+</script>
+
+
 	</head>
 	<body class="loading">
 		<div id="wrapper">
 			<div id="bg"></div>
 			<div id="overlay"></div>
 			<div id="main">
+			
+			<table id="subdivisionGrid"></table>
+			<div id="pager"></div>			
+			
 
 				<!-- Header -->
 					<header id="header">

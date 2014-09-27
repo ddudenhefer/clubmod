@@ -401,7 +401,14 @@ public class JStravaV3 implements JStrava {
         List<Athlete>athletes= Arrays.asList(athletesArray);
         return athletes;
     }
-
+    
+    
+    public String findClubMembersJSON(int clubId,int page, int per_page) {
+        String URL="https://www.strava.com/api/v3/clubs/"+clubId+"/members?page="+page+"&per_page="+per_page;
+        String result=getResult(URL);
+        return result;
+    }    
+    
     
     public List<Activity> findClubActivities(int clubId) {
         String URL="https://www.strava.com/api/v3/clubs/"+clubId+"/activities";
@@ -411,7 +418,6 @@ public class JStravaV3 implements JStrava {
         List<Activity>clubActivities= Arrays.asList(activitiesArray);
         return clubActivities;
     }
-
 
     
     public List<Activity> findClubActivities(int clubId,int page, int per_page) {
