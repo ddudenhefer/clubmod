@@ -55,7 +55,7 @@
 			
 				<!-- Header -->
 					<header id="header">
-						<div id="dialog" title="Basic dialog">
+						<div id="dialog" title="Basic dialog"></div>
 					
 						<img src="css/images/ModPatch.png" height="150" alt="ClubMod"> 
 						<h1>ClubMod Cycling</h1>
