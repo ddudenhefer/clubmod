@@ -59,7 +59,7 @@ $(document).ready(function(){
 			jsonReader: {
 				repeatitems: false,
 				id: "id",
-				//root: "",
+				root: "",
 				records: function (obj) {
         			return obj.length;
     			},
@@ -79,8 +79,8 @@ $(document).ready(function(){
 		   	sortname: "lastname",
 		    sortorder: "asc",
 		    ignoreCase: true,
-			width: 721,
-	   		height: 231,
+			width: 200,
+	   		height: 100,
 			autowidth: false,
 			shrinkToFit: true,
 			onSelectRow: function(rowId, rowStatus, event) {
@@ -107,11 +107,11 @@ $(document).ready(function(){
 			<div id="overlay"></div>
 			<div id="main">
 			
-			<table id="subdivisionGrid"></table>
-			<div id="pager"></div>			
-			
 				<!-- Header -->
 					<header id="header">
+								<table id="subdivisionGrid"></table>
+			<div id="pager"></div>			
+					
 						<img src="css/images/ModPatch.png" height="150" alt="ClubMod"> 
 						<h1>ClubMod Cycling</h1>
 						<p>Inspiring you on the bike with Strava Challenges and Achievement Prizes</p>
