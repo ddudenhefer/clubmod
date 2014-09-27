@@ -10,6 +10,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
+
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
 		<script src="js/skel.min.js"></script>
 		<script src="js/init.js"></script>
@@ -17,19 +18,18 @@
 		<script src="js/jquery-ui.js"></script>
 		<script src="js/grid.locale-en.js"></script>
 		<script src="js/jquery.jqGrid.src.js"></script>
-		<noscript>
-			<link rel="stylesheet" href="css/skel.css" />
-			<link rel="stylesheet" href="css/style.css" />
-			<link rel="stylesheet" href="css/style-wide.css" />
-			<link rel="stylesheet" href="css/style-noscript.css" />
-			<link rel="stylesheet" href="css/jquery-ui.css" />
-			<link rel="stylesheet" href="css/jquery-ui.theme.css" />
-			<link rel="stylesheet" href="css/ui.jqgrid.css" />
-		</noscript>
+
+<!-- 		<link rel="stylesheet" href="css/skel.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/style-wide.css" />
+		<link rel="stylesheet" href="css/style-noscript.css" />
+ -->		<link rel="stylesheet" href="css/jquery-ui.css" />
+		<link rel="stylesheet" href="css/jquery-ui.theme.css" />
+		<link rel="stylesheet" href="css/ui.jqgrid.css" />
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 
-<script>
+<script type="text/javascript">
 
 function getColumns () {
 	
@@ -41,11 +41,11 @@ function getModel () {
 
 	var jsonModel = [
 			{name:"id",index:"id", hidden: true },
-	   		{name:"firstname",index:"firstname", width:80},
-	   		{name:"lastname",index:"lastname", width:400},
+	   		{name:"firstname",index:"firstname", width:100},
+	   		{name:"lastname",index:"lastname", width:200},
 	   		{name:"profile_medium",index:"profile_medium", hidden: true},
-	   		{name:"city",index:"city", width:80},
-	   		{name:"state",index:"state", width:80}
+	   		{name:"city",index:"city", width:100},
+	   		{name:"state",index:"state", width:100}
 	   	];	
 	return jsonModel;
 }
@@ -79,8 +79,8 @@ $(document).ready(function(){
 		   	sortname: "lastname",
 		    sortorder: "asc",
 		    ignoreCase: true,
-			width: 200,
-	   		height: 100,
+			width: 500,
+	   		height: 200,
 			autowidth: false,
 			shrinkToFit: true,
 			onSelectRow: function(rowId, rowStatus, event) {
@@ -110,7 +110,7 @@ $(document).ready(function(){
 				<!-- Header -->
 					<header id="header">
 								<table id="subdivisionGrid"></table>
-			<div id="pager"></div>			
+								<div id="pager"></div>			
 					
 						<img src="css/images/ModPatch.png" height="150" alt="ClubMod"> 
 						<h1>ClubMod Cycling</h1>
