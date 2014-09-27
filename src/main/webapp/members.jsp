@@ -13,6 +13,7 @@
 
 		<script src="js/jquery.js"></script>
 		<script src="js/jquery-ui.js"></script>
+		<script src="js/jquery.jqGrid.src.js"></script>
 
 		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.theme.css" />

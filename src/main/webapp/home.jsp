@@ -18,31 +18,45 @@
 		<script src="js/grid.locale-en.js"></script>
 		<script src="js/jquery.jqGrid.src.js"></script>
 
-		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css" />
-		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.theme.css" />
-		<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
  		<link rel="stylesheet" href="css/skel.css" />
 		<link rel="stylesheet" href="css/style.css" />
 		<link rel="stylesheet" href="css/style-wide.css" />
 		<link rel="stylesheet" href="css/style-noscript.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.theme.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 
 		<script type="text/javascript">
 
 			$(document).ready(function(){	
-				 $( "#dialog" ).dialog({
-				      autoOpen: false,
-				      show: {
-				        effect: "blind",
+				$( "#dialog" ).dialog({
+					autoOpen: false,
+					modal: true,
+				    show: {
+				    	effect: "fade",
 				        duration: 1000
-				      },
-				      hide: {
-				        effect: "explode",
+				  	},
+				    hide: {
+				    	effect: "fade",
 				        duration: 1000
-				      }
-				    });
+				   	}
+				});
 
-				    $( "#members" ).click(function() {
-				      $( "#dialog" ).dialog( "open" );
+				$( "#members" ).click(function() {
+					$("#dialog").dialog('option', 'title', 'Club Members');
+					$( "#dialog" ).dialog("open" );
+			    });
+				$( "#activities" ).click(function() {
+					$("#dialog").dialog('option', 'title', 'Activities');
+					$( "#dialog" ).dialog( "open" );
+			    });
+				$( "#challenges" ).click(function() {
+					$("#dialog").dialog('option', 'title', 'Challenges');
+					$( "#dialog" ).dialog( "open" );
+			    });
+				$( "#achievements" ).click(function() {
+					$("#dialog").dialog('option', 'title', 'Achievements');
+					$( "#dialog" ).dialog( "open" );
 			    });
 			});
   		</script>
@@ -55,7 +69,7 @@
 			
 				<!-- Header -->
 					<header id="header">
-						<div id="dialog" title="Basic dialog"></div>
+						<div id="dialog"></div>
 					
 						<img src="css/images/ModPatch.png" height="150" alt="ClubMod"> 
 						<h1>ClubMod Cycling</h1>
@@ -63,9 +77,9 @@
 						<nav>
 							<ul>
 								<li><a id="members" href="#" class="icon fa-users"></a></li>
-								<li><a href="#" class="icon fa-bicycle"></a></li>
-								<li><a href="#" class="icon fa-flag"></a></li>
-								<li><a href="#" class="icon fa-trophy"></a></li>
+								<li><a id="activities" href="#" class="icon fa-bicycle"></a></li>
+								<li><a id="challenges" href="#" class="icon fa-flag"></a></li>
+								<li><a id="achievements" href="#" class="icon fa-trophy"></a></li>
 							</ul>
 						</nav>
 					</header>
