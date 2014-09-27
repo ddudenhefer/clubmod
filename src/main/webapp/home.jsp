@@ -29,7 +29,7 @@
 
 function getColumns () {
 	
-	var colArray = new Array("Id", "PID", "Name", "Number", "Survey");
+	var colArray = new Array("Id", "First Name", "Last Name", "City", "State", "Authenticated");
 	return colArray;
 }
 
@@ -37,10 +37,11 @@ function getModel () {
 
 	var jsonModel = [
 			{name:"id",index:"id", hidden: true },
-	   		{name:"pid",index:"pid", width:80},
-	   		{name:"name",index:"name", width:400},
-	   		{name:"number",index:"number", width:80},
-	   		{name:"survey",index:"survey", width:80}
+	   		{name:"firstname",index:"firstname", width:80},
+	   		{name:"lastname",index:"lastname", width:400},
+	   		{name:"profile_medium",index:"profile_medium", hidden: true},
+	   		{name:"city",index:"city", width:80},
+	   		{name:"state",index:"state", width:80}
 	   	];	
 	return jsonModel;
 }
@@ -54,7 +55,7 @@ $(document).ready(function(){
 			jsonReader: {
 				repeatitems: false,
 				id: "id",
-				root: "subdivisions",
+				//root: "",
 				records: function (obj) {
         			return obj.length;
     			},
@@ -71,7 +72,7 @@ $(document).ready(function(){
 		   	rowList: [10,20,30],
 		   	pager: "#pager",
 		    viewrecords: true,
-		   	sortname: "name",
+		   	sortname: "lastname",
 		    sortorder: "asc",
 		    ignoreCase: true,
 			width: 721,
@@ -105,7 +106,6 @@ $(document).ready(function(){
 			<table id="subdivisionGrid"></table>
 			<div id="pager"></div>			
 			
-
 				<!-- Header -->
 					<header id="header">
 						<img src="css/images/ModPatch.png" height="150" alt="ClubMod"> 
@@ -118,14 +118,12 @@ $(document).ready(function(){
 								<li><a href="#" class="icon fa-flag"></a></li>
 								<li><a href="#" class="icon fa-trophy"></a></li>								</ul>
 						</nav>
-
 					</header>
 
 				<!-- Footer -->
 					<footer id="footer">
 						<span class="copyright">&copy; 2009-2014 Mod Boulder</span><span class="copyright">3030 Washington, Boulder, CO  80304 | 720.252.6051 | <a href="mailto:info@modboulder.com?subject=">info@modboulder.com</a></span>
 					</footer>
-				
 			</div>
 		</div>
 	</body>
