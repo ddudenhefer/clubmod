@@ -80,7 +80,7 @@
 						<p>Inspiring you on the bike with Strava Challenges and Achievement Prizes</p>
 						<nav>
 							<ul>
-								<li><a id="members" href="#" class="icon fa-users"></a></li>
+								<li><a id="members" href="#" class="icon fa-users"><span class="label">Members</span></a></li>
 								<li><a id="activities" href="#" class="icon fa-bicycle"></a></li>
 								<li><a id="challenges" href="#" class="icon fa-flag"></a></li>
 								<li><a id="achievements" href="#" class="icon fa-trophy"></a></li>
