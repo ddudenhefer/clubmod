@@ -17,7 +17,7 @@
 		}
 	});
 
-	// Events (JS).
+/*	// Events (JS).
 		
 		// Remove "loading" class once the page has fully loaded.
 			window.onload = function() {
@@ -33,8 +33,7 @@
 			window.onorientationchange = function() {
 				document.body.scrollTop = 0;
 			}
-
-	/*
+*/
 
 	// Events (jQuery).
 	// Aerial doesn't need jQuery, but if you're going to use it anyway remove the
@@ -56,7 +55,5 @@
 				.on('orientationchange', function() {
 					jQuery('body').scrollTop(0);
 				});
-
-	*/
 
 })();
