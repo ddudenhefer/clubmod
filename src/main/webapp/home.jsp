@@ -10,13 +10,15 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
-		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
-		<script src="js/skel.min.js"></script>
-		<script src="js/init.js"></script>
+
 		<script src="js/jquery.js"></script>
 		<script src="js/jquery-ui.js"></script>
 		<script src="js/grid.locale-en.js"></script>
 		<script src="js/jquery.jqGrid.src.js"></script>
+
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="js/skel.min.js"></script>
+		<script src="js/init.js"></script>
 
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
