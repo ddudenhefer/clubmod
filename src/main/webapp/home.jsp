@@ -41,6 +41,8 @@
 				$( "#dialog" ).dialog({
 					autoOpen: false,
 					modal: true,
+					height: 400,
+					width: 600,
 				    show: {
 				    	effect: "fade",
 				        duration: 600
@@ -51,7 +53,7 @@
 				   	},
 				    open: function(event, ui) {
 				        createGrid();
-				      }
+				   	}
 				});
 
 				$( "#members" ).click(function() {
@@ -112,7 +114,7 @@
 		    			}
 			        },
 					gridview: true, 	        
-			        loadonce: true,
+			        loadonce: false,
 				   	rowNum: 10,
 				   	rowList: [10,20,30],
 				   	pager: "#pager",
@@ -130,7 +132,7 @@
 				});
 			
 				$("#subdivisionGrid").jqGrid("navGrid","#pager",
-					{edit:false,add:false,del:false,search:false,refresh:false},
+					{edit:false,add:false,del:false,search:false,refresh:true},
 					{}, 
 					{}, 
 					{}, 
