@@ -77,7 +77,7 @@
 						var rowData = $(this).getRowData(rowId);
 		   			},
 		   			loadComplete: function() {
-		   			    $("#memberGrid").trigger("reloadGrid"); // Call to fix client-side sorting
+		   				$("#memberGrid").jqGrid('setGridParam', {sortname: "lastname", sortorder: "acs"}).trigger('reloadGrid');
 		   			}
 				});
 			
