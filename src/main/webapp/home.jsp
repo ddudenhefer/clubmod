@@ -120,7 +120,7 @@
 				<!-- Header -->
 					<header id="header">
 						<div id="dialog" style="display:none;">
-						    <iframe id="memberList" width="620" height="480"></iframe>
+						    <iframe id="memberList" width="620" height="480" style="overflow: hidden;"></iframe>
 						</div>
 					
 						<img src="css/images/ModPatch.png" height="125" alt="ClubMod"> 

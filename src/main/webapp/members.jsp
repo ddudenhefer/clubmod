@@ -75,6 +75,9 @@
 					shrinkToFit: true,
 					onSelectRow: function(rowId, rowStatus, event) {
 						var rowData = $(this).getRowData(rowId);
+		   			},
+		   			loadComplete: function() {
+		   			    $("#memberGrid").trigger("reloadGrid"); // Call to fix client-side sorting
 		   			}
 				});
 			
