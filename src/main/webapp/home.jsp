@@ -51,22 +51,29 @@
 				        duration: 600
 				   	},
 				    open: function(event, ui) {
-				        createGrid();
-				   	}
+				        //createGrid();
+				   	},
+		            close: function () {
+		                $("#memberList").attr('src', "about:blank");
+		            }
 				});
 
 				$( "#members" ).click(function() {
-					$("#dialog").dialog('option', 'title', 'Club Members');
-					$( "#dialog" ).dialog("open" );
+			        $("#memberList").attr('src', $(this).attr("${rootName}/members.jsp"));
+					$("#dialog").dialog('option', 'title', 'Activities');
+					$( "#dialog" ).dialog( "open" );
 			    });
+				
 				$( "#activities" ).click(function() {
 					$("#dialog").dialog('option', 'title', 'Activities');
 					$( "#dialog" ).dialog( "open" );
 			    });
+				
 				$( "#challenges" ).click(function() {
 					$("#dialog").dialog('option', 'title', 'Challenges');
 					$( "#dialog" ).dialog( "open" );
 			    });
+				
 				$( "#achievements" ).click(function() {
 					$("#dialog").dialog('option', 'title', 'Achievements');
 					$( "#dialog" ).dialog( "open" );
@@ -150,9 +157,8 @@
 			
 				<!-- Header -->
 					<header id="header">
-						<div id="dialog">
-							<table id="subdivisionGrid"></table>
-							<div id="pager"></div>			
+						<div id="dialog" style="display:none;">
+						    <iframe id="memberList" width="350" height="350"></iframe>
 						</div>
 					
 						<img src="css/images/ModPatch.png" height="125" alt="ClubMod"> 
