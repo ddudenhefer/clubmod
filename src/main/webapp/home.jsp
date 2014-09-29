@@ -39,10 +39,11 @@
 			        $("#memberList").attr('src', "${rootName}/members.jsp");
 					$( "#dialog" ).dialog({
 						modal: true,
-						height: 500,
+						height: 400,
 						width: 640,
 						title: "Members",
-					    show: {
+						resizable: false,
+						show: {
 					    	effect: "fade",
 					        duration: 600
 					  	},
@@ -59,10 +60,11 @@
 				$( "#activities" ).click(function() {
 					$( "#dialog" ).dialog({
 						modal: true,
-						height: 500,
+						height: 400,
 						width: 640,
 						title: "Activities",
-					    show: {
+						resizable: false,
+						show: {
 					    	effect: "fade",
 					        duration: 600
 					  	},
@@ -76,10 +78,11 @@
 				$( "#challenges" ).click(function() {
 					$( "#dialog" ).dialog({
 						modal: true,
-						height: 500,
+						height: 400,
 						width: 640,
 						title: "Challenges",
-					    show: {
+						resizable: false,
+						show: {
 					    	effect: "fade",
 					        duration: 600
 					  	},
@@ -93,10 +96,11 @@
 				$( "#achievements" ).click(function() {
 					$( "#dialog" ).dialog({
 						modal: true,
-						height: 500,
+						height: 400,
 						width: 640,
 						title: "Achievements",
-					    show: {
+						resizable: false,
+						show: {
 					    	effect: "fade",
 					        duration: 600
 					  	},
