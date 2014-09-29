@@ -39,9 +39,8 @@
 			$(document).ready(function(){	
 				
 				$( "#members" ).click(function() {
-			        $("#memberList").attr('src', $(this).attr("${rootName}/members.jsp"));
+			        $("#memberList").attr('src', "${rootName}/members.jsp");
 					$( "#dialog" ).dialog({
-						autoOpen: false,
 						modal: true,
 						height: 500,
 						width: 640,
@@ -62,7 +61,6 @@
 				
 				$( "#activities" ).click(function() {
 					$( "#dialog" ).dialog({
-						autoOpen: false,
 						modal: true,
 						height: 500,
 						width: 640,
@@ -80,7 +78,6 @@
 				
 				$( "#challenges" ).click(function() {
 					$( "#dialog" ).dialog({
-						autoOpen: false,
 						modal: true,
 						height: 500,
 						width: 640,
@@ -98,7 +95,6 @@
 				
 				$( "#achievements" ).click(function() {
 					$( "#dialog" ).dialog({
-						autoOpen: false,
 						modal: true,
 						height: 500,
 						width: 640,
