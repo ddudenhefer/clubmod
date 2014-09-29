@@ -40,12 +40,12 @@
 				
 				$( "#members" ).click(function() {
 			        $("#memberList").attr('src', $(this).attr("${rootName}/members.jsp"));
-					$("#dialog").dialog('option', 'title', 'Members');
 					$( "#dialog" ).dialog({
 						autoOpen: false,
 						modal: true,
 						height: 500,
 						width: 640,
+						title: "Members",
 					    show: {
 					    	effect: "fade",
 					        duration: 600
@@ -61,12 +61,12 @@
 			    });
 				
 				$( "#activities" ).click(function() {
-					$("#dialog").dialog('option', 'title', 'Activities');
 					$( "#dialog" ).dialog({
 						autoOpen: false,
 						modal: true,
 						height: 500,
 						width: 640,
+						title: "Activities",
 					    show: {
 					    	effect: "fade",
 					        duration: 600
@@ -79,12 +79,12 @@
 			    });
 				
 				$( "#challenges" ).click(function() {
-					$("#dialog").dialog('option', 'title', 'Challenges');
 					$( "#dialog" ).dialog({
 						autoOpen: false,
 						modal: true,
 						height: 500,
 						width: 640,
+						title: "Challenges",
 					    show: {
 					    	effect: "fade",
 					        duration: 600
@@ -97,12 +97,12 @@
 			    });
 				
 				$( "#achievements" ).click(function() {
-					$("#dialog").dialog('option', 'title', 'Achievements');
 					$( "#dialog" ).dialog({
 						autoOpen: false,
 						modal: true,
 						height: 500,
 						width: 640,
+						title: "Achievements",
 					    show: {
 					    	effect: "fade",
 					        duration: 600
