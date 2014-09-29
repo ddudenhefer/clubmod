@@ -119,10 +119,6 @@
 			
 				<!-- Header -->
 					<header id="header">
-						<div id="dialog" style="display:none;">
-						    <iframe id="memberList" width="100%" height="100%"></iframe>
-						</div>
-					
 						<img src="css/images/ModPatch.png" height="125" alt="ClubMod"> 
 						<h1>ClubMod Cycling</h1>
 						<p>Inspiring you on the bike with Strava Challenges and Achievement Prizes</p>
@@ -135,6 +131,12 @@
 							</ul>
 						</nav>
 					</header>
+					
+					<main>
+						<div id="dialog" style="display:none;">
+						    <iframe id="memberList" width="100%" height="100%"></iframe>
+						</div>
+					</main>
 
 				<!-- Footer -->
 					<footer id="footer">

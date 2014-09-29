@@ -70,7 +70,7 @@
 				    sortorder: "asc",
 				    ignoreCase: true,
 					width: 580,
-			   		height: 280,
+			   		height: 240,
 					autowidth: false,
 					shrinkToFit: true,
 					onSelectRow: function(rowId, rowStatus, event) {
@@ -78,8 +78,6 @@
 		   			}
 				});
 				
-				$("#memberGrid").jqGrid('setGridParam', {sortname: "lastname", sortorder: "acs"}).trigger('reloadGrid');				
-			
 				$("#memberGrid").jqGrid("navGrid","#pager",
 					{edit:false,add:false,del:false,search:false,refresh:false},
 					{}, 

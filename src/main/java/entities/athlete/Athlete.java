@@ -3,10 +3,11 @@ package entities.athlete;
 import entities.club.Club;
 import entities.gear.Gear;
 
+import java.util.Comparator;
 import java.util.List;
 
-public class Athlete {
 
+public class Athlete implements Comparable<Athlete> {
 
     private int id;
     private String resource_state;
@@ -34,11 +35,19 @@ public class Athlete {
     private List<Gear> bikes;
     private List<Gear> shoes;
 
+    
     @Override
     public String toString() {
         return firstname +" "+ lastname;
     }
 
+    
+    @Override
+    public int compareTo(Athlete o) {
+        return Comparators.NAME.compare(this, o);
+    }
+    
+    
     public Athlete(int id) {
         this.id = id;
     }
@@ -244,5 +253,16 @@ public class Athlete {
 
     public void setShoes(List<Gear> shoes) {
         this.shoes = shoes;
+    }
+
+
+    public static class Comparators {
+
+        public static Comparator<Athlete> NAME = new Comparator<Athlete>() {
+            @Override
+            public int compare(Athlete o1, Athlete o2) {
+                return o1.getLastname().compareTo(o2.getLastname());
+            }
+        };
     }
 }
