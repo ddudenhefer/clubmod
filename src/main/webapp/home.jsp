@@ -37,46 +37,81 @@
 		<script type="text/javascript">
 
 			$(document).ready(function(){	
-				$( "#dialog" ).dialog({
-					autoOpen: false,
-					modal: true,
-					height: 500,
-					width: 640,
-				    show: {
-				    	effect: "fade",
-				        duration: 600
-				  	},
-				    hide: {
-				    	effect: "fade",
-				        duration: 600
-				   	},
-				    open: function(event, ui) {
-				        //createGrid();
-				   	},
-		            close: function () {
-		                $("#memberList").attr('src', "about:blank");
-		            }
-				});
-
+				
 				$( "#members" ).click(function() {
 			        $("#memberList").attr('src', $(this).attr("${rootName}/members.jsp"));
-					$("#dialog").dialog('option', 'title', 'Activities');
-					$( "#dialog" ).dialog( "open" );
+					$("#dialog").dialog('option', 'title', 'Members');
+					$( "#dialog" ).dialog({
+						autoOpen: false,
+						modal: true,
+						height: 500,
+						width: 640,
+					    show: {
+					    	effect: "fade",
+					        duration: 600
+					  	},
+					    hide: {
+					    	effect: "fade",
+					        duration: 600
+					   	},
+			            close: function () {
+			                $("#memberList").attr('src', "about:blank");
+			            }
+					});					
 			    });
 				
 				$( "#activities" ).click(function() {
 					$("#dialog").dialog('option', 'title', 'Activities');
-					$( "#dialog" ).dialog( "open" );
+					$( "#dialog" ).dialog({
+						autoOpen: false,
+						modal: true,
+						height: 500,
+						width: 640,
+					    show: {
+					    	effect: "fade",
+					        duration: 600
+					  	},
+					    hide: {
+					    	effect: "fade",
+					        duration: 600
+					   	}
+					});					
 			    });
 				
 				$( "#challenges" ).click(function() {
 					$("#dialog").dialog('option', 'title', 'Challenges');
-					$( "#dialog" ).dialog( "open" );
+					$( "#dialog" ).dialog({
+						autoOpen: false,
+						modal: true,
+						height: 500,
+						width: 640,
+					    show: {
+					    	effect: "fade",
+					        duration: 600
+					  	},
+					    hide: {
+					    	effect: "fade",
+					        duration: 600
+					   	}
+					});					
 			    });
 				
 				$( "#achievements" ).click(function() {
 					$("#dialog").dialog('option', 'title', 'Achievements');
-					$( "#dialog" ).dialog( "open" );
+					$( "#dialog" ).dialog({
+						autoOpen: false,
+						modal: true,
+						height: 500,
+						width: 640,
+					    show: {
+					    	effect: "fade",
+					        duration: 600
+					  	},
+					    hide: {
+					    	effect: "fade",
+					        duration: 600
+					   	}
+					});					
 			    });
 			});
 			

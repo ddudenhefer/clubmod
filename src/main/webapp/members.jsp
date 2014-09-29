@@ -41,7 +41,7 @@
 			}
 
 			$(document).ready(function(){	
-				$("#subdivisionGrid").jqGrid({
+				$("#memberGrid").jqGrid({
 				   	url:"${rootName}/rest/club/members",
 					datatype: "json",
 				   	colNames: getColumns(),
@@ -78,7 +78,7 @@
 		   			}
 				});
 			
-				$("#subdivisionGrid").jqGrid("navGrid","#pager",
+				$("#memberGrid").jqGrid("navGrid","#pager",
 					{edit:false,add:false,del:false,search:false,refresh:false},
 					{}, 
 					{}, 
@@ -90,7 +90,7 @@
 		</script>
 	</head>
 	<body>
-		<table id="subdivisionGrid"></table>
+		<table id="memberGrid"></table>
 		<div id="pager"></div>			
 	</body>
 </html>
