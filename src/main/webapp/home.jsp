@@ -31,7 +31,6 @@
 		<link rel="stylesheet" href="css/jquery-ui.theme.css" />
 		<link rel="stylesheet" href="css/ui.jqgrid.css" />
 
-
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 		
