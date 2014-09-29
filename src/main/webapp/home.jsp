@@ -11,14 +11,14 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="js/skel.min.js"></script>
+		<script src="js/init.js"></script>
+
 		<script src="js/jquery.js"></script>
 		<script src="js/jquery-ui.js"></script>
 		<script src="js/grid.locale-en.js"></script>
 		<script src="js/jquery.jqGrid.src.js"></script>
-
-		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
-		<script src="js/skel.min.js"></script>
-		<script src="js/init.js"></script>
 
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
@@ -41,8 +41,8 @@
 				$( "#dialog" ).dialog({
 					autoOpen: false,
 					modal: true,
-					height: 400,
-					width: 600,
+					height: 500,
+					width: 640,
 				    show: {
 				    	effect: "fade",
 				        duration: 600
@@ -114,7 +114,7 @@
 		    			}
 			        },
 					gridview: true, 	        
-			        loadonce: false,
+			        loadonce: true,
 				   	rowNum: 10,
 				   	rowList: [10,20,30],
 				   	pager: "#pager",
@@ -156,7 +156,7 @@
 							<div id="pager"></div>			
 						</div>
 					
-						<img src="css/images/ModPatch.png" height="80" alt="ClubMod"> 
+						<img src="css/images/ModPatch.png" height="125" alt="ClubMod"> 
 						<h1>ClubMod Cycling</h1>
 						<p>Inspiring you on the bike with Strava Challenges and Achievement Prizes</p>
 						<nav>
