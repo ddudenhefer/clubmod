@@ -70,16 +70,15 @@
 				    sortorder: "asc",
 				    ignoreCase: true,
 					width: 580,
-			   		height: 300,
+			   		height: 280,
 					autowidth: false,
 					shrinkToFit: true,
 					onSelectRow: function(rowId, rowStatus, event) {
 						var rowData = $(this).getRowData(rowId);
-		   			},
-		   			loadComplete: function() {
-		   				$("#memberGrid").jqGrid('setGridParam', {sortname: "lastname", sortorder: "acs"}).trigger('reloadGrid');
 		   			}
 				});
+				
+				$("#memberGrid").jqGrid('setGridParam', {sortname: "lastname", sortorder: "acs"}).trigger('reloadGrid');				
 			
 				$("#memberGrid").jqGrid("navGrid","#pager",
 					{edit:false,add:false,del:false,search:false,refresh:false},
