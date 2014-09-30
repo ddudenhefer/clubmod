@@ -85,6 +85,25 @@
 					{closeAfterSearch:true,closeOnEscape:true,modal:true}, 
 					{}
 				);
+				
+				$(window).bind('resize', function() {
+
+				    // Get width of parent container
+				    var width = $(window).attr('clientWidth');
+				    if (width == null || width < 1){
+				        // For IE, revert to offsetWidth if necessary
+				        width = $(window).attr('offsetWidth');
+				    }
+				    width = width - 2; // Fudge factor to prevent horizontal scrollbars
+				    if (width > 0 &&
+				        // Only resize if new width exceeds a minimal threshold
+				        // Fixes IE issue with in-place resizing when mousing-over frame bars
+				        Math.abs(width - $("#memberGrid").width()) > 5)
+				    {
+				    	$("#memberGrid").setGridWidth(width);
+				    }
+
+				}).trigger('resize');				
 			});
 			
 		</script>
