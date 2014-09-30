@@ -62,8 +62,9 @@
 				$( "#activities" ).click(function() {
 					$( "#dialog" ).dialog({
 						modal: true,
-						height: 400,
-						width: 640,
+						height: "auto",
+						width: "auto",
+					    maxWidth: 600,
 						title: "Activities",
 						resizable: false,
 						show: {
@@ -80,8 +81,9 @@
 				$( "#challenges" ).click(function() {
 					$( "#dialog" ).dialog({
 						modal: true,
-						height: 400,
-						width: 640,
+						height: "auto",
+						width: "auto",
+					    maxWidth: 600,
 						title: "Challenges",
 						resizable: false,
 						show: {
@@ -98,8 +100,9 @@
 				$( "#achievements" ).click(function() {
 					$( "#dialog" ).dialog({
 						modal: true,
-						height: 400,
-						width: 640,
+						height: "auto",
+						width: "auto",
+					    maxWidth: 600,
 						title: "Achievements",
 						resizable: false,
 						show: {
