@@ -143,7 +143,7 @@
 
 			        if (dialog.options.fluid) {
 			            // namespace window resize
-			            $(window).on("resize.responsive", function () {
+			            $(window).on("resize", function () {
 			                var wWidth = $(window).width();
 			                // check window width against dialog width
 			                if (wWidth < dialog.options.maxWidth + 50) {
