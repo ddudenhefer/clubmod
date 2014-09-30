@@ -132,7 +132,7 @@
 			    // each open dialog
 			    $visible.each(function () {
 			        var $this = $(this);
-			        var dialog = $this.find(".ui-dialog-content").data("dialog");
+			        var dialog = $this.find(".ui-dialog-content").data("ui-dialog");
 			        // if fluid option == true
 			        if (dialog.options.maxWidth && dialog.options.width) {
 			            // fix maxWidth bug
