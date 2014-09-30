@@ -45,7 +45,7 @@
 				$("#memberGrid").jqGrid({
 				   	url:"${rootName}/rest/club/members",
 					datatype: "json",
-					height: 240,
+					height: 238,
 				   	colNames: getColumns(),
 				   	colModel: getModel(),
 					jsonReader: {
@@ -90,7 +90,7 @@
 
 				    // Get width of parent container
 				    var width = $(window).width();
-				    width = width - 2; // Fudge factor to prevent horizontal scrollbars
+				    width = width - 20; // Fudge factor to prevent horizontal scrollbars
 				    if (width > 0 &&
 				        // Only resize if new width exceeds a minimal threshold
 				        // Fixes IE issue with in-place resizing when mousing-over frame bars
