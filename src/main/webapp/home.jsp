@@ -168,9 +168,9 @@
 			    if (width > 0 &&
 			        // Only resize if new width exceeds a minimal threshold
 			        // Fixes IE issue with in-place resizing when mousing-over frame bars
-			        Math.abs(width - $("#memberGrid").width()) > 5)
+			        Math.abs(width - grid.width()) > 5)
 			    {
-			    	$("#memberGrid").setGridWidth(width);
+			    	grid.setGridWidth(width);
 			    }
 			}
   		</script>
