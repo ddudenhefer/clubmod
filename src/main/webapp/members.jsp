@@ -89,11 +89,7 @@
 				$(window).bind('resize', function() {
 
 				    // Get width of parent container
-				    var width = $(window).attr('clientWidth');
-				    if (width == null || width < 1){
-				        // For IE, revert to offsetWidth if necessary
-				        width = $(window).attr('offsetWidth');
-				    }
+				    var width = $(window).width();
 				    width = width - 2; // Fudge factor to prevent horizontal scrollbars
 				    if (width > 0 &&
 				        // Only resize if new width exceeds a minimal threshold
