@@ -117,11 +117,6 @@
 			    });
 			});
 			
-			// on window resize run function
-			$(window).resize(function () {
-			    fluidDialog();
-			});
-			
 			// run function on all dialog opens
 			$(document).on("dialogopen", ".ui-dialog", function (event, ui) {
 			    fluidDialog();
@@ -139,31 +134,30 @@
 			        var $this = $(this);
 			        var dialog = $this.find(".ui-dialog-content").data("dialog");
 			        // if fluid option == true
-			        if (dialog.option("maxWidth") && dialog.option("width")) {
+			        if (dialog.options.maxWidth && dialog.options.width) {
 			            // fix maxWidth bug
-			            $this.css("max-width", dialog.option("maxWidth"));
+			            $this.css("max-width", dialog.options.maxWidth);
 			            //reposition dialog
-			            dialog.option("position", dialog.option("position"));
+			            dialog.option("position", dialog.options.position);
 			        }
 
-			        if (dialog.option("fluid")) {
+			        if (dialog.options.fluid) {
 			            // namespace window resize
 			            $(window).on("resize.responsive", function () {
 			                var wWidth = $(window).width();
 			                // check window width against dialog width
-			                if (wWidth < dialog.option("maxWidth") + 50) {
+			                if (wWidth < dialog.options.maxWidth + 50) {
 			                    // keep dialog from filling entire screen
 			                    $this.css("width", "90%");
 			                    
 			                }
 			              //reposition dialog
-			              dialog.option("position", dialog.option("position"));
+			              dialog.option("position", dialog.options.position);
 			            });
 			        }
 
 			    });
 			}
-			
   		</script>
 	</head>
 	<body class="loading">
