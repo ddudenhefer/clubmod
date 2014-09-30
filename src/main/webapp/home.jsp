@@ -137,6 +137,7 @@
 			        if (dialog.options.maxWidth && dialog.options.width) {
 			            // fix maxWidth bug
 			            $this.css("max-width", dialog.options.maxWidth);
+			            $this.css("width", "90%");
 			            //reposition dialog
 			            dialog.option("position", dialog.options.position);
 			        }
