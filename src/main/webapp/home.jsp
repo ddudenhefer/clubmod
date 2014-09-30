@@ -40,7 +40,7 @@
 					$( "#dialog" ).dialog({
 						modal: true,
 						height: "auto",
-						width: "auto",
+						width: 260,
 					    maxWidth: 600,
 					    fluid: true,
 						title: "Members",
@@ -170,7 +170,7 @@
 				<!-- Header -->
 					<header id="header">
 						<img src="css/images/ModPatch.png" height="125" alt="ClubMod"> 
-						<h1>ClubMod Cycling</h1>
+						<h1>Club Mod Cycling</h1>
 						<p>Inspiring you on the bike with Strava Challenges and Achievement Prizes</p>
 						<nav>
 							<ul>
