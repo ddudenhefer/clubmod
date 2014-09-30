@@ -39,7 +39,7 @@
 			        $("#memberList").attr('src', "${rootName}/members.jsp");
 					$( "#dialog" ).dialog({
 						modal: true,
-						height: 400,
+						height: 300,
 						width: "auto",
 					    maxWidth: 600,
 					    fluid: true,
@@ -138,6 +138,7 @@
 			            // fix maxWidth bug
 			            $this.css("max-width", dialog.options.maxWidth);
 			            $this.css("width", "90%");
+			            resizeGrid($this.width());
 			            //reposition dialog
 			            dialog.option("position", dialog.options.position);
 			        }
@@ -150,7 +151,7 @@
 			                if (wWidth < dialog.options.maxWidth + 50) {
 			                    // keep dialog from filling entire screen
 			                    $this.css("width", "90%");
-			                    
+					            resizeGrid($this.width());
 			                }
 			              //reposition dialog
 			              dialog.option("position", dialog.options.position);
@@ -158,6 +159,19 @@
 			        }
 
 			    });
+			}
+			
+			function resizeGrid (width) {
+				
+				var grid = $("#memberList").contents().find("#memberGrid");
+			    width = width - 2; // Fudge factor to prevent horizontal scrollbars
+			    if (width > 0 &&
+			        // Only resize if new width exceeds a minimal threshold
+			        // Fixes IE issue with in-place resizing when mousing-over frame bars
+			        Math.abs(width - $("#memberGrid").width()) > 5)
+			    {
+			    	$("#memberGrid").setGridWidth(width);
+			    }
 			}
   		</script>
 	</head>
