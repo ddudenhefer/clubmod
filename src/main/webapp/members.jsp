@@ -32,11 +32,11 @@
 			
 				var jsonModel = [
 						{name:"id",index:"id", hidden: true },
-				   		{name:"firstname",index:"firstname", width:100},
-				   		{name:"lastname",index:"lastname", width:200},
+				   		{name:"firstname",index:"firstname"},
+				   		{name:"lastname",index:"lastname"},
 				   		{name:"profile_medium",index:"profile_medium", hidden: true},
-				   		{name:"city",index:"city", width:100},
-				   		{name:"state",index:"state", width:100}
+				   		{name:"city",index:"city"},
+				   		{name:"state",index:"state"}
 				   	];	
 				return jsonModel;
 			}
@@ -69,9 +69,7 @@
 				   	sortname: "lastname",
 				    sortorder: "asc",
 				    ignoreCase: true,
-					width: 580,
-			   		height: 240,
-					autowidth: false,
+					autowidth: true,
 					shrinkToFit: true,
 					onSelectRow: function(rowId, rowStatus, event) {
 						var rowData = $(this).getRowData(rowId);
@@ -87,6 +85,26 @@
 					{}
 				);
 			});
+			
+			$(window).bind('resize', function() {
+				
+			    // Get width of parent container
+				var width = $("#dialog", window.parent.document).attr('clientWidth');
+			    if (width == null || width < 1){
+			        // For IE, revert to offsetWidth if necessary
+			        width = $("#dialog", window.parent.document).attr('offsetWidth');
+			    }
+			    width = width - 2; // Fudge factor to prevent horizontal scrollbars
+			    if (width > 0 &&
+			        // Only resize if new width exceeds a minimal threshold
+			        // Fixes IE issue with in-place resizing when mousing-over frame bars
+			        Math.abs(width - $("#memberGrid").width()) > 5)
+			    {
+			    	$("#memberGrid").setGridWidth(width);
+			    }
+
+			}).trigger('resize');
+			
 		</script>
 	</head>
 	<body>

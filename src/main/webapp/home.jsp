@@ -39,8 +39,10 @@
 			        $("#memberList").attr('src', "${rootName}/members.jsp");
 					$( "#dialog" ).dialog({
 						modal: true,
-						height: 400,
-						width: 640,
+						height: "auto",
+						width: "auto",
+					    maxWidth: 600,
+					    fluid: true,
 						title: "Members",
 						resizable: false,
 						show: {
@@ -112,6 +114,33 @@
 			    });
 			});
 			
+			// on window resize run function
+			$(window).resize(function () {
+			    fluidDialog();
+			});
+			
+			function fluidDialog() {
+			    var $visible = $(".ui-dialog:visible");
+			    // each open dialog
+			    $visible.each(function () {
+			        var $this = $(this);
+			        var dialog = $this.find(".ui-dialog-content").data("ui-dialog");
+			        // if fluid option == true
+			        if (dialog.options.fluid) {
+			            var wWidth = $(window).width();
+			            // check window width against dialog width
+			            if (wWidth < (parseInt(dialog.options.maxWidth) + 50))  {
+			                // keep dialog from filling entire screen
+			                $this.css("max-width", "90%");
+			            } else {
+			                // fix maxWidth bug
+			                $this.css("max-width", dialog.options.maxWidth + "px");
+			            }
+			            //reposition dialog
+			            dialog.option("position", dialog.options.position);
+			        }
+			    });
+			}
 			
   		</script>
 	</head>
