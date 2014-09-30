@@ -45,7 +45,7 @@
 				$("#memberGrid").jqGrid({
 				   	url:"${rootName}/rest/club/members",
 					datatype: "json",
-					height: 260,
+					height: 240,
 				   	colNames: getColumns(),
 				   	colModel: getModel(),
 					jsonReader: {

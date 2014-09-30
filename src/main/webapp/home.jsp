@@ -39,7 +39,7 @@
 			        $("#memberList").attr('src', "${rootName}/members.jsp");
 					$( "#dialog" ).dialog({
 						modal: true,
-						height: 300,
+						height: 400,
 						width: "auto",
 					    maxWidth: 600,
 					    fluid: true,
