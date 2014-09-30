@@ -170,7 +170,7 @@
 			        // Fixes IE issue with in-place resizing when mousing-over frame bars
 			        Math.abs(width - grid.width()) > 5)
 			    {
-			    	grid.setGridWidth(width);
+			    	grid.jqGrid("setGridWidth", width, true);
 			    }
 			    grid.trigger("resize");
 
