@@ -39,8 +39,8 @@
 			        $("#memberList").attr('src', "${rootName}/members.jsp");
 					$( "#dialog" ).dialog({
 						modal: true,
-						height: "auto",
-						width: 260,
+						height: 400,
+						width: "auto",
 					    maxWidth: 600,
 					    fluid: true,
 						title: "Members",
@@ -62,7 +62,7 @@
 				$( "#activities" ).click(function() {
 					$( "#dialog" ).dialog({
 						modal: true,
-						height: "auto",
+						height: 400,
 						width: "auto",
 					    maxWidth: 600,
 						title: "Activities",
@@ -81,7 +81,7 @@
 				$( "#challenges" ).click(function() {
 					$( "#dialog" ).dialog({
 						modal: true,
-						height: "auto",
+						height: 400,
 						width: "auto",
 					    maxWidth: 600,
 						title: "Challenges",
@@ -100,7 +100,7 @@
 				$( "#achievements" ).click(function() {
 					$( "#dialog" ).dialog({
 						modal: true,
-						height: "auto",
+						height: 400,
 						width: "auto",
 					    maxWidth: 600,
 						title: "Achievements",
@@ -184,7 +184,7 @@
 					
 					<main>
 						<div id="dialog" style="display:none;">
-						    <iframe id="memberList" width="100%" height="100%"></iframe>
+						    <iframe id="memberList" width="99%" height="99%"></iframe>
 						</div>
 					</main>
 
