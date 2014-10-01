@@ -68,9 +68,10 @@ public class ActivitySvc {
 					float totalMiles = 0;
 				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 				    for (Activity activity : activities) {
-				    	totalMiles += Constants.ConvertMetersToMiles(activity.getDistance());
+				    	if (activity.getType().equals("Ride"))
+				    		totalMiles += Constants.ConvertMetersToMiles(activity.getDistance(), false);
 				    }
-					obj.addProperty("miles", totalMiles);
+					obj.addProperty("miles", (float) (Math.round(totalMiles * 10) / 10.0));
 					objArray.add(obj);
 				}
 			} catch (Exception e) {

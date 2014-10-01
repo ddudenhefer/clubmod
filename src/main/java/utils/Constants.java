@@ -7,8 +7,11 @@ public class Constants {
 	public static final String CLIENT_SECRET = "4fb119f5ab894d0bf0c998c8d32577740ca6e316";
 	public static final int CLIENT_ID = 2946;
 	
-    public static float ConvertMetersToMiles(float meters)
+    public static float ConvertMetersToMiles(float meters, boolean round)
     {
-    	return (float) (Math.round((meters / 1609.344) * 10) / 10.0);
+    	if (round)
+    		return (float) (meters / 1609.344);
+    	else
+    		return (float) (Math.round((meters / 1609.344) * 10) / 10.0);
     }
 }
