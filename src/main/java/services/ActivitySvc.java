@@ -65,13 +65,13 @@ public class ActivitySvc {
 					DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 					long startSeconds = df.parse(startDate).getTime() / 1000l;
 					long endSeconds = df.parse(endDate).getTime() / 1000l;
-					float totalMiles = 0;
+					float totalMeters = 0;
 				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 				    for (Activity activity : activities) {
 				    	if (activity.getType().equals("Ride"))
-				    		totalMiles += Constants.ConvertMetersToMiles(activity.getDistance(), false);
+				    		totalMeters += activity.getDistance();
 				    }
-					obj.addProperty("miles", (float) (Math.round(totalMiles * 10) / 10.0));
+					obj.addProperty("miles", (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
 					objArray.add(obj);
 				}
 			} catch (Exception e) {
