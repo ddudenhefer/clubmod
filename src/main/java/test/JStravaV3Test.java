@@ -14,8 +14,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import utils.Constants;
 import connector.JStravaV3;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -681,4 +686,27 @@ public class JStravaV3Test {
             }
         }
     }
+    
+    @Test
+    public void testGetAthleteActivitiesBetweenDates() {
+    	
+	    JStravaV3 strava= new JStravaV3("3ff761fc2568621422792aa096c8bb0746fdb15f");
+	    DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+
+	    long startSeconds, endSeconds;
+		try {
+			startSeconds = df.parse("09/15/2014").getTime() / 1000l;
+			endSeconds = df.parse("09/27/2014").getTime() / 1000l;
+		    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds );
+		    for (Activity activity:activities) {
+		        System.out.println("Current Athlete Activity "+activity.toString());
+		        System.out.println("      Date "+activity.getStart_date_local());
+		        System.out.println("      Miles "+Constants.ConvertMetersToMiles(activity.getDistance()));
+		    }
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
 }
