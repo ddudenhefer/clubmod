@@ -62,7 +62,7 @@ public class ActivitySvc {
 					obj.addProperty("name", athlete.getFirstname() + " " + athlete.getLastname());
 					strava = new JStravaV3(member.getAccessToken());
 					
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+					DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 					long startSeconds = df.parse(startDate).getTime() / 1000l;
 					long endSeconds = df.parse(endDate).getTime() / 1000l;
 					float totalMiles = 0;
