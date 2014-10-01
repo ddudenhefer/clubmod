@@ -44,7 +44,7 @@ public class ActivitySvc {
 	@GET
 	@Path("/{startDate}/{endDate}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getClubActivitiesByDateRange(@PathParam("startDate") Date startDate, @PathParam("endDate") Date endDate) { 
+	public String getClubActivitiesByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
 		
 		JStravaV3 strava= new JStravaV3(Constants.PUBLIC_ACCESS_TOKEN);
 		List<Athlete> athletes = strava.findClubMembers(Constants.CLUB_ID,1,200);
@@ -61,9 +61,10 @@ public class ActivitySvc {
 					obj = new JsonObject();
 					obj.addProperty("name", athlete.getFirstname() + " " + athlete.getLastname());
 					strava = new JStravaV3(member.getAccessToken());
-	
-					long startSeconds = startDate.getTime() / 1000l;
-					long endSeconds = endDate.getTime() / 1000l;
+					
+					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+					long startSeconds = df.parse(startDate).getTime() / 1000l;
+					long endSeconds = df.parse(endDate).getTime() / 1000l;
 					float totalMiles = 0;
 				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 				    for (Activity activity : activities) {
