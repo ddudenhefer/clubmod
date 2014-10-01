@@ -701,7 +701,7 @@ public class JStravaV3Test {
 		    for (Activity activity:activities) {
 		        System.out.println("Current Athlete Activity "+activity.toString());
 		        System.out.println("      Date "+activity.getStart_date_local());
-		        System.out.println("      Miles "+Constants.ConvertMetersToMiles(activity.getDistance()));
+		        System.out.println("      Miles "+Constants.ConvertMetersToMiles(activity.getDistance(), true));
 		    }
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
