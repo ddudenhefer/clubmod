@@ -61,7 +61,7 @@
 				
 				$( "#activities" ).click(function() {
 			        $("#activityList").attr('src', "${rootName}/mileageChallenge.jsp");
-					$( "#dialog" ).dialog({
+					$( "#dialog2" ).dialog({
 						modal: true,
 						height: 400,
 						width: "auto",
