@@ -22,7 +22,6 @@
 		
 		<style>
 			.ui-widget { font-size: 11px; };
-			td {font-family: "Verdana,Arial,sans-serif"; font-size: 11px; }
 		</style>
 
 		<script type="text/javascript">
@@ -127,10 +126,10 @@
 		<table>
 			<tr>
 				<td>
-					From Date: <input type="text" id="fromdate">
+					<label id="fromLabel">From Date: </label><input type="text" id="fromdate">
 				</td>
 				<td>
-					To Date: <input type="text" id="todate">
+					<label id="toLabel">To Date: </label><input type="text" id="todate">
 				</td>
 				<td>
 					<button id="go">Go</button>
