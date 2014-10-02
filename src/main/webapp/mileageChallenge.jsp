@@ -49,10 +49,9 @@
 			
 			function createGrid (startDate, endDate) {
 				$("#mileageGrid").jqGrid({
-				   	url:"${rootName}/rest/activity/",
-				   	data: {'startDate': startDate, 'endDate': endDate},
+				   	url:"${rootName}/rest/activity/"+startDate+"/"+endDate,
 					datatype: "json",
-					height: 238,
+					height: 230,
 				   	colNames: getColumns(),
 				   	colModel: getModel(),
 					jsonReader: {
