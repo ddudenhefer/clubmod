@@ -38,18 +38,21 @@
 				   	];	
 				return jsonModel;
 			}
+			
+			function loadGrid (startDate, endDate) {
+				
+				$("#mileageGrid").jqGrid().setGridParam({url : "${rootName}/rest/activity/"+startDate+"/"+endDate}).trigger("reloadGrid");
+			}
 
 			$(document).ready(function(){
 				$("#fromdate").datepicker();
 				$("#todate").datepicker();
 				$("#go").button().click(function(event) {
-			  		createGrid($("#fromdate").datepicker('getDate'), $("#todate").datepicker('getDate'));
+			  		loadGrid($("#fromdate").datepicker('getDate'), $("#todate").datepicker('getDate'));
 			   	});
-			});
-			
-			function createGrid (startDate, endDate) {
+				
 				$("#mileageGrid").jqGrid({
-				   	url:"${rootName}/rest/activity/"+startDate+"/"+endDate,
+				   	//url:"${rootName}/rest/activity/"+startDate+"/"+endDate,
 					datatype: "json",
 					height: 230,
 				   	colNames: getColumns(),
@@ -106,9 +109,7 @@
 				    }
 
 				}).trigger('resize');
-				
-				$("#mileageGrid").show();
-			}
+			});
 			
 		</script>
 	</head>
