@@ -122,7 +122,19 @@
 		</script>
 	</head>
 	<body>
-		<p>From Date: <input type="text" id="fromdate"><span style="width:10px"></span>To Date: <input type="text" id="todate"><span style="width:10px"></span><button id="go">Go</button></p>
+		<table>
+			<tr>
+				<td>
+					From Date: <input type="text" id="fromdate">
+				</td>
+				<td>
+					To Date: <input type="text" id="todate">
+				</td>
+				<td>
+					<button id="go">Go</button>
+				</td>
+			</tr>
+		</table>
 		<table id="mileageGrid"></table>
 		<div id="pager"></div>			
 	</body>
