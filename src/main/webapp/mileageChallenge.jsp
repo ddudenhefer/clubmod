@@ -19,6 +19,10 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.theme.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+		
+		<style>
+			.ui-widget { font-size: 11px; }
+		</style>
 
 		<script type="text/javascript">
 
