@@ -44,10 +44,10 @@
 				alert((startDate.getMonth() + 1) + '-' + startDate.getDate() + '-' +  startDate.getFullYear());
 				alert((endDate.getMonth() + 1) + '-' + endDate.getDate() + '-' +  endDate.getFullYear());
 				
-				startDate =  $.datepicker.formatDate('MM-dd-yyyy', new Date(startDate));
-				endDate =  $.datepicker.formatDate('MM-dd-yyyy', new Date(endDate));
+				startDate =  (startDate.getMonth() + 1) + '-' + startDate.getDate() + '-' +  startDate.getFullYear()
+				endDate =  (endDate.getMonth() + 1) + '-' + endDate.getDate() + '-' +  endDate.getFullYear()
 				
-				$("#mileageGrid").jqGrid().setGridParam({url : "${rootName}/rest/activity/09-01-2014/10-01-2014"}).trigger("reloadGrid");
+				$("#mileageGrid").jqGrid().setGridParam({url : "${rootName}/rest/activity/"+startDate+"/"+endDate}).trigger("reloadGrid");
 			}
 
 			$(document).ready(function(){
