@@ -117,7 +117,7 @@
 		<p>From Date: <input type="text" id="fromdate"></p>
 		<p>To Date: <input type="text" id="todate"></p>
 		<button id="go">Go</button>
-		<table id="memberGrid"></table>
+		<table id="mileageGrid"></table>
 		<div id="pager"></div>			
 	</body>
 </html>
