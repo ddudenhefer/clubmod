@@ -40,18 +40,8 @@
 			}
 
 			$(document).ready(function(){
-				$("#fromdate").datepicker({
-					showOn: "button",
-				   	buttonImage: "images/calendar.gif",
-				   	buttonImageOnly: true,
-				  	buttonText: "Select from date"
-				});
-				$("#todate").datepicker({
-					showOn: "button",
-				   	buttonImage: "images/calendar.gif",
-				   	buttonImageOnly: true,
-				  	buttonText: "Select to date"
-				});
+				$("#fromdate").datepicker();
+				$("#todate").datepicker();
 				$("#go").button().click(function(event) {
 			  		createGrid($("#fromdate").datepicker('getDate'), $("#todate").datepicker('getDate'));
 			   	});
