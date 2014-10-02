@@ -66,11 +66,15 @@ public class ActivitySvc {
 					long startSeconds = df.parse(startDate).getTime() / 1000l;
 					long endSeconds = df.parse(endDate).getTime() / 1000l;
 					float totalMeters = 0;
+					int totalRides = 0;
 				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 				    for (Activity activity : activities) {
-				    	if (activity.getType().equals("Ride"))
+				    	if (activity.getType().equals("Ride")) {
 				    		totalMeters += activity.getDistance();
+				    		totalRides ++;
+				    	}
 				    }
+					obj.addProperty("rides", totalRides);
 					obj.addProperty("miles", (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
 					objArray.add(obj);
 				}

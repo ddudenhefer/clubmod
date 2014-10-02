@@ -60,21 +60,26 @@
 			    });
 				
 				$( "#activities" ).click(function() {
+			        $("#activityList").attr('src', "${rootName}/mileageChallenge.jsp");
 					$( "#dialog" ).dialog({
 						modal: true,
 						height: 400,
 						width: "auto",
 					    maxWidth: 600,
+					    fluid: true,
 						title: "Activities",
-						resizable: true,
+						resizable: false,
 						show: {
 					    	effect: "fade",
-					        duration: 600
+					        duration: 500
 					  	},
 					    hide: {
 					    	effect: "fade",
-					        duration: 600
-					   	}
+					        duration: 500
+					   	},
+			            close: function () {
+			                $("#activityList").attr('src', "about:blank");
+			            }
 					});					
 			    });
 				
@@ -185,6 +190,9 @@
 					<main>
 						<div id="dialog" style="display:none;">
 						    <iframe id="memberList" width="99%" height="99%"></iframe>
+						</div>
+						<div id="dialog2" style="display:none;">
+						    <iframe id="activityList" width="99%" height="99%"></iframe>
 						</div>
 					</main>
 
