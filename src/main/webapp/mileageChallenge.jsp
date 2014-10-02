@@ -41,6 +41,9 @@
 			
 			function loadGrid (startDate, endDate) {
 				
+				alert((startDate.getMonth() + 1) + '-' + startDate.getDate() + '-' +  startDate.getFullYear());
+				alert((endDate.getMonth() + 1) + '-' + endDate.getDate() + '-' +  endDate.getFullYear());
+				
 				startDate =  $.datepicker.formatDate('MM-dd-yyyy', new Date(startDate));
 				endDate =  $.datepicker.formatDate('MM-dd-yyyy', new Date(endDate));
 				
