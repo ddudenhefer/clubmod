@@ -64,6 +64,25 @@
 			    });
 				
 				$( "#activities" ).click(function() {
+					$( "#dialog" ).dialog({
+						modal: true,
+						height: 400,
+						width: "auto",
+					    maxWidth: 600,
+						title: "Activities",
+						resizable: true,
+						show: {
+					    	effect: "fade",
+					        duration: 600
+					  	},
+					    hide: {
+					    	effect: "fade",
+					        duration: 600
+					   	}
+					});					
+			    });
+				
+				$( "#challenges" ).click(function() {
 			        $("#activityList").attr('src', "${rootName}/mileageChallenge.jsp");
 					$( "#dialog2" ).dialog({
 						modal: true,
@@ -71,7 +90,7 @@
 						width: "auto",
 					    maxWidth: 600,
 					    fluid: true,
-						title: "Activities",
+						title: "Weekly Challenge - Most Miles Riden",
 						resizable: false,
 						show: {
 					    	effect: "fade",
@@ -84,25 +103,6 @@
 			            close: function () {
 			                $("#activityList").attr('src', "about:blank");
 			            }
-					});					
-			    });
-				
-				$( "#challenges" ).click(function() {
-					$( "#dialog" ).dialog({
-						modal: true,
-						height: 400,
-						width: "auto",
-					    maxWidth: 600,
-						title: "Challenges",
-						resizable: true,
-						show: {
-					    	effect: "fade",
-					        duration: 600
-					  	},
-					    hide: {
-					    	effect: "fade",
-					        duration: 600
-					   	}
 					});					
 			    });
 				
