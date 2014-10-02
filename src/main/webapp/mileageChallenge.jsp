@@ -41,9 +41,6 @@
 			
 			function loadGrid (startDate, endDate) {
 				
-				alert((startDate.getMonth() + 1) + '-' + startDate.getDate() + '-' +  startDate.getFullYear());
-				alert((endDate.getMonth() + 1) + '-' + endDate.getDate() + '-' +  endDate.getFullYear());
-				
 				startDate =  (startDate.getMonth() + 1) + '-' + startDate.getDate() + '-' + startDate.getFullYear();
 				endDate =  (endDate.getMonth() + 1) + '-' + endDate.getDate() + '-' + endDate.getFullYear();
 				
@@ -60,6 +57,7 @@
 				$("#mileageGrid").jqGrid({
 				   	//url:"${rootName}/rest/activity/"+startDate+"/"+endDate,
 					datatype: "json",
+					root: "athletes",
 					height: 230,
 				   	colNames: getColumns(),
 				   	colModel: getModel(),
