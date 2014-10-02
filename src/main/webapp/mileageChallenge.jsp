@@ -21,7 +21,8 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 		
 		<style>
-			.ui-widget { font-size: 11px; }
+			.ui-widget { font-size: 11px; };
+			body {	font-family: Verdana,Arial,sans-serif; font-size: 11px; }
 		</style>
 
 		<script type="text/javascript">
