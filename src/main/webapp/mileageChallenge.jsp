@@ -44,7 +44,7 @@
 				startDate =  $.datepicker.formatDate('MM-dd-yyyy', new Date(startDate));
 				endDate =  $.datepicker.formatDate('MM-dd-yyyy', new Date(endDate));
 				
-				$("#mileageGrid").jqGrid().setGridParam({url : "${rootName}/rest/activity/"+startDate+"/"+endDate}).trigger("reloadGrid");
+				$("#mileageGrid").jqGrid().setGridParam({url : "${rootName}/rest/activity/09-01-2014/10-01-2014"}).trigger("reloadGrid");
 			}
 
 			$(document).ready(function(){
