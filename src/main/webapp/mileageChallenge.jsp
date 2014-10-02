@@ -44,7 +44,8 @@
 				startDate =  (startDate.getMonth() + 1) + '-' + startDate.getDate() + '-' + startDate.getFullYear();
 				endDate =  (endDate.getMonth() + 1) + '-' + endDate.getDate() + '-' + endDate.getFullYear();
 				
-				$("#mileageGrid").jqGrid().setGridParam({url : "http://services-clubmod.rhcloud.com/rest/activity/"+startDate+"/"+endDate}).trigger("reloadGrid");
+				$("#mileageGrid").jqGrid().setGridParam({url : "http://services-clubmod.rhcloud.com/rest/activity/"+startDate+"/"+endDate});
+				$("#mileageGrid").jqGrid().trigger("reloadGrid");
 			}
 
 			$(document).ready(function(){
