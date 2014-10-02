@@ -41,6 +41,9 @@
 			
 			function loadGrid (startDate, endDate) {
 				
+				startDate =  $.datepicker.formatDate('MM-dd-yyyy', new Date(startDate));
+				endDate =  $.datepicker.formatDate('MM-dd-yyyy', new Date(endDate));
+				
 				$("#mileageGrid").jqGrid().setGridParam({url : "${rootName}/rest/activity/"+startDate+"/"+endDate}).trigger("reloadGrid");
 			}
 
