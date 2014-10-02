@@ -59,6 +59,7 @@ public class ActivitySvc {
 				Member member = memberDAO.getMemberByAthleteId(athlete.getId());
 				if (member != null && member.getAccessToken() != null) {
 					obj = new JsonObject();
+					obj.addProperty("id", athlete.getId());
 					obj.addProperty("name", athlete.getFirstname() + " " + athlete.getLastname());
 					strava = new JStravaV3(member.getAccessToken());
 					
