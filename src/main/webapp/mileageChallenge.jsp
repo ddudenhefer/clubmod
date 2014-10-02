@@ -105,7 +105,9 @@
 				    	$("#mileageGrid").setGridWidth(width);
 				    }
 
-				}).trigger('resize');				
+				}).trigger('resize');
+				
+				$("#mileageGrid").show();
 			}
 			
 		</script>
