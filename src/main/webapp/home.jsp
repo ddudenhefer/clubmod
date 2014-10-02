@@ -90,7 +90,7 @@
 						width: "auto",
 					    maxWidth: 600,
 					    fluid: true,
-						title: "Weekly Challenge - Most Miles Riden",
+						title: "Weekly Challenge - Most Miles",
 						resizable: false,
 						show: {
 					    	effect: "fade",
@@ -102,7 +102,10 @@
 					   	},
 			            close: function () {
 			                $("#activityList").attr('src', "about:blank");
-			            }
+			            },
+			            open: function(event, ui) {
+			                $(".ui-dialog-titlebar").append("<img src='/css/images/ModPatch.png' id='myNewImage' />");
+			              }
 					});					
 			    });
 				
