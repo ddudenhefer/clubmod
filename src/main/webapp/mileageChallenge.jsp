@@ -44,8 +44,8 @@
 				alert((startDate.getMonth() + 1) + '-' + startDate.getDate() + '-' +  startDate.getFullYear());
 				alert((endDate.getMonth() + 1) + '-' + endDate.getDate() + '-' +  endDate.getFullYear());
 				
-				startDate =  (startDate.getMonth() + 1) + '-' + startDate.getDate() + '-' +  startDate.getFullYear()
-				endDate =  (endDate.getMonth() + 1) + '-' + endDate.getDate() + '-' +  endDate.getFullYear()
+				startDate =  (startDate.getMonth() + 1) + '-' + startDate.getDate() + '-' + startDate.getFullYear();
+				endDate =  (endDate.getMonth() + 1) + '-' + endDate.getDate() + '-' + endDate.getFullYear();
 				
 				$("#mileageGrid").jqGrid().setGridParam({url : "${rootName}/rest/activity/"+startDate+"/"+endDate}).trigger("reloadGrid");
 			}
