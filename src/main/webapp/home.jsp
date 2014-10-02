@@ -102,11 +102,7 @@
 					   	},
 			            close: function () {
 			                $("#activityList").attr('src', "about:blank");
-			            },
-			            open: function(event, ui) {
-			            	$(".ui-dialog-titlebar").remove("#myNewImage");
-			                $(".ui-dialog-titlebar").append("<img src='/css/images/ModPatch.png' id='myNewImage' width='50px'/>");
-			              }
+			            }
 					});					
 			    });
 				

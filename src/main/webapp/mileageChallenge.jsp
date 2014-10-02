@@ -22,7 +22,7 @@
 		
 		<style>
 			.ui-widget { font-size: 11px; };
-			body {font-family: "Verdana,Arial,sans-serif"; font-size: 11px; }
+			td {font-family: "Verdana,Arial,sans-serif"; font-size: 11px; }
 		</style>
 
 		<script type="text/javascript">
