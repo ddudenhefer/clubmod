@@ -31,6 +31,10 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 		
+		<style>
+			.ui-dialog{font-size: 62.5%;}
+		</style>
+		
 		<script type="text/javascript">
 
 			$(document).ready(function(){	
@@ -63,7 +67,7 @@
 			        $("#activityList").attr('src', "${rootName}/mileageChallenge.jsp");
 					$( "#dialog2" ).dialog({
 						modal: true,
-						height: 400,
+						height: 500,
 						width: "auto",
 					    maxWidth: 600,
 					    fluid: true,

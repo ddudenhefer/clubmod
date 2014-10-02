@@ -48,7 +48,7 @@
 				startDate =  (startDate.getMonth() + 1) + '-' + startDate.getDate() + '-' + startDate.getFullYear();
 				endDate =  (endDate.getMonth() + 1) + '-' + endDate.getDate() + '-' + endDate.getFullYear();
 				
-				$("#mileageGrid").jqGrid().setGridParam({url : "http://services-clubmod.rhcloud.com/rest/activity/"+startDate+"/"+endDate});
+				$("#mileageGrid").jqGrid().setGridParam({url : "${rootName}/rest/activity/"+startDate+"/"+endDate});
 				$("#mileageGrid").jqGrid().trigger("reloadGrid");
 			}
 
@@ -122,9 +122,7 @@
 		</script>
 	</head>
 	<body>
-		<p>From Date: <input type="text" id="fromdate"></p>
-		<p>To Date: <input type="text" id="todate"></p>
-		<button id="go">Go</button>
+		<p>From Date: <input type="text" id="fromdate"><span style="width:10px"></span>To Date: <input type="text" id="todate"><span style="width:10px"></span><button id="go">Go</button></p>
 		<table id="mileageGrid"></table>
 		<div id="pager"></div>			
 	</body>
