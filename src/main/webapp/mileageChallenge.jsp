@@ -56,15 +56,14 @@
 			   	});
 				
 				$("#mileageGrid").jqGrid({
-				   	//url:"${rootName}/rest/activity/"+startDate+"/"+endDate,
 					datatype: "json",
-					root: "athletes",
 					height: 230,
 				   	colNames: getColumns(),
 				   	colModel: getModel(),
 					jsonReader: {
-						repeatitems: false,
+						root: "athletes",
 						id: "id",
+						repeatitems: false,
 						records: function (obj) {
 		        			return obj.length;
 		    			},
