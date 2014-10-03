@@ -125,10 +125,6 @@
 					   	}
 					});					
 			    });
-				
-				$(document).tooltip({
-					items: "*:not(.ui-dialog-titlebar-close)"
-				});			
 			});
 			
 			// run function on all dialog opens
@@ -188,10 +184,10 @@
 						<p>Inspiring you on the bike with Strava Challenges and Achievement Prizes</p>
 						<nav>
 							<ul>
-								<li><a id="members" href="#" class="icon fa-users" title="Club Members"></a></li>
-								<li><a id="activities" href="#" class="icon fa-bicycle" title="Activities"></a></li>
-								<li><a id="challenges" href="#" class="icon fa-flag" title="Challenges"></a></li>
-								<li><a id="achievements" href="#" class="icon fa-trophy" title="Achievements"></a></li>
+								<li><a id="members" href="#" class="icon fa-users"></a></li>
+								<li><a id="activities" href="#" class="icon fa-bicycle"></a></li>
+								<li><a id="challenges" href="#" class="icon fa-flag"></a></li>
+								<li><a id="achievements" href="#" class="icon fa-trophy"></a></li>
 							</ul>
 						</nav>
 					</header>
