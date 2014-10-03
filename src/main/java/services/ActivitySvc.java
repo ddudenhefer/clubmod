@@ -4,6 +4,7 @@ package services;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -64,8 +65,9 @@ public class ActivitySvc {
 					strava = new JStravaV3(member.getAccessToken());
 					
 					DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-					long startSeconds = df.parse(startDate).getTime() / 1000l;
-					long endSeconds = df.parse(endDate).getTime() / 1000l;
+					
+					long startSeconds = getStartOfDay(df.parse(startDate)).getTime() / 1000l;
+					long endSeconds = getEndOfDay(df.parse(endDate)).getTime() / 1000l;
 					float totalMeters = 0;
 					int totalRides = 0;
 				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
@@ -89,5 +91,23 @@ public class ActivitySvc {
 		
 		return obj.toString(); 
 	}
-	//
+
+	private Date getStartOfDay(Date date) {
+	    Calendar calendar = Calendar.getInstance();
+	    int year = calendar.get(Calendar.YEAR);
+	    int month = calendar.get(Calendar.MONTH);
+	    int day = calendar.get(Calendar.DATE);
+	    calendar.set(year, month, day, 0, 0, 0);
+	    return calendar.getTime();
+	}
+
+	private Date getEndOfDay(Date date) {
+	    Calendar calendar = Calendar.getInstance();
+	    int year = calendar.get(Calendar.YEAR);
+	    int month = calendar.get(Calendar.MONTH);
+	    int day = calendar.get(Calendar.DATE);
+	    calendar.set(year, month, day, 23, 59, 59);
+	    return calendar.getTime();
+	}					
+
 } 

@@ -34,6 +34,7 @@
 		<style>
 			.ui-dialog{font-size: 80%;}
 			.ui-tooltip-content {font-size: 80%;}
+			.ui-dialog .ui-dialog-titlebar {height: 60px;}			
 		</style>
 		
 		<script type="text/javascript">
