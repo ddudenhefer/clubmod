@@ -23,13 +23,10 @@
 		
 		<style>
 			.ui-widget { font-size: 11px; };
-			body, input, select, textarea {
+			body, label {
 				color: black;
 				font-family: "Arial","Helvetica","sans-serif";
 				font-size: 12pt;
-				font-weight: 300 !important;
-				letter-spacing: -0.025em;
-				line-height: 1.75em;
 			}			
 		</style>
 

@@ -106,7 +106,7 @@
 			            },
 			            open: function(event, ui) {
 			            	$(".ui-dialog-titlebar").remove("#modBikeId");
-			                $(".ui-dialog-titlebar").append("<img src='/css/images/modBike.png' id='modBikeId' width='24px' style='margin:0px 20px 0px 0px;float: right'/>");
+			                $(".ui-dialog-titlebar").append("<img src='/css/images/modBike.png' id='modBikeId' height='30px' style='margin:0px 20px 0px 0px;float: right'/>");
 			              }
 					});					
 			    });
@@ -130,7 +130,9 @@
 					});					
 			    });
 				
-				$(document).tooltip();				
+				$(document).tooltip({
+					items: "*:not(.ui-dialog-titlebar-close)"
+				});			
 			});
 			
 			// run function on all dialog opens
