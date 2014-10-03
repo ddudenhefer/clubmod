@@ -94,6 +94,7 @@ public class ActivitySvc {
 
 	private Date getStartOfDay(Date date) {
 	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(date);
 	    int year = calendar.get(Calendar.YEAR);
 	    int month = calendar.get(Calendar.MONTH);
 	    int day = calendar.get(Calendar.DATE);
@@ -103,6 +104,7 @@ public class ActivitySvc {
 
 	private Date getEndOfDay(Date date) {
 	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(date);
 	    int year = calendar.get(Calendar.YEAR);
 	    int month = calendar.get(Calendar.MONTH);
 	    int day = calendar.get(Calendar.DATE);
