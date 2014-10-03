@@ -33,6 +33,7 @@
 		
 		<style>
 			.ui-dialog{font-size: 80%;}
+			.ui-tooltip-content {font-size: 80%;}
 		</style>
 		
 		<script type="text/javascript">
@@ -104,8 +105,8 @@
 			                $("#activityList").attr('src', "about:blank");
 			            },
 			            open: function(event, ui) {
-			            	$(".ui-dialog-titlebar").remove("#modBike");
-			                $(".ui-dialog-titlebar").append("<img src='/css/images/modBike.png' id='modBike' style='margin:0px 20px 0px 0px'/>");
+			            	$(".ui-dialog-titlebar").remove("#modBikeId");
+			                $(".ui-dialog-titlebar").append("<img src='/css/images/modBike.png' id='modBikeId' width='24px' style='margin:0px 20px 0px 0px;float: right'/>");
 			              }
 					});					
 			    });
