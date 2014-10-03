@@ -23,11 +23,7 @@
 		
 		<style>
 			.ui-widget { font-size: 11px; };
-			body, label {
-				color: black;
-				font-family: "Arial","Helvetica","sans-serif";
-				font-size: 12pt;
-			}			
+			body {color:black}
 		</style>
 
 		<script type="text/javascript">
