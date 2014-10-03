@@ -22,7 +22,9 @@
 		
 		<style>
 			.ui-widget { font-size: 11px; };
-			body, tr, td { font-family: "Arial","Helvetica","sans-serif"; font-size: 11px;}
+			table, th, td {
+    			font-family: "Arial","Helvetica","sans-serif"; font-size: 11px;
+			}
 		</style>
 
 		<script type="text/javascript">
