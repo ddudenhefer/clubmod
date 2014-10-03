@@ -16,21 +16,13 @@
 		<script src="js/grid.locale-en.js"></script>
 		<script src="js/jquery.jqGrid.src.js"></script>		
 
-		<link rel="stylesheet" href="css/style.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.theme.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 		
 		<style>
 			.ui-widget { font-size: 11px; };
-			body, input, select, textarea, td {
-				color: black;
-				font-family: "Arial","Helvetica","sans-serif";
-				font-size: 11px;
-				font-weight: 300 !important;
-				letter-spacing: -0.025em;
-				line-height: 1.75em;
-			}
+			body, tr, td { font-family: "Arial","Helvetica","sans-serif"; font-size: 11px;}
 		</style>
 
 		<script type="text/javascript">
