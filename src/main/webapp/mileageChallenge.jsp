@@ -23,7 +23,14 @@
 		
 		<style>
 			.ui-widget { font-size: 11px; };
-			body {color:black}
+			body, input, select, textarea, td {
+				color: black;
+				font-family: "Arial","Helvetica","sans-serif";
+				font-size: 11px;
+				font-weight: 300 !important;
+				letter-spacing: -0.025em;
+				line-height: 1.75em;
+			}
 		</style>
 
 		<script type="text/javascript">
@@ -128,10 +135,10 @@
 		<table>
 			<tr>
 				<td>
-					<label id="fromLabel">From Date: </label><input type="text" id="fromdate">
+					From Date:&nbsp;&nbsp;<input type="text" id="fromdate">
 				</td>
 				<td>
-					<label id="toLabel">To Date: </label><input type="text" id="todate">
+					To Date:&nbsp;&nbsp;<input type="text" id="todate">
 				</td>
 				<td>
 					<button id="go">Go</button>
