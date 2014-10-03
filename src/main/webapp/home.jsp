@@ -34,7 +34,7 @@
 		<style>
 			.ui-dialog{font-size: 80%;}
 			.ui-tooltip-content {font-size: 80%;}
-			.ui-dialog .ui-dialog-titlebar {height: 60px;}			
+			.ui-dialog .ui-dialog-titlebar {height: 40px;}			
 		</style>
 		
 		<script type="text/javascript">
@@ -107,7 +107,7 @@
 			            },
 			            open: function(event, ui) {
 			            	$(".ui-dialog-titlebar").remove("#modBikeId");
-			                $(".ui-dialog-titlebar").append("<img src='/css/images/modBike.png' id='modBikeId' height='24px' style='margin:0px 20px 30px 0px;float: right;'/>");
+			                $(".ui-dialog-titlebar").append("<img src='/css/images/modBike.png' id='modBikeId' height='24px' style='margin:0px 20px 10px 0px;float: right;'/>");
 			              }
 					});					
 			    });
