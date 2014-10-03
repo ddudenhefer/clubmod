@@ -102,7 +102,11 @@
 					   	},
 			            close: function () {
 			                $("#activityList").attr('src', "about:blank");
-			            }
+			            },
+			            open: function(event, ui) {
+			            	$(".ui-dialog-titlebar").remove("#modBike");
+			                $(".ui-dialog-titlebar").append("<img src='/css/images/modBike.png' id='modBike' style='margin:0px 20px 0px 0px'/>");
+			              }
 					});					
 			    });
 				
@@ -124,6 +128,8 @@
 					   	}
 					});					
 			    });
+				
+				$(document).tooltip();				
 			});
 			
 			// run function on all dialog opens
@@ -183,10 +189,10 @@
 						<p>Inspiring you on the bike with Strava Challenges and Achievement Prizes</p>
 						<nav>
 							<ul>
-								<li><a id="members" href="#" class="icon fa-users"><span class="label">Members</span></a></li>
-								<li><a id="activities" href="#" class="icon fa-bicycle"></a></li>
-								<li><a id="challenges" href="#" class="icon fa-flag"></a></li>
-								<li><a id="achievements" href="#" class="icon fa-trophy"></a></li>
+								<li><a id="members" href="#" class="icon fa-users" title="Club Members"></a></li>
+								<li><a id="activities" href="#" class="icon fa-bicycle" title="Activities"></a></li>
+								<li><a id="challenges" href="#" class="icon fa-flag" title="Challenges"></a></li>
+								<li><a id="achievements" href="#" class="icon fa-trophy" title="Achievements"></a></li>
 							</ul>
 						</nav>
 					</header>
