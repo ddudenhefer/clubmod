@@ -126,10 +126,10 @@
 		<table>
 			<tr>
 				<td>
-					<label style="font-family:helvetica,arial,sans-serif;font-size:11px;">From Date:</label>&nbsp;&nbsp;<input type="text" id="fromdate">
+					<label style="font-family:helvetica,arial,sans-serif;font-size:11px;">From Date:</label>&nbsp;&nbsp;<input type="text" id="fromdate" style="width:80px">
 				</td>
 				<td>
-					<label style="font-family:helvetica,arial,sans-serif;font-size:11px;">To Date:</label>&nbsp;&nbsp;<input type="text" id="todate">
+					<label style="font-family:helvetica,arial,sans-serif;font-size:11px;">To Date:</label>&nbsp;&nbsp;<input type="text" id="todate" style="width:80px">
 				</td>
 				<td>
 					<button id="go">Go</button>
