@@ -40,6 +40,7 @@
 				   		{name:"rides",index:"rides"},
 				   		{name:"miles",index:"miles"}
 				   	];	
+				
 				return jsonModel;
 			}
 			
