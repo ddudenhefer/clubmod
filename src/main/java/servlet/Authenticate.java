@@ -3,6 +3,7 @@ package servlet;
 import java.io.*;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import model.Member;
@@ -11,6 +12,7 @@ import utils.Constants;
 import connector.JStravaV3;
 import entities.athlete.Profile;
 
+@WebServlet("/authenticate")
 public class Authenticate extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
