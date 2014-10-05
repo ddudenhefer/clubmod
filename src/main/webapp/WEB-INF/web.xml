@@ -16,10 +16,20 @@
 		</init-param>
 	    <load-on-startup>1</load-on-startup>
 	</servlet>
+	<servlet>
+		<servlet-name>Authenticate</servlet-name>
+		<servlet-class>servlet.Authenticate</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>JAX-RS Servlet</servlet-name>
 	    <url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Authenticate</servlet-name>
+		<url-pattern>/authenticate</url-pattern>
+	</servlet-mapping>
+
+
          
 </web-app>
 
