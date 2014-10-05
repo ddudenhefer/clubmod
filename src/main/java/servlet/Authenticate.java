@@ -14,7 +14,7 @@ import entities.athlete.Profile;
 
 @WebServlet("/authenticate")
 public class Authenticate extends HttpServlet {
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		
 		String code = request.getParameter("code");
