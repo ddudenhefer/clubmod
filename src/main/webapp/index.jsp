@@ -6,7 +6,7 @@
 		Profile profile = null;
 
 		if (code != null) {
-			String URL="https://www.strava.com/oauth/token?client_id=" + Constants.CLIENT_ID + "&client_secret=" + Constants.CLIENT_SECRET + "4fb119f5ab894d0bf0c998c8d32577740ca6e316&code="+code;
+			String URL="https://www.strava.com/oauth/token?client_id=" + Constants.CLIENT_ID + "&client_secret=" + Constants.CLIENT_SECRET + "&code="+code;
 			JStravaV3 strava= new JStravaV3();
 			profile = strava.authenticateAccess(code);
 	        
@@ -26,11 +26,14 @@
 <HTML>
 <HEAD>
 	<TITLE>ClubMod Authentication</TITLE>
+		<STYLE>
+			    	.circular {width: 124px; height: 124px; border-radius: 62px; -webkit-border-radius: 62px; -moz-border-radius: 62px;}
+		</STYLE>
 </HEAD>
 <BODY>
 
 <H1><%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%>, thanks for authenticating!</H1>
-<div class='avatar avatar-athlete avatar-xl'>
+<div class='circular'>
 	<img alt="<%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%>" src="<%=profile.getAthlete().getProfile()%>" title="<%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%>" />
 </div>
 
