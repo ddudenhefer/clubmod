@@ -26,7 +26,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Authenticate</servlet-name>
-		<url-pattern>/authenticate</url-pattern>
+		<url-pattern>/authenticate/*</url-pattern>
 	</servlet-mapping>
 
 
