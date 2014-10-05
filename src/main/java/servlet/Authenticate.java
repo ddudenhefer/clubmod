@@ -12,7 +12,7 @@ import connector.JStravaV3;
 import entities.athlete.Profile;
 
 public class Authenticate extends HttpServlet {
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		
 		String code = request.getParameter("code");
@@ -37,10 +37,13 @@ public class Authenticate extends HttpServlet {
 	        	out.println("<HTML>");
 	        	out.println("	<HEAD>");
 	        	out.println("		<TITLE>Club Mod Authentication</TITLE>");
+	        	out.println("		<STYLE>");
+	        	out.println("			.circular {width: 300px; height: 300px; border-radius: 150px; -webkit-border-radius: 150px; -moz-border-radius: 150px;}");
+	        	out.println("		</STYLE>");
 	        	out.println("	</HEAD>");
 	        	out.println("	<BODY>");
 	        	out.println("		<H1>" + profile.getAthlete().getFirstname() + " " + profile.getAthlete().getLastname() + ", thanks for authenticating!</H1>");
-	        	out.println("		<div class='avatar avatar-athlete avatar-xl'>");
+	        	out.println("		<div class='circular'>");
 	        	out.println("			<img alt='" + profile.getAthlete().getFirstname()+ " " + profile.getAthlete().getLastname() + " src='" + profile.getAthlete().getProfile() + " title='" + profile.getAthlete().getFirstname() + " " + profile.getAthlete().getLastname() + "' />");
 	        	out.println("		</div>");
 	        	out.println("  	</BODY>");
