@@ -27,7 +27,15 @@
 <HEAD>
 	<TITLE>ClubMod Authentication</TITLE>
 		<STYLE>
-			    	.circular {width: 124px; height: 124px; border-radius: 62px; -webkit-border-radius: 62px; -moz-border-radius: 62px;}
+	    	.circular img {
+	    		width: 124px;
+	    		height: 124px; 
+	    		border-radius: 62px; 
+	    		-webkit-border-radius: 62px; 
+	    		-moz-border-radius: 62px; 
+	    		-ms-border-radius: 62px;
+             			-o-border-radius: 62px;
+	    	}
 		</STYLE>
 </HEAD>
 <BODY>
