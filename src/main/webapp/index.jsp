@@ -34,7 +34,7 @@
 	    		-webkit-border-radius: 62px; 
 	    		-moz-border-radius: 62px; 
 	    		-ms-border-radius: 62px;
-             			-o-border-radius: 62px;
+             	-o-border-radius: 62px;
 	    	}
 		</STYLE>
 </HEAD>
