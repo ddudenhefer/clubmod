@@ -79,7 +79,6 @@ public class ActivitySvc {
 				    		totalRides ++;
 				    	}
 				    }
-				    
 				    challenge.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
 				    challenge.setRides(totalRides);
 				    challengeResults.add(challenge);
