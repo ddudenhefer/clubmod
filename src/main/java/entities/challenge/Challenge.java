@@ -105,35 +105,35 @@ public class Challenge implements Comparable<Challenge> {
         public static Comparator<Challenge> MILES = new Comparator<Challenge>() {
             @Override
             public int compare(Challenge o1, Challenge o2) {
-            	return Float.compare(o1.getMiles(), o2.getMiles());
+            	return Float.compare(o2.getMiles(), o1.getMiles());
             }
         };
 
         public static Comparator<Challenge> RIDES = new Comparator<Challenge>() {
             @Override
             public int compare(Challenge o1, Challenge o2) {
-            	return Integer.compare(o1.getRides(), o2.getRides());
+            	return Integer.compare(o2.getRides(), o1.getRides());
             }
         };
 
         public static Comparator<Challenge> SPEED = new Comparator<Challenge>() {
             @Override
             public int compare(Challenge o1, Challenge o2) {
-            	return Float.compare(o1.getSpeed(), o2.getSpeed());
+            	return Float.compare(o2.getSpeed(), o1.getSpeed());
             }
         };
 
         public static Comparator<Challenge> TIME = new Comparator<Challenge>() {
             @Override
             public int compare(Challenge o1, Challenge o2) {
-            	return Long.compare(o1.getTime(), o2.getTime());
+            	return Long.compare(o2.getTime(), o1.getTime());
             }
         };
 
         public static Comparator<Challenge> ELEVATION = new Comparator<Challenge>() {
             @Override
             public int compare(Challenge o1, Challenge o2) {
-            	return Long.compare(o1.getElevation(), o2.getElevation());
+            	return Long.compare(o2.getElevation(), o1.getElevation());
             }
         };
 
