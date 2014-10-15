@@ -89,7 +89,6 @@ public class Challenge implements Comparable<Challenge> {
         this.elevation = elevation;
     }
 
-
     public static class Comparators {
 
         public static Comparator<Challenge> NAME = new Comparator<Challenge>() {
