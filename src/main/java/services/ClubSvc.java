@@ -11,9 +11,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import model.Member;
+
 import com.google.gson.Gson;
 
 import connector.JStravaV3;
+import dao.MemberDAO;
 import entities.athlete.Athlete;
 import utils.Constants;
 
@@ -36,6 +39,23 @@ public class ClubSvc {
 		JStravaV3 strava= new JStravaV3(Constants.PUBLIC_ACCESS_TOKEN);
 		List<Athlete> athletes = strava.findClubMembers(Constants.CLUB_ID,1,200);
 		Collections.sort(athletes, Athlete.Comparators.NAME);
+		
+		for (Athlete athlete : athletes) {
+			MemberDAO memberDAO = new MemberDAO();
+			try {
+				Member member = memberDAO.getMemberByAthleteId(athlete.getId());
+				if (member != null && member.getAccessToken() != null) {
+				    strava = new JStravaV3(member.getAccessToken());
+				    
+				    // test authentication: if null, continue
+				    Athlete verifyAthlete = strava.getCurrentAthlete();
+				    athlete.setAuthenticated (verifyAthlete != null);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		Gson gson = new Gson();
 		String ret = "";

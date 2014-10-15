@@ -59,15 +59,19 @@ public class ActivitySvc {
 			try {
 				Member member = memberDAO.getMemberByAthleteId(athlete.getId());
 				if (member != null && member.getAccessToken() != null) {
-					Challenge challenge = new Challenge();
+				    strava = new JStravaV3(member.getAccessToken());
+				    
+				    // test authentication: if null, continue
+				    Athlete verifyAthlete = strava.getCurrentAthlete();
+				    if (verifyAthlete == null)
+				    	continue;
+
+				    Challenge challenge = new Challenge();
 				    challenge.setAthleteId(athlete.getId());
 				    challenge.setFisrtName(athlete.getFirstname());
 				    challenge.setLastName(athlete.getLastname());
-
-				    strava = new JStravaV3(member.getAccessToken());
 					
 					DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-					
 					long startSeconds = getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 					long endSeconds = getEndOfDay(df.parse(endDate)).getTime() / 1000l;
 					float totalMeters = 0;

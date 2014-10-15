@@ -34,6 +34,7 @@ public class Athlete implements Comparable<Athlete> {
     private List<Club> clubs;
     private List<Gear> bikes;
     private List<Gear> shoes;
+    private boolean authenticated;
 
     
     @Override
@@ -253,6 +254,14 @@ public class Athlete implements Comparable<Athlete> {
 
     public void setShoes(List<Gear> shoes) {
         this.shoes = shoes;
+    }
+    
+    public boolean getAuthenticated() {
+        return authenticated;
+    }
+
+    public void setAuthenticated(boolean authenticated) {
+        this.authenticated = authenticated;
     }
 
 
