@@ -91,13 +91,11 @@ public class ActivitySvc {
 	    Collections.sort(challengeResults, Challenge.Comparators.MILES);
 	    
 	    Gson gson = new Gson();
-	    String json = gson.toJson(challengeResults);
-	    JsonParser parser = new JsonParser();
-	    JsonArray array = parser.parse(json).getAsJsonArray();
-	    JsonObject obj = new JsonObject();
-		obj.add("athletes", array);
-		
-		return obj.toString(); 
+		String ret = "";
+		if (challengeResults != null) {
+			ret = gson.toJson(challengeResults);
+		}		
+		return ret;	    
 	}
 
 	private Date getStartOfDay(Date date) {
