@@ -25,11 +25,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import connector.JStravaV3;
 import dao.MemberDAO;
 import entities.activity.Activity;
 import entities.athlete.Athlete;
+import entities.challenge.Challenge;
 
 // The class registers its methods for the HTTP GET request using the @GET annotation. 
 // Using the @Produces annotation, it defines that it can deliver several MIME types,
@@ -50,19 +52,19 @@ public class ActivitySvc {
 		JStravaV3 strava= new JStravaV3(Constants.PUBLIC_ACCESS_TOKEN);
 		List<Athlete> athletes = strava.findClubMembers(Constants.CLUB_ID,1,200);
 		Collections.sort(athletes, Athlete.Comparators.NAME);	
-
-		JsonObject obj = new JsonObject();
-		JsonArray objArray = new JsonArray();
+		List<Challenge> challengeResults = new ArrayList<Challenge>();
 
 		for (Athlete athlete : athletes) {
 			MemberDAO memberDAO = new MemberDAO();
 			try {
 				Member member = memberDAO.getMemberByAthleteId(athlete.getId());
 				if (member != null && member.getAccessToken() != null) {
-					obj = new JsonObject();
-					obj.addProperty("id", athlete.getId());
-					obj.addProperty("name", athlete.getFirstname() + " " + athlete.getLastname());
-					strava = new JStravaV3(member.getAccessToken());
+					Challenge challenge = new Challenge();
+				    challenge.setAthleteId(athlete.getId());
+				    challenge.setFisrtName(athlete.getFirstname());
+				    challenge.setLastName(athlete.getLastname());
+
+				    strava = new JStravaV3(member.getAccessToken());
 					
 					DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 					
@@ -77,17 +79,24 @@ public class ActivitySvc {
 				    		totalRides ++;
 				    	}
 				    }
-					obj.addProperty("rides", totalRides);
-					obj.addProperty("miles", (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
-					objArray.add(obj);
+				    
+				    challenge.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
+				    challenge.setRides(totalRides);
+				    challengeResults.add(challenge);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		obj = new JsonObject();
-		obj.add("athletes", objArray);
+	    Collections.sort(challengeResults, Challenge.Comparators.MILES);
+	    
+	    Gson gson = new Gson();
+	    String json = gson.toJson(challengeResults);
+	    JsonParser parser = new JsonParser();
+	    JsonArray array = parser.parse(json).getAsJsonArray();
+	    JsonObject obj = new JsonObject();
+		obj.add("athletes", array);
 		
 		return obj.toString(); 
 	}
