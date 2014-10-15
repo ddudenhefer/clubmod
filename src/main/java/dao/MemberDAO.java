@@ -10,22 +10,29 @@ import model.Member;
 public class MemberDAO {
 	
 	Connection connection = Database.getConnection();
+	PreparedStatement preparedStatement = null;
 	
 	public Member getMemberByAthleteId(int athleteId)throws Exception {
 		Member member = null;
 		try {
-				PreparedStatement ps = connection.prepareStatement("SELECT id, athleteId, accessToken FROM members where athleteId=?");
-				ps.setLong(1,athleteId);
-				ResultSet rs = ps.executeQuery();
-				if (rs.next()) {
-					member = new Member();
-					member.setId(rs.getInt("id"));
-					member.setAthleteId(rs.getInt("athleteId"));
-					member.setAccessToken(rs.getString("accessToken"));
-				}
+			preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken FROM members where athleteId=?");
+			preparedStatement.setLong(1,athleteId);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				member = new Member();
+				member.setId(rs.getInt("id"));
+				member.setAthleteId(rs.getInt("athleteId"));
+				member.setAccessToken(rs.getString("accessToken"));
+			}
 		
 		} catch (Exception e) {
 			throw e;
+		}
+		finally {
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (connection != null)
+			connection.close();
 		}
 		return member;
 	}
@@ -34,26 +41,36 @@ public class MemberDAO {
 	
 		if (member == null)
 			return false;
-		
-		Member memberDB = getMemberByAthleteId(member.getAthleteId());
-		if (memberDB != null) {	// update
-			String sql = "update members set accessToken=? where athleteId=?";
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setLong(1, member.getAthleteId());
-			preparedStatement.setString(2, member.getAccessToken());
 
-			int rowsAffected = preparedStatement.executeUpdate();
-			if (rowsAffected > 0)
-				return true;
+		try {
+			Member memberDB = getMemberByAthleteId(member.getAthleteId());
+			if (memberDB != null) {	// update
+				String sql = "update members set accessToken=? where athleteId=?";
+				preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setLong(1, member.getAthleteId());
+				preparedStatement.setString(2, member.getAccessToken());
+	
+				int rowsAffected = preparedStatement.executeUpdate();
+				if (rowsAffected > 0)
+					return true;
+			}
+			else {	// insert
+				String sql = "insert into members (athleteId, accessToken) values (?,?)";
+				PreparedStatement preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setLong(1, member.getAthleteId());
+				preparedStatement.setString(2, member.getAccessToken());
+				int rowsAffected = preparedStatement.executeUpdate();
+				if (rowsAffected > 0)
+					return true;
+			}
+		} catch (Exception e) {
+			throw e;
 		}
-		else {	// insert
-			String sql = "insert into members (athleteId, accessToken) values (?,?)";
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setLong(1, member.getAthleteId());
-			preparedStatement.setString(2, member.getAccessToken());
-			int rowsAffected = preparedStatement.executeUpdate();
-			if (rowsAffected > 0)
-				return true;
+		finally {
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (connection != null)
+			connection.close();
 		}
 		return false;
 	}
@@ -63,16 +80,27 @@ public class MemberDAO {
 		if (member == null || member.getId() == 0)
 			return false;
 		
-		Member memberDB = getMemberByAthleteId(member.getAthleteId());
-		if (memberDB != null) {
-			String sql = "delete from members where athleteId=?";
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setLong(1, member.getAthleteId());
-
-			int rowsAffected = preparedStatement.executeUpdate();
-			if (rowsAffected > 0)
-				return true;
+		try {
+			Member memberDB = getMemberByAthleteId(member.getAthleteId());
+			if (memberDB != null) {
+				String sql = "delete from members where athleteId=?";
+				preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setLong(1, member.getAthleteId());
+	
+				int rowsAffected = preparedStatement.executeUpdate();
+				if (rowsAffected > 0)
+					return true;
+			}
+		} catch (Exception e) {
+			throw e;
 		}
+		finally {
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (connection != null)
+			connection.close();
+		}
+		
 		return false;
 	}
 }
