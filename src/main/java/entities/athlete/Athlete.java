@@ -263,6 +263,7 @@ public class Athlete implements Comparable<Athlete> {
     public void setAuthenticated(boolean authenticated) {
         this.authenticated = authenticated;
     }
+    
 
 
     public static class Comparators {
