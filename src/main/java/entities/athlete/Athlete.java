@@ -270,7 +270,7 @@ public class Athlete implements Comparable<Athlete> {
         public static Comparator<Athlete> NAME = new Comparator<Athlete>() {
             @Override
             public int compare(Athlete o1, Athlete o2) {
-                return o1.getLastname().compareTo(o2.getLastname());
+                return o1.getLastname().toLowerCase().compareTo(o2.getLastname().toLowerCase());
             }
         };
     }
