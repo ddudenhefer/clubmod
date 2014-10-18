@@ -26,7 +26,7 @@
 %>
 <HTML>
 <HEAD>
-	<TITLE>ClubMod Authorization</TITLE>
+	<TITLE>Club Mod Authorization</TITLE>
 		<STYLE>
 	    	.circular img {
 	    		width: 124px;
@@ -38,18 +38,21 @@
              	-o-border-radius: 62px;
 	    	}
 	    	
-	    	h1 {color:#f26921; font-family:Sanchez}
-	    	h2 {color:#999; font-family:futura-pt}
+	    	h1 {color:#f26921; font-family:Helvetica}
+	    	h2 h3 {color:#999; font-family:Helvetica}
 		</STYLE>
 </HEAD>
 <BODY>
 
 <div style="text-align:center">
-<img alt="Club Mod" src="/css/images/Mod-Cyclists-Banner-2.jpg" title="Club Mod"/>
-<H1><%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%>, thanks for authorizing Club Mod access!</H1>
+<img alt="Club Mod" src="/css/images/Mod-Cyclists-Banner-2.jpg" title="Club Mod" width="100%" />
+<H1>Hello <%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%> and welcome to CLUB MOD!</H1>
+<H2>Thank you for authorizing Club Mod access to Strava.  This allows us to create weekly rankings as well as an overall leaderboard.</H2>
+
 <div class='circular'>
 	<img alt="<%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%>" src="<%=profile.getAthlete().getProfile()%>" title="<%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%>" />
 </div>
+<H2>Thank you for authorizing Club Mod access to Strava.  This allows us to create weekly rankings as well as an overall leaderboard.</H2>
 </div>
 
 </BODY>
@@ -60,7 +63,7 @@
 %>
 <HTML>
 <HEAD>
-	<TITLE>ClubMod Authorization</TITLE>
+	<TITLE>Club Mod Authorization</TITLE>
 		<STYLE>
 	    	.circular img {
 	    		width: 124px;
@@ -71,14 +74,14 @@
 	    		-ms-border-radius: 62px;
              	-o-border-radius: 62px;
 	    	}
-	    	h1 {color:#f26921; font-family:Sanchez}
-	    	h2 {color:#999; font-family:futura-pt}
+	    	h1 {color:#f26921; font-family:Helvetica}
+	    	h2 h3 {color:#999; font-family:Helvetica}
 		</STYLE>
 </HEAD>
 <BODY>
 
 <div style="text-align:center">
-<img alt="Club Mod" src="/css/images/Mod-Cyclists-Banner-2.jpg" title="Club Mod"/>
+<img alt="Club Mod" src="/css/images/Mod-Cyclists-Banner-2.jpg" title="Club Mod" width="100%" />
 <H1>Authorization Failed!</H1>
 <H2>Please contact <a href="mailto:sean@modboulder.com?Subject=Authorization%20Failure" target="_top">Club Mod Support</a></H2>
 </div>
@@ -91,7 +94,7 @@
 %>
 <HTML>
 <HEAD>
-	<TITLE>ClubMod Authorization</TITLE>
+	<TITLE>Club Mod Authorization</TITLE>
 	<STYLE>
 	    	.circular img {
 	    		width: 124px;
@@ -102,8 +105,8 @@
 	    		-ms-border-radius: 62px;
              	-o-border-radius: 62px;
 	    	}
-	    	h1 {color:#f26921; font-family:Sanchez}
-	    	h2 {color:#999; font-family:futura-pt}
+	    	h1 {color:#f26921; font-family:Helvetica}
+	    	h2 h3 {color:#999; font-family:Helvetica}
 	</STYLE>
 </HEAD>
 <BODY>
