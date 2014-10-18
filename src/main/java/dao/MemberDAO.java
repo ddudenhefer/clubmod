@@ -52,6 +52,7 @@ public class MemberDAO {
 			connection = Database.getConnection();
 			if (connection != null) {
 				Member memberDB = getMemberByAthleteId(member.getAthleteId());
+				System.out.println("memberDB: " + memberDB);
 				if (memberDB != null) {	// update
 					String sql = "update members set accessToken=? where athleteId=?";
 					preparedStatement = connection.prepareStatement(sql);
