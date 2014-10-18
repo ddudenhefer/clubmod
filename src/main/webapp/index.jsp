@@ -40,21 +40,21 @@
 	    	
 	    	h1 {color:#f26921; font-family:Helvetica}
 	    	h2 {color:#999; font-size:16px; font-family:Helvetica}
-	    	h3 {color:#777; font-size:12px; font-family:Helvetica}
+	    	h3 {color:#777; font-size:10px; font-family:Helvetica}
 		</STYLE>
 </HEAD>
 <BODY>
 
 <div style="text-align:center">
 <img alt="Club Mod" src="/css/images/Mod-Cyclists-Banner-2.jpg" title="Club Mod" width="100%" />
-<H1>Hello <%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%> and welcome to CLUB MOD!</H1>
-<H2>Thank you for authorizing Club Mod access to Strava.  This allows us to create weekly rankings as well as an overall leaderboard.</H2>
+<H1>Hello <%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%> and Welcome to <span style="color:#02a0bb">CLUB MOD</span>!</H1>
+<H2>Thank you for authorizing Club Mod access to Strava.<br>This allows us to create weekly rankings as well as an overall leaderboard.</H2>
 
 <div class='circular'>
 	<img alt="<%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%>" src="<%=profile.getAthlete().getProfile()%>" title="<%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%>" />
 </div>
 <br><br><br><br>
-<img alt="ModBoulder" src="/css/images/logo.jpg" title="ModBoulder" width="40%" />
+<a href="http://www.modboulder.com/" target="_blank"><img alt="ModBoulder" src="/css/images/logo.jpg" title="ModBoulder" width="20%" /></a>
 <H3>© 2009-2014 Mod Boulder<br>
 3030 Washington, Boulder, CO  80304 | 720.252.6051 | <a href="mailto:info@modboulder.com?Subject=" target="_top">info@modboulder.com</a>
 </H3>
@@ -81,7 +81,7 @@
 	    	}
 	    	h1 {color:#f26921; font-family:Helvetica}
 	    	h2 {color:#999; font-size:16px; font-family:Helvetica}
-	    	h3 {color:#777; font-size:12px; font-family:Helvetica}
+	    	h3 {color:#777; font-size:10px; font-family:Helvetica}
 		</STYLE>
 </HEAD>
 <BODY>
@@ -91,7 +91,7 @@
 <H1>Authorization Failed!</H1>
 <H2>Please contact <a href="mailto:sean@modboulder.com?Subject=Authorization%20Failure" target="_top">Club Mod Support</a></H2>
 <br><br><br><br>
-<img alt="ModBoulder" src="/css/images/logo.jpg" title="ModBoulder" width="40%" />
+<a href="http://www.modboulder.com/" target="_blank"><img alt="ModBoulder" src="/css/images/logo.jpg" title="ModBoulder" width="20%" /></a>
 <H3>© 2009-2014 Mod Boulder<br>
 3030 Washington, Boulder, CO  80304 | 720.252.6051 | <a href="mailto:info@modboulder.com?Subject=" target="_top">info@modboulder.com</a>
 </H3>
@@ -118,7 +118,7 @@
 	    	}
 	    	h1 {color:#f26921; font-family:Helvetica}
 	    	h2 {color:#999; font-size:16px; font-family:Helvetica}
-	    	h3 {color:#777; font-size:12px; font-family:Helvetica}
+	    	h3 {color:#777; font-size:10px; font-family:Helvetica}
 	</STYLE>
 </HEAD>
 <BODY>
@@ -129,7 +129,7 @@
 <H2>Sorry to hear you do not want to join Club Mod Weekly Challenges at this time.<br>If you should change your mind, please visit:<br><br>
 <a href="http://www.modboulder.com/clubmodsignup/" target="_blank">Join Today</a></H2>
 <br><br><br><br>
-<img alt="ModBoulder" src="/css/images/logo.jpg" title="ModBoulder" width="60%" />
+<a href="http://www.modboulder.com/" target="_blank"><img alt="ModBoulder" src="/css/images/logo.jpg" title="ModBoulder" width="20%" /></a>
 <H3>© 2009-2014 Mod Boulder<br>
 3030 Washington, Boulder, CO  80304 | 720.252.6051 | <a href="mailto:info@modboulder.com?Subject=" target="_top">info@modboulder.com</a>
 </H3>
