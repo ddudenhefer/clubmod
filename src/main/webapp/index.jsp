@@ -37,13 +37,19 @@
 	    		-ms-border-radius: 62px;
              	-o-border-radius: 62px;
 	    	}
+	    	
+	    	h1 {color:#f26921; font-family:Sanchez}
+	    	h2 {color:#999; font-family:futura-pt}
 		</STYLE>
 </HEAD>
 <BODY>
 
+<div style="text-align:center">
+<img alt="Club Mod" src="/css/images/Mod-Cyclists-Banner-2.jpg" title="Club Mod"/>
 <H1><%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%>, thanks for authorizing Club Mod access!</H1>
 <div class='circular'>
 	<img alt="<%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%>" src="<%=profile.getAthlete().getProfile()%>" title="<%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%>" />
+</div>
 </div>
 
 </BODY>
@@ -65,12 +71,17 @@
 	    		-ms-border-radius: 62px;
              	-o-border-radius: 62px;
 	    	}
+	    	h1 {color:#f26921; font-family:Sanchez}
+	    	h2 {color:#999; font-family:futura-pt}
 		</STYLE>
 </HEAD>
 <BODY>
 
+<div style="text-align:center">
+<img alt="Club Mod" src="/css/images/Mod-Cyclists-Banner-2.jpg" title="Club Mod"/>
 <H1>Authorization Failed!</H1>
 <H2>Please contact <a href="mailto:sean@modboulder.com?Subject=Authorization%20Failure" target="_top">Club Mod Support</a></H2>
+</div>
 
 </BODY>
 </HTML>
@@ -81,6 +92,19 @@
 <HTML>
 <HEAD>
 	<TITLE>ClubMod Authorization</TITLE>
+	<STYLE>
+	    	.circular img {
+	    		width: 124px;
+	    		height: 124px; 
+	    		border-radius: 62px; 
+	    		-webkit-border-radius: 62px; 
+	    		-moz-border-radius: 62px; 
+	    		-ms-border-radius: 62px;
+             	-o-border-radius: 62px;
+	    	}
+	    	h1 {color:#f26921; font-family:Sanchez}
+	    	h2 {color:#999; font-family:futura-pt}
+	</STYLE>
 </HEAD>
 <BODY>
 
