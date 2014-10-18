@@ -28,6 +28,7 @@ public class MemberSvc {
 	// This method is called if TEXT_PLAIN is request
 	@GET
 	@Path("{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getMemberByAthleteId(@PathParam("id") int id) { 
 		Member member = null;
@@ -46,54 +47,44 @@ public class MemberSvc {
 			ret = gson.toJson(member);
 		}
 		else {
-			Properties prop = new Properties();
-			prop.put("Success", "false");
-			ret = gson.toJson(prop);
+			ret = gson.toJson("");
 		}
 		return ret;
 	}
   
 
 	@POST
-	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/create")
-	public String saveMember(final Member member) {
+	public boolean saveMember(final Member member) {
 		MemberDAO memberDAO = new MemberDAO();
-		Gson gson = new Gson();
-		String ret = "";
-		Properties prop = new Properties();
+		boolean ret = false;
+		
 		try {
-			memberDAO.saveMember(member);
-			prop.put("Success", "true");
+			ret = memberDAO.saveMember(member);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			prop.put("Success", "false");
+			ret = false;
 		}
-		ret = gson.toJson(prop);
 	    return ret; 
 	}
 	
 	
 	@POST
-	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/delete")
-	public String deleteMember(final Member member) {
+	public boolean deleteMember(final Member member) {
 		MemberDAO memberDAO = new MemberDAO();
-		Gson gson = new Gson();
-		String ret = "";
-		Properties prop = new Properties();
+		boolean ret = false;
+
 		try {
-			memberDAO.deleteMember(member);
-			prop.put("Success", "true");
+			ret = memberDAO.deleteMember(member);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			prop.put("Success", "false");
+			ret = false;
 		}
-		ret = gson.toJson(prop);
 	    return ret; 
 	}	
 } 
