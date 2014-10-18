@@ -9,11 +9,11 @@ import model.Member;
 
 public class MemberDAO {
 	
-	Connection connection = null;
-	PreparedStatement preparedStatement = null;
-	
 	public Member getMemberByAthleteId(int athleteId)throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
 		Member member = null;
+
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
@@ -44,6 +44,9 @@ public class MemberDAO {
 	
 		if (member == null)
 			return false;
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
 
 		try {
 			connection = Database.getConnection();
@@ -61,7 +64,7 @@ public class MemberDAO {
 				}
 				else {	// insert
 					String sql = "insert into members (athleteId, accessToken) values (?,?)";
-					PreparedStatement preparedStatement = connection.prepareStatement(sql);
+					preparedStatement = connection.prepareStatement(sql);
 					preparedStatement.setLong(1, member.getAthleteId());
 					preparedStatement.setString(2, member.getAccessToken());
 					int rowsAffected = preparedStatement.executeUpdate();
@@ -85,6 +88,9 @@ public class MemberDAO {
 		
 		if (member == null || member.getId() == 0)
 			return false;
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
 		
 		try {
 			connection = Database.getConnection();
