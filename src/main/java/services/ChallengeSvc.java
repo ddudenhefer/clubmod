@@ -21,7 +21,7 @@ import dao.ChallengeDAO;
 public class ChallengeSvc {
 	
 	@GET
-	@Path("/{challengeIndex]/{currentDate}")
+	@Path("/{challengeIndex}/{currentDate}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getChallenge(@PathParam("challengeIndex") int challengeIndex, @PathParam("currentDate") String currentDate) { 
