@@ -18,7 +18,7 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT id, challengeIndex, name, season, startDate, endDate FROM challenge where challengeIndex=? and ? between startDate and endDate");
+				preparedStatement = connection.prepareStatement("SELECT id, challengeIndex, name, season, startDate, endDate FROM challenges where challengeIndex=? and ? between startDate and endDate");
 				preparedStatement.setLong(1,challengeIndex);
 				preparedStatement.setDate(2,currentDate);
 				ResultSet rs = preparedStatement.executeQuery();
