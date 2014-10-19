@@ -55,7 +55,7 @@ public class MemberDAO {
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, points FROM members");
 				ResultSet rs = preparedStatement.executeQuery();
-				if (rs.next()) {
+				while (rs.next()) {
 					member = new Member();
 					member.setId(rs.getInt("id"));
 					member.setAthleteId(rs.getInt("athleteId"));
