@@ -10,7 +10,7 @@ import model.Challenge;
 
 public class ChallengeDAO {
 	
-	public Challenge getChallenge(Date currentDate)throws Exception {
+	public Challenge getChallenge(int challengeIndex, Date currentDate)throws Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		Challenge challenge = null;
@@ -18,9 +18,11 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate FROM challenges where ? between startDate and endDate";
+				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate FROM challenges where (? between startDate and endDate) or ";
+				sql += "(challengeIndex=? and endDate = max(endDate))";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setDate(1,currentDate);
+				preparedStatement.setInt(2,challengeIndex);
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {
 					challenge = new Challenge();

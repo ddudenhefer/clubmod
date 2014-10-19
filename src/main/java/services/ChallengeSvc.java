@@ -21,15 +21,15 @@ import dao.ChallengeDAO;
 public class ChallengeSvc {
 	
 	@GET
-	@Path("/{currentDate}")
+	@Path("/{challengeIndex]/{currentDate}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getChallenge(@PathParam("currentDate") String currentDate) { 
+	public String getChallenge(@PathParam("challengeIndex") int challengeIndex, @PathParam("currentDate") String currentDate) { 
 		Challenge challenge = null;
 		
 		try {
 			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-			challenge = new ChallengeDAO().getChallenge(new java.sql.Date(df.parse(currentDate).getTime()));
+			challenge = new ChallengeDAO().getChallenge(challengeIndex, new java.sql.Date(df.parse(currentDate).getTime()));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
