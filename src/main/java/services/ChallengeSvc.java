@@ -36,7 +36,7 @@ public class ChallengeSvc {
 	@Path("/{challengeIndex}/{currentDate}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getChallenge(@PathParam("challengeIndex") int challengeIndex, @PathParam("currentDate") String currentDate) { 
+	public String getChallenge(@PathParam("currentDate") String currentDate) { 
 		Challenge challenge = null;
 		
 		try {
