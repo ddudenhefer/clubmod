@@ -46,7 +46,7 @@
 <BODY>
 
 <div style="text-align:center">
-<img alt="Club Mod" src="/css/images/Mod-Cyclists-Banner-2.jpg" title="Club Mod" width="100%" />
+<img alt="Club Mod" src="/css/images/Mod-Cyclists-Banner-2.jpg" title="Club Mod" width="60%" />
 <H1>Hello <%=profile.getAthlete().getFirstname()%> <%=profile.getAthlete().getLastname()%> and Welcome to <span style="color:#02a0bb">CLUB MOD</span>!</H1>
 <H2>Thank you for authorizing Club Mod access to Strava.<br>This allows us to create weekly rankings as well as an overall leaderboard.</H2>
 
@@ -87,7 +87,7 @@
 <BODY>
 
 <div style="text-align:center">
-<img alt="Club Mod" src="/css/images/Mod-Cyclists-Banner-2.jpg" title="Club Mod" width="100%" />
+<img alt="Club Mod" src="/css/images/Mod-Cyclists-Banner-2.jpg" title="Club Mod" width="60%" />
 <H1>Authorization Failed!</H1>
 <H2>Please contact <a href="mailto:sean@modboulder.com?Subject=Authorization%20Failure" target="_top">Club Mod Support</a></H2>
 <br><br><br><br>
@@ -124,7 +124,7 @@
 <BODY>
 
 <div style="text-align:center">
-<img alt="Club Mod" src="/css/images/Mod-Cyclists-Banner-2.jpg" title="Club Mod" width="100%" />
+<img alt="Club Mod" src="/css/images/Mod-Cyclists-Banner-2.jpg" title="Club Mod" width="60%" />
 <H1>Club Mod</H1>
 <H2>Sorry to hear you do not want to join Club Mod Weekly Challenges at this time.<br>If you should change your mind, please visit:<br><br>
 <a href="http://www.modboulder.com/clubmodsignup/" target="_blank">Join Today</a></H2>
