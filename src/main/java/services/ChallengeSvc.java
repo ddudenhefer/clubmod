@@ -1,7 +1,6 @@
 package services;
 
 
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -14,26 +13,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import model.Challenge;
-
 import com.google.gson.Gson;
-
 import dao.ChallengeDAO;
 
 
-
-// The class registers its methods for the HTTP GET request using the @GET annotation. 
-// Using the @Produces annotation, it defines that it can deliver several MIME types,
-// text, XML and HTML. 
-
-// The browser requests per default the HTML MIME type.
-
-//Sets the path to base URL + /hello
 @Path("/challenge")
 public class ChallengeSvc {
 	
-	// This method is called if TEXT_PLAIN is request
 	@GET
-	@Path("/{challengeIndex}/{currentDate}")
+	@Path("/{currentDate}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getChallenge(@PathParam("currentDate") String currentDate) { 

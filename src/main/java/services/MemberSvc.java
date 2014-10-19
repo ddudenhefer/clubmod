@@ -1,6 +1,9 @@
 package services;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,20 +13,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import model.Member;
+
 import com.google.gson.Gson;
+
 import dao.MemberDAO;
+import entities.challenge.Challenge;
 
-// The class registers its methods for the HTTP GET request using the @GET annotation. 
-// Using the @Produces annotation, it defines that it can deliver several MIME types,
-// text, XML and HTML. 
-
-// The browser requests per default the HTML MIME type.
-
-//Sets the path to base URL + /hello
 @Path("/member")
 public class MemberSvc {
 	
-	// This method is called if TEXT_PLAIN is request
 	@GET
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -49,8 +47,28 @@ public class MemberSvc {
 		}
 		return ret;
 	}
-  
 
+	
+	@GET
+	@Path("/all")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAllMembers() {
+		List<Member> members = new ArrayList<Member>();
+		
+		try {
+			members = new MemberDAO().getAllMembers();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		Gson gson = new Gson();
+		String ret = "";
+		ret = gson.toJson(members);
+		return ret;
+	}
+	
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/create")

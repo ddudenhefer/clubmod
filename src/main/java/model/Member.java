@@ -8,6 +8,7 @@ public class Member implements Serializable {
    private int id;
    private int athleteId;
    private String accessToken;
+   private String points;
 
 
    public int getId() {
@@ -32,6 +33,14 @@ public class Member implements Serializable {
 
    public void setAccessToken(String accessToken) {
       this.accessToken = accessToken;
+   }
+
+   public String getPoints() {
+      return points;
+   }
+
+   public void setPoints(String points) {
+      this.points = points;
    }
 
 }

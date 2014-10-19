@@ -8,9 +8,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -18,48 +16,36 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.google.gson.Gson;
 import model.Member;
 import utils.Constants;
-
-import com.google.gson.Gson;
-
 import connector.JStravaV3;
 import dao.MemberDAO;
 import entities.activity.Activity;
 import entities.athlete.Athlete;
 import entities.challenge.Challenge;
 
-// The class registers its methods for the HTTP GET request using the @GET annotation. 
-// Using the @Produces annotation, it defines that it can deliver several MIME types,
-// text, XML and HTML. 
-
-// The browser requests per default the HTML MIME type.
-
-//Sets the path to base URL + /hello
 @Path("/activity")
 public class ActivitySvc {
 	
-	// This method is called if TEXT_PLAIN is request
 	@GET
 	@Path("/{startDate}/{endDate}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getClubActivitiesByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
 		
 		JStravaV3 strava= new JStravaV3(Constants.PUBLIC_ACCESS_TOKEN);
-		List<Athlete> athletes = strava.findClubMembers(Constants.CLUB_ID,1,200);
-		Collections.sort(athletes, Athlete.Comparators.NAME);	
 		List<Challenge> challengeResults = new ArrayList<Challenge>();
 
-		for (Athlete athlete : athletes) {
-			MemberDAO memberDAO = new MemberDAO();
-			try {
-				Member member = memberDAO.getMemberByAthleteId(athlete.getId());
+		MemberDAO memberDAO = new MemberDAO();
+		try {
+			List<Member> members = memberDAO.getAllMembers();
+			for (Member member : members) {
 				if (member != null && member.getAccessToken() != null) {
-				    strava = new JStravaV3(member.getAccessToken());
+					strava = new JStravaV3(member.getAccessToken());
 				    
 				    // test authentication: if null, continue
-				    Athlete verifyAthlete = strava.getCurrentAthlete();
-				    if (verifyAthlete == null)
+				    Athlete athlete = strava.getCurrentAthlete();
+				    if (athlete == null)
 				    	continue;
 
 				    Challenge challenge = new Challenge();
@@ -83,10 +69,10 @@ public class ActivitySvc {
 				    challenge.setRides(totalRides);
 				    challengeResults.add(challenge);
 				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	    Collections.sort(challengeResults, Challenge.Comparators.MILES);
 	    

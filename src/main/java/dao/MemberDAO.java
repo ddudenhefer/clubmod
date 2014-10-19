@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.Gson;
 
 import model.Member;
 
@@ -17,7 +20,7 @@ public class MemberDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken FROM members where athleteId=?");
+				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, points FROM members where athleteId=?");
 				preparedStatement.setLong(1,athleteId);
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {
@@ -25,6 +28,7 @@ public class MemberDAO {
 					member.setId(rs.getInt("id"));
 					member.setAthleteId(rs.getInt("athleteId"));
 					member.setAccessToken(rs.getString("accessToken"));
+					member.setPoints(rs.getString("points"));
 				}
 			}
 		
@@ -40,6 +44,40 @@ public class MemberDAO {
 		return member;
 	}
 	
+	public List<Member> getAllMembers()throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		List<Member> members = new ArrayList<Member>();
+		Member member = null;
+
+		try {
+			connection = Database.getConnection();
+			if (connection != null) {
+				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, points FROM members");
+				ResultSet rs = preparedStatement.executeQuery();
+				if (rs.next()) {
+					member = new Member();
+					member.setId(rs.getInt("id"));
+					member.setAthleteId(rs.getInt("athleteId"));
+					member.setAccessToken(rs.getString("accessToken"));
+					member.setPoints(rs.getString("points"));
+					members.add(member);
+				}
+			}
+		
+		} catch (Exception e) {
+			throw e;
+		}
+		finally {
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (connection != null)
+				connection.close();
+		}
+		
+		return members;
+	}
+
 	public boolean saveMember(Member member)throws Exception {
 	
 		if (member == null)
