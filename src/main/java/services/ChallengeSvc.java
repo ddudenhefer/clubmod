@@ -41,7 +41,7 @@ public class ChallengeSvc {
 		
 		try {
 			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-			challenge = new ChallengeDAO().getChallenge(challengeIndex, (Date) df.parse(currentDate));
+			challenge = new ChallengeDAO().getChallenge(challengeIndex, new java.sql.Date(df.parse(currentDate).getTime()));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
