@@ -3,7 +3,6 @@ package entities.challenge;
 import java.util.Comparator;
 
 
-
 public class Challenge implements Comparable<Challenge> {
 
 	private int athleteId;
