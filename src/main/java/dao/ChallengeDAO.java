@@ -19,7 +19,7 @@ public class ChallengeDAO {
 			connection = Database.getConnection();
 			if (connection != null) {
 				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate FROM challenges where (? between startDate and endDate) or ";
-				sql += "(challengeIndex=? and endDate = max(endDate))";
+				sql += "(challengeIndex=? and max(endDate)=endDate)";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setDate(1,currentDate);
 				preparedStatement.setInt(2,challengeIndex);
