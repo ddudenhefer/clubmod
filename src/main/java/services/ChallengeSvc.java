@@ -2,6 +2,8 @@ package services;
 
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -16,6 +18,8 @@ import model.Challenge;
 import com.google.gson.Gson;
 
 import dao.ChallengeDAO;
+
+
 
 // The class registers its methods for the HTTP GET request using the @GET annotation. 
 // Using the @Produces annotation, it defines that it can deliver several MIME types,
@@ -32,11 +36,12 @@ public class ChallengeSvc {
 	@Path("/{challengeIndex}/{currentDate}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getChallenge(@PathParam("challengeIndex") int challengeIndex, @PathParam("currentDate") Date currentDate) { 
+	public String getChallenge(@PathParam("challengeIndex") int challengeIndex, @PathParam("currentDate") String currentDate) { 
 		Challenge challenge = null;
 		
 		try {
-			challenge = new ChallengeDAO().getChallenge(challengeIndex,currentDate );
+			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+			challenge = new ChallengeDAO().getChallenge(challengeIndex, (Date) df.parse(currentDate));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
