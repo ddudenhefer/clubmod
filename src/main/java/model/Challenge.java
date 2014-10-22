@@ -12,6 +12,8 @@ public class Challenge implements Serializable {
    private String season;
    private Date startDate;
    private Date endDate;
+   private String label;
+   private String service;
 
 
    public int getId() {
@@ -62,4 +64,19 @@ public class Challenge implements Serializable {
 	   this.endDate = endDate;
    }
 
+   public String getLabel() {
+	      return label;
+	   }
+
+   public void setLabel(String label) {
+      this.label = label;
+   }
+
+   public String getService() {
+      return service;
+   }
+
+   public void setService(String service) {
+	   this.service = service;
+   }
 }
