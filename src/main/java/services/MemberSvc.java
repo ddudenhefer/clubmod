@@ -17,7 +17,7 @@ import model.Member;
 import com.google.gson.Gson;
 
 import dao.MemberDAO;
-import entities.challenge.Challenge;
+import entities.challenge.ChallengeResult;
 
 @Path("/member")
 public class MemberSvc {

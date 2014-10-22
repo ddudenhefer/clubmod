@@ -14,4 +14,21 @@ public class Constants {
     	else
     		return (float) (Math.round((meters / 1609.344) * 10) / 10.0);
     }
+    
+    public static float ConvertMPStoMPH (float mps, boolean round) {
+
+    	if (round)
+    		return (float) (mps / (1609.344/3600));
+    	else
+    		return (float) (Math.round((mps / (1609.344/3600)) * 10) / 10.0);
+    }
+
+    public static float ConvertMetersToFeet(float meters, boolean round)
+    {
+    	if (round)
+    		return (float) (meters / 0.3048);
+    	else
+    		return (float) (Math.round((meters / 0.3048) * 10) / 10.0);
+    }
+
 }

@@ -3,7 +3,7 @@ package entities.challenge;
 import java.util.Comparator;
 
 
-public class Challenge implements Comparable<Challenge> {
+public class ChallengeResult implements Comparable<ChallengeResult> {
 
 	private int athleteId;
     private String firstName;
@@ -16,7 +16,7 @@ public class Challenge implements Comparable<Challenge> {
 
     
     @Override
-    public int compareTo(Challenge o) {
+    public int compareTo(ChallengeResult o) {
         return Comparators.NAME.compare(this, o);
     }
     
@@ -29,7 +29,7 @@ public class Challenge implements Comparable<Challenge> {
         this.athleteId = athleteId;
     }
 
-    public Challenge() {
+    public ChallengeResult() {
     }
 
     public String getFirstName() {
@@ -90,9 +90,9 @@ public class Challenge implements Comparable<Challenge> {
 
     public static class Comparators {
 
-        public static Comparator<Challenge> NAME = new Comparator<Challenge>() {
+        public static Comparator<ChallengeResult> NAME = new Comparator<ChallengeResult>() {
             @Override
-            public int compare(Challenge o1, Challenge o2) {
+            public int compare(ChallengeResult o1, ChallengeResult o2) {
             	int ret = o1.getLastName().compareTo(o2.getLastName());
             	if (ret == 0)
             		return o1.getFirstName().compareTo(o2.getFirstName());
@@ -100,37 +100,37 @@ public class Challenge implements Comparable<Challenge> {
             }
         };
 
-        public static Comparator<Challenge> MILES = new Comparator<Challenge>() {
+        public static Comparator<ChallengeResult> MILES = new Comparator<ChallengeResult>() {
             @Override
-            public int compare(Challenge o1, Challenge o2) {
+            public int compare(ChallengeResult o1, ChallengeResult o2) {
             	return Float.compare(o2.getMiles(), o1.getMiles());
             }
         };
 
-        public static Comparator<Challenge> RIDES = new Comparator<Challenge>() {
+        public static Comparator<ChallengeResult> RIDES = new Comparator<ChallengeResult>() {
             @Override
-            public int compare(Challenge o1, Challenge o2) {
+            public int compare(ChallengeResult o1, ChallengeResult o2) {
             	return Integer.compare(o2.getRides(), o1.getRides());
             }
         };
 
-        public static Comparator<Challenge> SPEED = new Comparator<Challenge>() {
+        public static Comparator<ChallengeResult> SPEED = new Comparator<ChallengeResult>() {
             @Override
-            public int compare(Challenge o1, Challenge o2) {
+            public int compare(ChallengeResult o1, ChallengeResult o2) {
             	return Float.compare(o2.getSpeed(), o1.getSpeed());
             }
         };
 
-        public static Comparator<Challenge> TIME = new Comparator<Challenge>() {
+        public static Comparator<ChallengeResult> TIME = new Comparator<ChallengeResult>() {
             @Override
-            public int compare(Challenge o1, Challenge o2) {
+            public int compare(ChallengeResult o1, ChallengeResult o2) {
             	return Long.compare(o2.getTime(), o1.getTime());
             }
         };
 
-        public static Comparator<Challenge> ELEVATION = new Comparator<Challenge>() {
+        public static Comparator<ChallengeResult> ELEVATION = new Comparator<ChallengeResult>() {
             @Override
-            public int compare(Challenge o1, Challenge o2) {
+            public int compare(ChallengeResult o1, ChallengeResult o2) {
             	return Long.compare(o2.getElevation(), o1.getElevation());
             }
         };
