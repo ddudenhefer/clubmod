@@ -225,7 +225,7 @@ public class ActivitySvc {
 				    	}
 				    }
 				    double mphSpeed = Math.round(Constants.ConvertMPStoMPH(speed, true) * 10) / 10.0;
-				    challenge.setSpeed((float)mphSpeed/totalRides);
+				    challenge.setSpeed((float) (Math.round((mphSpeed/totalRides) * 10) / 10.0));
 				    challengeResults.add(challenge);
 				}
 			}
