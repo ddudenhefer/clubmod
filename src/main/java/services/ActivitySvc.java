@@ -135,7 +135,7 @@ public class ActivitySvc {
 	
 	
 	@GET
-	@Path("/time/{startDate}/{endDate}")
+	@Path("/longest/{startDate}/{endDate}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getTimeByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
 		
@@ -161,15 +161,15 @@ public class ActivitySvc {
 					DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 					long startSeconds = getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 					long endSeconds = getEndOfDay(df.parse(endDate)).getTime() / 1000l;
-					int time = 0;
+					float longestMeters = 0;
 				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 				    for (Activity activity : activities) {
 				    	if (activity.getType().equals("Ride")) {
-				    		time += activity.getMoving_time();
+				    		if (activity.getDistance() > longestMeters)
+				    			longestMeters = activity.getDistance();
 				    	}
 				    }
-				    
-				    challenge.setTime(time);
+				    challenge.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(longestMeters, true) * 10) / 10.0));				    
 				    challengeResults.add(challenge);
 				}
 			}
@@ -177,7 +177,7 @@ public class ActivitySvc {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    Collections.sort(challengeResults, ChallengeResult.Comparators.TIME);
+	    Collections.sort(challengeResults, ChallengeResult.Comparators.MILES);
 	    
 	    Gson gson = new Gson();
 		String ret = "";
