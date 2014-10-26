@@ -35,6 +35,8 @@ public class Athlete implements Comparable<Athlete> {
     private List<Gear> bikes;
     private List<Gear> shoes;
     private boolean authenticated;
+    private float milesYTD;
+    private long elevationYTD;
 
     
     @Override
@@ -264,7 +266,22 @@ public class Athlete implements Comparable<Athlete> {
         this.authenticated = authenticated;
     }
     
+    public float getMilesYTD() {
+        return milesYTD;
+    }
 
+    public void setMilesYTD(float milesYTD) {
+        this.milesYTD = milesYTD;
+    }
+
+    public long getElevationYTD() {
+        return elevationYTD;
+    }
+
+    public void setElevationYTD(long elevationYTD) {
+        this.elevationYTD = elevationYTD;
+    }
+    
 
     public static class Comparators {
 

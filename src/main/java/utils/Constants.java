@@ -1,5 +1,8 @@
 package utils;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class Constants {
 	
 	public static final int CLUB_ID = 43953;
@@ -30,5 +33,26 @@ public class Constants {
     	else
     		return (float) (Math.round((meters / 0.3048) * 10) / 10.0);
     }
+    
+    public static Date getStartOfDay(Date date) {
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(date);
+	    int year = calendar.get(Calendar.YEAR);
+	    int month = calendar.get(Calendar.MONTH);
+	    int day = calendar.get(Calendar.DATE);
+	    calendar.set(year, month, day, 0, 0, 0);
+	    return calendar.getTime();
+	}
+
+
+    public static Date getEndOfDay(Date date) {
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(date);
+	    int year = calendar.get(Calendar.YEAR);
+	    int month = calendar.get(Calendar.MONTH);
+	    int day = calendar.get(Calendar.DATE);
+	    calendar.set(year, month, day, 23, 59, 59);
+	    return calendar.getTime();
+	}					    
 
 }
