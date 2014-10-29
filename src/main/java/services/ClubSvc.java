@@ -3,6 +3,7 @@ package services;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -31,11 +32,6 @@ public class ClubSvc {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getClubMembers()  {
 		
-		JStravaV3 strava= new JStravaV3(Constants.PUBLIC_ACCESS_TOKEN);
-		List<Athlete> athletes = strava.findClubMembers(Constants.CLUB_ID,1,200);
-		Collections.sort(athletes, Athlete.Comparators.NAME);
-		
-
 	    Calendar cal = Calendar.getInstance();
 		long endSeconds = Constants.getEndOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
 
@@ -43,18 +39,21 @@ public class ClubSvc {
         cal.set(Calendar.MONTH, 0);
 
         long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
-		
-		for (Athlete athlete : athletes) {
-			MemberDAO memberDAO = new MemberDAO();
-			try {
-				Member member = memberDAO.getMemberByAthleteId(athlete.getId());
+
+		List<Athlete> athletes = new ArrayList<Athlete>();
+		MemberDAO memberDAO = new MemberDAO();
+		try {
+			List<Member> members = memberDAO.getAllMembers();
+			for (Member member : members) {
 				if (member != null && member.getAccessToken() != null) {
-				    strava = new JStravaV3(member.getAccessToken());
+					JStravaV3 strava = new JStravaV3(member.getAccessToken());
 				    
 				    // test authentication: if null, continue
-				    Athlete verifyAthlete = strava.getCurrentAthlete();
-				    athlete.setAuthenticated (verifyAthlete != null);
-				    
+				    Athlete athlete = strava.getCurrentAthlete();
+				    if (athlete == null)
+				    	continue;		
+				    athletes.add(athlete);
+		
 					float totalMeters = 0;	
 					float elevation = 0;
 				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
@@ -67,12 +66,14 @@ public class ClubSvc {
 				    athlete.setMilesYTD((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
 				    athlete.setElevationYTD((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));					
 				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
+
+		Collections.sort(athletes, Athlete.Comparators.NAME);
+
 		Gson gson = new Gson();
 		String ret = "";
 		if (athletes != null) {
