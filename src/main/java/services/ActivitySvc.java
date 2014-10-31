@@ -62,8 +62,11 @@ public class ActivitySvc {
 				    		totalMeters += activity.getDistance();
 				    	}
 				    }
-				    challenge.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
-				    challengeResults.add(challenge);
+				    
+				    if (activities.size() > 0) {
+				    	challenge.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
+				    	challengeResults.add(challenge);
+				    }
 				}
 			}
 		} catch (Exception e) {
@@ -115,8 +118,11 @@ public class ActivitySvc {
 				    		totalRides ++;
 				    	}
 				    }
-				    challenge.setRides(totalRides);
-				    challengeResults.add(challenge);
+				    
+				    if (activities.size() > 0) {
+				    	challenge.setRides(totalRides);
+				    	challengeResults.add(challenge);
+				    }
 				}
 			}
 		} catch (Exception e) {
@@ -169,8 +175,11 @@ public class ActivitySvc {
 				    			longestMeters = activity.getDistance();
 				    	}
 				    }
-				    challenge.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(longestMeters, true) * 10) / 10.0));				    
-				    challengeResults.add(challenge);
+				    
+				    if (activities.size() > 0) {
+				    	challenge.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(longestMeters, true) * 10) / 10.0));				    
+				    	challengeResults.add(challenge);
+				    }
 				}
 			}
 		} catch (Exception e) {
@@ -217,16 +226,26 @@ public class ActivitySvc {
 					long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
 					float speed = 0;
 					int totalRides = 0;
+					float totalMeters = 0;
+				    challenge.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));					
+					
 				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 				    for (Activity activity : activities) {
 				    	if (activity.getType().equals("Ride")) {
 				    		speed += activity.getAverage_speed();
+				    		totalMeters += activity.getDistance();
 				    		totalRides ++;
 				    	}
 				    }
-				    double mphSpeed = Math.round(Constants.ConvertMPStoMPH(speed, true) * 10) / 10.0;
-				    challenge.setSpeed((float) (Math.round((mphSpeed/totalRides) * 10) / 10.0));
-				    challengeResults.add(challenge);
+				    
+				    if (activities.size() > 0) {
+					    float miles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
+					    if (miles >= 100) {
+						    double mphSpeed = Math.round(Constants.ConvertMPStoMPH(speed, true) * 10) / 10.0;
+						    challenge.setSpeed((float) (Math.round((mphSpeed/totalRides) * 10) / 10.0));
+						    challengeResults.add(challenge);
+					    }
+				    }
 				}
 			}
 		} catch (Exception e) {
@@ -278,8 +297,11 @@ public class ActivitySvc {
 				    		elevation += activity.getTotal_elevation_gain();
 				    	}
 				    }
-				    challenge.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
-				    challengeResults.add(challenge);
+				    
+				    if (activities.size() > 0) {
+				    	challenge.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
+				    	challengeResults.add(challenge);
+				    }
 				}
 			}
 		} catch (Exception e) {
