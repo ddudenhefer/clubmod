@@ -1,13 +1,29 @@
 package utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.ws.rs.PathParam;
+
+import com.google.gson.Gson;
+
+import model.Challenge;
+import model.Member;
+import dao.ChallengeDAO;
+import dao.MemberDAO;
+import entities.challenge.ChallengeResult;
+import entities.segment.Segment;
+import services.ActivitySvc;
 
 public class AppContextListener implements ServletContextListener {
 	
@@ -55,6 +71,50 @@ public class AppContextListener implements ServletContextListener {
 		@Override
 		public void run() {
 			System.out.println("UpdatePointsTask " + new Date().toString());
+			
+			List<Challenge> challenges = new ArrayList<Challenge>();
+			Date today = new Date();
+			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+			ActivitySvc activitySvc = new ActivitySvc();
+			
+			try {
+				challenges = new ChallengeDAO().getAllChallenges();
+				for (Challenge challenge : challenges) {
+					if (today.after(challenge.getStartDate())) {
+						String sDate = df.format(challenge.getStartDate());
+						String eDate = df.format(challenge.getEndDate());
+						String results = "";
+						
+						if (challenge.getService().equals("distance"))
+							results = activitySvc.getDistanceByDateRange(sDate, eDate);
+						else if (challenge.getService().equals("rides"))
+							results = activitySvc.getRidesByDateRange(sDate, eDate);
+						else if (challenge.getService().equals("longest"))
+							results = activitySvc.getTimeByDateRange(sDate, eDate);
+						else if (challenge.getService().equals("speed"))
+							results = activitySvc.getSpeedByDateRange(sDate, eDate);
+						else if (challenge.getService().equals("elevation"))
+							results = activitySvc.getElevationByDateRange(sDate, eDate);
+						
+						Gson gson= new Gson();
+						ChallengeResult[]challengeResultsArray= gson.fromJson(results, ChallengeResult[].class);
+				        List<ChallengeResult> challengeResults=Arrays.asList(challengeResultsArray);	
+				        
+				        if (challengeResults.size() > 0) {
+				        	int athleteId = challengeResults.get(0).getAthleteId();
+				        	MemberDAO memberDAO = new MemberDAO();
+				        	Member member = memberDAO.getMemberByAthleteId(athleteId);
+				        	challenge.setMemberId(member.getId());
+				        	
+				        	ChallengeDAO challengeDAO = new ChallengeDAO();
+				        	challengeDAO.saveChallenge(challenge);
+				        }
+					}
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

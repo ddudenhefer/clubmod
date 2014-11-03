@@ -14,6 +14,7 @@ public class Challenge implements Serializable {
    private Date endDate;
    private String label;
    private String service;
+   private int memberId;
 
 
    public int getId() {
@@ -24,7 +25,7 @@ public class Challenge implements Serializable {
       this.id = id;
    }
 
-   public int ChallengeIndex() {
+   public int getChallengeIndex() {
 	      return challengeIndex;
 	   }
 
@@ -79,4 +80,13 @@ public class Challenge implements Serializable {
    public void setService(String service) {
 	   this.service = service;
    }
+   
+   public int getMemberId() {
+	      return memberId;
+	   }
+
+   public void setMemberId(int memberId) {
+	      this.memberId = memberId;
+}
+   
 }
