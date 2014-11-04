@@ -60,13 +60,13 @@ public class PointsDAO {
 		
 		Point point = getPoints("achievements", "500 miles");
 		String parts[] = null;
-		parts = point.getType().split(" ");
+		parts = point.getSubType().split(" ");
 		int miles = Integer.parseInt(parts[0]);
 		int count = (int)distance/miles;
 		points += (count*point.getPoints());
 		
 		point = getPoints("achievements", "25000 feet");
-		parts = point.getType().split(" ");
+		parts = point.getSubType().split(" ");
 		int feet = Integer.parseInt(parts[0]);
 		count = (int)elevation/feet;
 		points += (count*point.getPoints());
