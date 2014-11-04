@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 
 import connector.JStravaV3;
 import dao.MemberDAO;
+import dao.PointsDAO;
 import entities.activity.Activity;
 import entities.athlete.Athlete;
 import utils.Constants;
@@ -64,7 +65,10 @@ public class ClubSvc {
 				    	}
 				    }
 				    athlete.setMilesYTD((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
-				    athlete.setElevationYTD((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));					
+				    athlete.setElevationYTD((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
+				    
+				    PointsDAO pointsDAO = new PointsDAO();
+				    athlete.setPointsYTD(pointsDAO.getMemberPoints(member.getId(), athlete.getMilesYTD(), athlete.getElevationYTD()));
 				}
 			}
 		} catch (Exception e) {

@@ -48,7 +48,6 @@ public class ChallengeDAO {
 	}
 	
 	
-	
 	public Challenge getChallenge(int challengeIndex, Date currentDate)throws Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -100,6 +99,48 @@ public class ChallengeDAO {
 			connection = Database.getConnection();
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges order by startDate");
+				ResultSet rs = preparedStatement.executeQuery();
+				while (rs.next()) {
+					challenge = new Challenge();
+					challenge.setId(rs.getInt("id"));
+					challenge.setChallengeIndex(rs.getInt("challengeIndex"));
+					challenge.setName(rs.getString("name"));
+					challenge.setSeason(rs.getString("season"));
+					challenge.setStartDate(rs.getDate("startDate"));
+					challenge.setEndDate(rs.getDate("endDate"));
+					challenge.setLabel(rs.getString("label"));
+					challenge.setService(rs.getString("service"));
+					challenge.setMemberId(rs.getInt("memberId"));
+					challenges.add(challenge);
+				}
+			}
+		
+		} catch (Exception e) {
+			throw e;
+		}
+		finally {
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (connection != null)
+				connection.close();
+		}
+		
+		return challenges;
+	}
+	
+
+	public List<Challenge> getChallengesByMemberId(int memberId)throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		List<Challenge> challenges = new ArrayList<Challenge>();
+		Challenge challenge = null;
+
+		try {
+			connection = Database.getConnection();
+			if (connection != null) {
+				preparedStatement = connection.prepareStatement("SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where memberId=? order by startDate");
+				preparedStatement.setInt(1,memberId);
+				
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) {
 					challenge = new Challenge();

@@ -37,6 +37,7 @@ public class Athlete implements Comparable<Athlete> {
     private boolean authenticated;
     private float milesYTD;
     private long elevationYTD;
+    private int pointsYTD;
 
     
     @Override
@@ -282,6 +283,13 @@ public class Athlete implements Comparable<Athlete> {
         this.elevationYTD = elevationYTD;
     }
     
+    public int getPointsYTD() {
+        return pointsYTD;
+    }
+
+    public void setPointsYTD(int pointsYTD) {
+        this.pointsYTD = pointsYTD;
+    }
 
     public static class Comparators {
 
