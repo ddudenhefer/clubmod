@@ -80,7 +80,7 @@ public class AppContextListener implements ServletContextListener {
 			try {
 				challenges = new ChallengeDAO().getAllChallenges();
 				for (Challenge challenge : challenges) {
-					if (today.after(challenge.getStartDate())) {
+					if (challenge.getMemberId() == 0 && today.after(challenge.getEndDate())) {
 						String sDate = df.format(challenge.getStartDate());
 						String eDate = df.format(challenge.getEndDate());
 						String results = "";

@@ -115,7 +115,10 @@ public class ActivitySvc {
 				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 				    for (Activity activity : activities) {
 				    	if (activity.getType().equals("Ride")) {
-				    		totalRides ++;
+				    		float meters = activity.getDistance();
+				    		float feet = (float) (Math.round(Constants.ConvertMetersToMiles(meters, true) * 10) / 10.0);
+				    		if (feet >= 25)
+				    			totalRides ++;
 				    	}
 				    }
 				    
@@ -240,7 +243,7 @@ public class ActivitySvc {
 				    
 				    if (activities.size() > 0) {
 					    float miles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
-					    if (miles >= 100) {
+					    if (miles >= 50) {
 						    double mphSpeed = Math.round(Constants.ConvertMPStoMPH(speed, true) * 10) / 10.0;
 						    challenge.setSpeed((float) (Math.round((mphSpeed/totalRides) * 10) / 10.0));
 						    challengeResults.add(challenge);
