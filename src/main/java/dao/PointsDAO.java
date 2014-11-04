@@ -21,7 +21,7 @@ public class PointsDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				String sql = "SELECT id, type, subtype, points FROM challenges where type=? and subtype=?";
+				String sql = "SELECT id, type, subtype, points FROM points where type=? and subtype=?";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setString(1,type);
 				preparedStatement.setString(2,subType);
