@@ -49,7 +49,8 @@ public class AppContextListener implements ServletContextListener {
 
 		TimerTask updatePointsTask = new UpdatePointsTask();
 		Timer timer = new Timer();
-	    timer.scheduleAtFixedRate(updatePointsTask, getTomorrowMorning1am(), ONCE_PER_DAY);
+	    //timer.scheduleAtFixedRate(updatePointsTask, getTomorrowMorning1am(), ONCE_PER_DAY);
+	    timer.schedule(updatePointsTask, 0);
 	}
 	
 	private static Date getTomorrowMorning1am(){
