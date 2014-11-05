@@ -21,7 +21,7 @@ public class PointsDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				String sql = "SELECT id, type, subtype, increment, limit, points FROM points where type=? and subtype=?";
+				String sql = "SELECT id, type, subtype, increment, maxlimit, points FROM points where type=? and subtype=?";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setString(1,type);
 				preparedStatement.setString(2,subType);
@@ -32,7 +32,7 @@ public class PointsDAO {
 					point.setType(rs.getString("type"));
 					point.setSubType(rs.getString("subtype"));
 					point.setIncrement(rs.getInt("increment"));
-					point.setLimit(rs.getInt("limit"));
+					point.setLimit(rs.getInt("maxlimit"));
 					point.setPoints(rs.getInt("points"));
 				}
 			}
