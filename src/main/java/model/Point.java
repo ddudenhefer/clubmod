@@ -9,6 +9,8 @@ public class Point implements Serializable {
    private int id;
    private String type;
    private String subType;
+   private int increment;
+   private int limit;
    private int points;
 
 
@@ -35,13 +37,29 @@ public class Point implements Serializable {
    public void setSubType(String subType) {
 	   this.subType = subType;
    }
+   
+   public int getIncrement() {
+      return increment;
+   }
+
+   public void setIncrement(int increment) {
+      this.increment = increment;
+   }
+   
+   public int getLimit() {
+      return limit;
+   }
+
+   public void setLimit(int limit) {
+      this.limit = limit;
+   }
 
    public int getPoints() {
-	      return points;
-	   }
+      return points;
+   }
 
    public void setPoints(int points) {
-	      this.points = points;
-}
+      this.points = points;
+   }
    
 }

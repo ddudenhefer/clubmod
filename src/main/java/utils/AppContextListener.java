@@ -29,7 +29,7 @@ public class AppContextListener implements ServletContextListener {
 	
 	private final static long ONCE_PER_DAY = 1000*60*60*24;
 	private final static int ONE_DAY = 1;
-	private final static int ONE_AM = 1;
+	private final static int HOUR_AM = 2;
 	private final static int ZERO_MINUTES = 0;
 
 	
@@ -49,8 +49,8 @@ public class AppContextListener implements ServletContextListener {
 
 		TimerTask updatePointsTask = new UpdatePointsTask();
 		Timer timer = new Timer();
-	    //timer.scheduleAtFixedRate(updatePointsTask, getTomorrowMorning1am(), ONCE_PER_DAY);
-	    timer.schedule(updatePointsTask, 0);
+	    timer.scheduleAtFixedRate(updatePointsTask, getTomorrowMorning1am(), ONCE_PER_DAY);
+	    //timer.schedule(updatePointsTask, 0);
 	}
 	
 	private static Date getTomorrowMorning1am(){
@@ -60,7 +60,7 @@ public class AppContextListener implements ServletContextListener {
 	    		tomorrow.get(Calendar.YEAR),
 	    		tomorrow.get(Calendar.MONTH),
 	    		tomorrow.get(Calendar.DATE),
-	    		ONE_AM,
+	    		HOUR_AM,
 	    		ZERO_MINUTES
 	    );
 	    return result.getTime();

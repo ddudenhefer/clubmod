@@ -21,7 +21,7 @@ public class PointsDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				String sql = "SELECT id, type, subtype, points FROM points where type=? and subtype=?";
+				String sql = "SELECT id, type, subtype, increment, limit, points FROM points where type=? and subtype=?";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setString(1,type);
 				preparedStatement.setString(2,subType);
@@ -31,6 +31,8 @@ public class PointsDAO {
 					point.setId(rs.getInt("id"));
 					point.setType(rs.getString("type"));
 					point.setSubType(rs.getString("subtype"));
+					point.setIncrement(rs.getInt("increment"));
+					point.setLimit(rs.getInt("limit"));
 					point.setPoints(rs.getInt("points"));
 				}
 			}
@@ -58,16 +60,17 @@ public class PointsDAO {
 			points += point.getPoints();
 	    }
 		
-		Point point = getPoints("achievements", "500 miles");
-		String parts[] = null;
-		parts = point.getSubType().split(" ");
-		int miles = Integer.parseInt(parts[0]);
+		Point point = getPoints("achievements", "miles");
+		int miles = point.getIncrement();
+		if (distance > point.getLimit())
+			distance = point.getLimit();
 		int count = (int)distance/miles;
 		points += (count*point.getPoints());
 		
-		point = getPoints("achievements", "25000 feet");
-		parts = point.getSubType().split(" ");
-		int feet = Integer.parseInt(parts[0]);
+		point = getPoints("achievements", "feet");
+		int feet = point.getIncrement();
+		if (elevation > point.getLimit())
+			elevation = point.getLimit();
 		count = (int)elevation/feet;
 		points += (count*point.getPoints());
 

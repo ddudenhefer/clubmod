@@ -138,7 +138,7 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where memberId=? order by startDate");
+				preparedStatement = connection.prepareStatement("SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where memberId=?");
 				preparedStatement.setInt(1,memberId);
 				
 				ResultSet rs = preparedStatement.executeQuery();
