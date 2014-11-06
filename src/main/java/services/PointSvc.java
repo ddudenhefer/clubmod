@@ -10,10 +10,13 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import model.Point;
+
 import com.google.gson.Gson;
+
 import dao.PointsDAO;
 
 @Path("/point")
@@ -70,7 +73,7 @@ public class PointSvc {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/update")
-	public boolean updatePoints(@PathParam("points") List<Point> points) {
+	public boolean updatePoints(@QueryParam("points") final List<Point> points) {
 		PointsDAO pointsDAO = new PointsDAO();
 		boolean ret = false;
 		
