@@ -2,6 +2,7 @@ package services;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -18,6 +19,7 @@ import model.Point;
 import com.google.gson.Gson;
 
 import dao.PointsDAO;
+import entities.segment.Segment;
 
 @Path("/point")
 public class PointSvc {
@@ -73,11 +75,15 @@ public class PointSvc {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/update")
-	public boolean updatePoints(@QueryParam("points") final List<Point> points) {
+	public boolean updatePoints(@PathParam("data") String jsonData) {
 		PointsDAO pointsDAO = new PointsDAO();
 		boolean ret = false;
 		
 		try {
+			Gson gson = new Gson();
+	        Point[]pointsArray = gson.fromJson(jsonData, Point[].class); 
+	        List<Point> points=Arrays.asList(pointsArray);	
+
 			ret = pointsDAO.updatePoints(points);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
