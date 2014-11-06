@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Challenge;
-import model.Member;
 import model.Point;
 
 public class PointsDAO {
@@ -148,7 +147,7 @@ public class PointsDAO {
 		return points;
 	}
 	
-	public boolean savePoint(Point point)throws Exception {
+	public boolean updatePoint(Point point)throws Exception {
 		
 		if (point == null)
 			return false;
@@ -185,6 +184,23 @@ public class PointsDAO {
 		return false;
 	}
 
+
+	public boolean updatePoints(List<Point> points)throws Exception {
+		
+		if (points == null || points.size() == 0)
+			return false;
+		
+		try {
+			for (Point point : points) {
+				updatePoint(point);
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		return true;
+	}
+	
+	
 	public boolean deletePoint(Point point)throws Exception {
 		
 		if (point == null || point.getId() == 0)

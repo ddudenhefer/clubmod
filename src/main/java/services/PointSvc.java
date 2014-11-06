@@ -16,7 +16,7 @@ import model.Point;
 import com.google.gson.Gson;
 import dao.PointsDAO;
 
-@Path("/member")
+@Path("/point")
 public class PointSvc {
 	
 	@GET
@@ -70,12 +70,12 @@ public class PointSvc {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/update")
-	public boolean savePoints(final Point point) {
+	public boolean updatePoints(@PathParam("points") List<Point> points) {
 		PointsDAO pointsDAO = new PointsDAO();
 		boolean ret = false;
 		
 		try {
-			ret = pointsDAO.savePoint(point);
+			ret = pointsDAO.updatePoints(points);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
