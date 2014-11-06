@@ -58,7 +58,7 @@ public class PointsDAO {
 				String sql = "SELECT id, type, subtype, increment, maxlimit, points FROM points";
 				preparedStatement = connection.prepareStatement(sql);
 				ResultSet rs = preparedStatement.executeQuery();
-				if (rs.next()) {
+				while (rs.next()) {
 					point = new Point();
 					point.setId(rs.getInt("id"));
 					point.setType(rs.getString("type"));

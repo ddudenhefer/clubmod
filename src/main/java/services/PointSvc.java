@@ -11,15 +11,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import model.Point;
-
 import com.google.gson.Gson;
-
 import dao.PointsDAO;
-import entities.segment.Segment;
 
 @Path("/point")
 public class PointSvc {
@@ -55,7 +51,7 @@ public class PointSvc {
 	@Path("/all")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getAllMembers() {
+	public String getAllPoints() {
 		List<Point> points = new ArrayList<Point>();
 		
 		try {
@@ -75,7 +71,7 @@ public class PointSvc {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/update")
-	public boolean updatePoints(@PathParam("data") String jsonData) {
+	public boolean updatePoints(@PathParam("jsonData") String jsonData) {
 		PointsDAO pointsDAO = new PointsDAO();
 		boolean ret = false;
 		
