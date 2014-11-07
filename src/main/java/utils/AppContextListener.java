@@ -28,8 +28,10 @@ import services.ActivitySvc;
 public class AppContextListener implements ServletContextListener {
 	
 	private final static long ONCE_PER_DAY = 1000*60*60*24;
+	private final static long ONCE_PER_WEEK = 1000*60*60*24*7;
 	private final static int ONE_DAY = 1;
 	private final static int HOUR_AM = 2;
+	private final static int HOUR_NOON = 12;
 	private final static int ZERO_MINUTES = 0;
 
 	
@@ -48,9 +50,13 @@ public class AppContextListener implements ServletContextListener {
 		System.out.println("AppContextListener Listener initialized.");
 
 		TimerTask updatePointsTask = new UpdatePointsTask();
-		Timer timer = new Timer();
-	    timer.scheduleAtFixedRate(updatePointsTask, getTomorrowMorning1am(), ONCE_PER_DAY);
-	    //timer.schedule(updatePointsTask, 0);
+		Timer pointsTimer = new Timer();
+		pointsTimer.scheduleAtFixedRate(updatePointsTask, getTomorrowMorning1am(), ONCE_PER_DAY);
+
+		TimerTask updateChallengeTask = new UpdateChallengeTask();
+		Timer challengeTimer = new Timer();
+		challengeTimer.scheduleAtFixedRate(updateChallengeTask, getMondayNoon(), ONCE_PER_WEEK);
+
 	}
 	
 	private static Date getTomorrowMorning1am(){
@@ -64,9 +70,21 @@ public class AppContextListener implements ServletContextListener {
 	    		ZERO_MINUTES
 	    );
 	    return result.getTime();
-	  }
+	 }
 	
-
+	private static Date getMondayNoon(){
+		Calendar date = Calendar.getInstance();
+		date.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+	    Calendar result = new GregorianCalendar(
+	    		date.get(Calendar.YEAR),
+	    		date.get(Calendar.MONTH),
+	    		date.get(Calendar.DATE),
+	    		HOUR_NOON,
+	    		ZERO_MINUTES
+	    );
+	    return result.getTime();
+	 }
+	
 	class UpdatePointsTask extends TimerTask {
 		
 		@Override
@@ -116,6 +134,14 @@ public class AppContextListener implements ServletContextListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	class UpdateChallengeTask extends TimerTask {
+		
+		@Override
+		public void run() {
+			System.out.println("UpdateChallengeTask " + new Date().toString());
 		}
 	}
 
