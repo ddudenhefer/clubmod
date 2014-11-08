@@ -70,7 +70,7 @@ public class PointSvc {
 	
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)
-	@Path("/update")
+	@Path("/update/{jsonData}")
 	public boolean updatePoints(@PathParam("jsonData") String jsonData) {
 		PointsDAO pointsDAO = new PointsDAO();
 		boolean ret = false;
