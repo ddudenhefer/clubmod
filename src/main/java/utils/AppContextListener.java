@@ -159,12 +159,17 @@ public class AppContextListener implements ServletContextListener {
 			System.out.println("UpdateMemberYTDTask " + new Date().toString());
 			
 			Calendar cal = Calendar.getInstance();
-			boolean resetTotals = false;
-			if (cal.get(Calendar.MONTH) == Calendar.DECEMBER && cal.get(Calendar.DAY_OF_MONTH) == 31)
+			long endSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
+			boolean resetTotals = true;
+/*			if (cal.get(Calendar.MONTH) == Calendar.DECEMBER && cal.get(Calendar.DAY_OF_MONTH) == 31)
 				resetTotals = true;
+*/			
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+	        cal.set(Calendar.MONTH, 0);
+
+	        long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;			
 			
-	        long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
-			long endSeconds = Constants.getEndOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
+	        //long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
 
 			List<Athlete> athletes = new ArrayList<Athlete>();
 			MemberDAO memberDAO = new MemberDAO();
