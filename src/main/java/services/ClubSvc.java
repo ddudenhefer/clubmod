@@ -15,11 +15,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import model.Member;
+import model.MemberYTDTotal;
 
 import com.google.gson.Gson;
 
 import connector.JStravaV3;
 import dao.MemberDAO;
+import dao.MemberYTDTotalsDAO;
 import dao.PointsDAO;
 import entities.activity.Activity;
 import entities.athlete.Athlete;
@@ -34,12 +36,8 @@ public class ClubSvc {
 	public String getClubMembers()  {
 		
 	    Calendar cal = Calendar.getInstance();
-		long endSeconds = Constants.getEndOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
-
-		cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.set(Calendar.MONTH, 0);
-
         long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
+		long endSeconds = Constants.getEndOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
 
 		List<Athlete> athletes = new ArrayList<Athlete>();
 		MemberDAO memberDAO = new MemberDAO();
@@ -64,8 +62,13 @@ public class ClubSvc {
 				    		elevation += activity.getTotal_elevation_gain();
 				    	}
 				    }
-				    athlete.setMilesYTD((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
-				    athlete.setElevationYTD((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
+				    
+				    MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
+				    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
+				    if (memberYTDTotal != null) {
+					    athlete.setMilesYTD(memberYTDTotal.getMilesYTD() + (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
+					    athlete.setElevationYTD(memberYTDTotal.getElevationYTD() + (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
+				    }
 				    
 				    PointsDAO pointsDAO = new PointsDAO();
 				    athlete.setPointsYTD(pointsDAO.getMemberPoints(member.getId(), athlete.getMilesYTD(), athlete.getElevationYTD()));
