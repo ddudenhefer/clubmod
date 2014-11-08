@@ -76,6 +76,7 @@ public class PointSvc {
 		boolean ret = false;
 		
 		try {
+			System.out.println(jsonData);
 			Gson gson = new Gson();
 	        Point[]pointsArray = gson.fromJson(jsonData, Point[].class); 
 	        List<Point> points=Arrays.asList(pointsArray);	
