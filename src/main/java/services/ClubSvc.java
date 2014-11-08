@@ -63,8 +63,8 @@ public class ClubSvc {
 				    MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
 				    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
 				    if (memberYTDTotal != null) {
-					    athlete.setMilesYTD(memberYTDTotal.getMilesYTD() + (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
-					    athlete.setElevationYTD(memberYTDTotal.getElevationYTD() + (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
+					    athlete.setMilesYTD((float) (Math.round(memberYTDTotal.getMilesYTD() + Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
+					    athlete.setElevationYTD((long) (Math.round(memberYTDTotal.getElevationYTD() + Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
 				    }
 				    
 				    PointsDAO pointsDAO = new PointsDAO();
