@@ -16,6 +16,7 @@
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
   <filter>
+  
     <filter-name>CORS</filter-name>
     <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
     
@@ -38,6 +39,7 @@
 		<param-name>cors.supportedHeaders</param-name>
 		<param-value>*</param-value>
 	</init-param>
+	
   </filter>
   <filter-mapping>
     <filter-name>CORS</filter-name>
