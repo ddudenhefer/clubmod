@@ -71,23 +71,24 @@ public class PointSvc {
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Path("/update/{jsonData}")
-	public boolean updatePoints(@PathParam("jsonData") String jsonData) {
+	public String updatePoints(@PathParam("jsonData") String jsonData) {
 		PointsDAO pointsDAO = new PointsDAO();
-		boolean ret = false;
+		String ret = "failed";
 		
 		try {
 			System.out.println(jsonData);
-/*			Gson gson = new Gson();
+			Gson gson = new Gson();
+			
 	        Point[]pointsArray = gson.fromJson(jsonData, Point[].class); 
 	        List<Point> points=Arrays.asList(pointsArray);	
 
-			ret = pointsDAO.updatePoints(points);
-*/		} catch (Exception e) {
+			boolean ok = pointsDAO.updatePoints(points);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			ret = false;
+			ret = "failed";
 		}
-	    return ret; 
+		return "success";
 	}
 	
 	
