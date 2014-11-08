@@ -72,11 +72,15 @@ public class PointSvc {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/update")
-	public boolean updatePoints(@PathParam("points") List<Point> points) {
+	public boolean updatePoints(@PathParam("jsonData") String jsonData) {
 		PointsDAO pointsDAO = new PointsDAO();
 		boolean ret = false;
 		
 		try {
+			Gson gson = new Gson();
+	        Point[]pointsArray = gson.fromJson(jsonData, Point[].class); 
+	        List<Point> points=Arrays.asList(pointsArray);	
+
 			ret = pointsDAO.updatePoints(points);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
