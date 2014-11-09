@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Challenge;
-import model.Member;
 
 public class ChallengeDAO {
 	
@@ -88,6 +87,45 @@ public class ChallengeDAO {
 		return challenge;
 	}
 	
+	
+	public Challenge getChallengeById(int id)throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		Challenge challenge = null;
+
+		try {
+			connection = Database.getConnection();
+			if (connection != null) {
+				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where id=?";
+				preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setInt(1,id);
+				ResultSet rs = preparedStatement.executeQuery();
+				if (rs.next()) {
+					challenge = new Challenge();
+					challenge.setId(rs.getInt("id"));
+					challenge.setChallengeIndex(rs.getInt("challengeIndex"));
+					challenge.setName(rs.getString("name"));
+					challenge.setSeason(rs.getString("season"));
+					challenge.setStartDate(rs.getDate("startDate"));
+					challenge.setEndDate(rs.getDate("endDate"));
+					challenge.setLabel(rs.getString("label"));
+					challenge.setService(rs.getString("service"));
+					challenge.setMemberId(rs.getInt("memberId"));
+				}
+			}
+		
+		} catch (Exception e) {
+			throw e;
+		}
+		finally {
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (connection != null)
+				connection.close();
+		}
+		return challenge;
+	}
+
 	
 	public List<Challenge> getAllChallenges()throws Exception {
 		Connection connection = null;
@@ -169,5 +207,58 @@ public class ChallengeDAO {
 		
 		return challenges;
 	}
+	
+	public boolean updateChallenge(Challenge challenge)throws Exception {
+		
+		if (challenge == null)
+			return false;
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connection = Database.getConnection();
+			if (connection != null) {
+				Challenge challengeDB = getChallengeById(challenge.getId());
+				if (challengeDB != null) {	// update
+					String sql = "update challenges set startDate=?, endDate=? where id=?";
+					preparedStatement = connection.prepareStatement(sql);
+					preparedStatement.setDate(1, (Date) challenge.getStartDate());
+					preparedStatement.setDate(2, (Date) challenge.getEndDate());
+					preparedStatement.setLong(3, challenge.getId());
+		
+					int rowsAffected = preparedStatement.executeUpdate();
+					if (rowsAffected > 0)
+						return true;
+				}
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		finally {
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (connection != null)
+			connection.close();
+		}
+		return false;
+	}
+
+
+	public boolean updateChallenges(List<Challenge> challenges)throws Exception {
+		
+		if (challenges == null || challenges.size() == 0)
+			return false;
+		
+		try {
+			for (Challenge challenge : challenges) {
+				updateChallenge(challenge);
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		return true;
+	}
+	
 	
 }

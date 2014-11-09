@@ -4,6 +4,7 @@ package services;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -15,12 +16,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import model.Challenge;
-import model.Member;
-
 import com.google.gson.Gson;
-
 import dao.ChallengeDAO;
-import dao.MemberDAO;
 
 
 @Path("/challenge")
@@ -72,5 +69,29 @@ public class ChallengeSvc {
 		}
 		return ret;
 	}
+	
+	@POST
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Path("/update/{jsonData}")
+	public String updateChallenges(@PathParam("jsonData") String jsonData) {
+		ChallengeDAO challengeDAO = new ChallengeDAO();
+		String ret = "success";
+		
+		try {
+			Gson gson = new Gson();
+			Challenge[]challengesArray = gson.fromJson(jsonData, Challenge[].class); 
+	        List<Challenge> challenge=Arrays.asList(challengesArray);	
+
+			boolean ok = challengeDAO.updateChallenges(challenge);
+			if (! ok)
+				ret = "failed"; 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			ret = "failed";
+		}
+		return ret;
+	}
+	
 	
 } 
