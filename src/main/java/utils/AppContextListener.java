@@ -55,10 +55,10 @@ public class AppContextListener implements ServletContextListener {
 
 		TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
 		Timer memberYTDTimer = new Timer();
-		memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23), ONCE_PER_DAY);
+		memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23,45), ONCE_PER_DAY);
 	}
 	
-	private static Date getTomorrow(int hour){
+	private static Date getTomorrow(int hour, int mins){
 		Calendar tomorrow = Calendar.getInstance();
 	    tomorrow.add(Calendar.DATE, 1);
 	    Calendar result = new GregorianCalendar(
@@ -66,19 +66,19 @@ public class AppContextListener implements ServletContextListener {
 	    		tomorrow.get(Calendar.MONTH),
 	    		tomorrow.get(Calendar.DATE),
 	    		hour,
-	    		ZERO_MINUTES
+	    		mins
 	    );
 	    return result.getTime();
 	 }
 	
-	private static Date getTonight(int hour){
+	private static Date getTonight(int hour, int mins){
 		Calendar tonight = Calendar.getInstance();
 	    Calendar result = new GregorianCalendar(
 	    		tonight.get(Calendar.YEAR),
 	    		tonight.get(Calendar.MONTH),
 	    		tonight.get(Calendar.DATE),
 	    		hour,
-	    		ZERO_MINUTES
+	    		mins
 	    );
 	    return result.getTime();
 	 }
