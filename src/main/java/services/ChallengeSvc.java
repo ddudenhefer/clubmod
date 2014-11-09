@@ -16,7 +16,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import model.Challenge;
+
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import dao.ChallengeDAO;
 
 
@@ -78,7 +81,7 @@ public class ChallengeSvc {
 		String ret = "success";
 		
 		try {
-			Gson gson = new Gson();
+			Gson gson = new GsonBuilder().setDateFormat("MM-dd-yyyy").create();
 			Challenge[]challengesArray = gson.fromJson(jsonData, Challenge[].class); 
 	        List<Challenge> challenge=Arrays.asList(challengesArray);	
 
