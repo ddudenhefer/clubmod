@@ -223,8 +223,8 @@ public class ChallengeDAO {
 				if (challengeDB != null) {	// update
 					String sql = "update challenges set startDate=?, endDate=? where id=?";
 					preparedStatement = connection.prepareStatement(sql);
-					preparedStatement.setDate(1, (Date) challenge.getStartDate());
-					preparedStatement.setDate(2, (Date) challenge.getEndDate());
+					preparedStatement.setDate(1, new java.sql.Date(challenge.getStartDate().getTime()));
+					preparedStatement.setDate(2, new java.sql.Date(challenge.getEndDate().getTime()));
 					preparedStatement.setLong(3, challenge.getId());
 		
 					int rowsAffected = preparedStatement.executeUpdate();
