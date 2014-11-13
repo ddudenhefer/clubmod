@@ -47,7 +47,10 @@ public class ClubSvc {
 				    // test authentication: if null, continue
 				    Athlete athlete = strava.getCurrentAthlete();
 				    if (athlete == null)
-				    	continue;		
+				    	continue;
+				    
+				    member.setFirstName(athlete.getFirstname());
+				    member.setLastName(athlete.getLastname());
 		
 					float totalMeters = 0;	
 					float elevation = 0;
