@@ -36,10 +36,10 @@ public class ClubSvc {
         long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
 		long endSeconds = Constants.getEndOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
 
-		List<Athlete> athletes = new ArrayList<Athlete>();
+		List<Member> members = new ArrayList<Member>();
 		MemberDAO memberDAO = new MemberDAO();
 		try {
-			List<Member> members = memberDAO.getAllMembers();
+			members = memberDAO.getAllMembers();
 			for (Member member : members) {
 				if (member != null && member.getAccessToken() != null) {
 					JStravaV3 strava = new JStravaV3(member.getAccessToken());
@@ -48,7 +48,6 @@ public class ClubSvc {
 				    Athlete athlete = strava.getCurrentAthlete();
 				    if (athlete == null)
 				    	continue;		
-				    athletes.add(athlete);
 		
 					float totalMeters = 0;	
 					float elevation = 0;
@@ -69,12 +68,12 @@ public class ClubSvc {
 				    	milesYTD_DB += (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
 				    	elevationYTD_DB += (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0);
 				    	
-					    athlete.setMilesYTD((float)(Math.round(milesYTD_DB * 10) / 10.0));
-					    athlete.setElevationYTD((long)(Math.round(elevationYTD_DB *10) /10.0));
+				    	member.setMilesYTD((float)(Math.round(milesYTD_DB * 10) / 10.0));
+				    	member.setElevationYTD((long)(Math.round(elevationYTD_DB *10) /10.0));
 				    }
 				    
 				    PointsDAO pointsDAO = new PointsDAO();
-				    athlete.setPointsYTD(pointsDAO.getMemberPoints(member.getId(), athlete.getMilesYTD(), athlete.getElevationYTD()));
+				    member.setPointsYTD(pointsDAO.getMemberPoints(member.getId(), member.getMilesYTD(), member.getElevationYTD()));
 				}
 			}
 		} catch (Exception e) {
@@ -82,12 +81,12 @@ public class ClubSvc {
 			e.printStackTrace();
 		}
 
-		Collections.sort(athletes, Athlete.Comparators.NAME);
+		Collections.sort(members, Member.Comparators.NAME);
 
 		Gson gson = new Gson();
 		String ret = "";
-		if (athletes != null) {
-			ret = gson.toJson(athletes);
+		if (members != null) {
+			ret = gson.toJson(members);
 		}		
 		return ret;
 	}

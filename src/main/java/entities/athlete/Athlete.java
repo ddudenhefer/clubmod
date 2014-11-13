@@ -6,6 +6,8 @@ import entities.gear.Gear;
 import java.util.Comparator;
 import java.util.List;
 
+import model.Member;
+
 
 public class Athlete implements Comparable<Athlete> {
 
@@ -34,10 +36,6 @@ public class Athlete implements Comparable<Athlete> {
     private List<Club> clubs;
     private List<Gear> bikes;
     private List<Gear> shoes;
-    private boolean authenticated;
-    private float milesYTD;
-    private long elevationYTD;
-    private int pointsYTD;
 
     
     @Override
@@ -259,45 +257,17 @@ public class Athlete implements Comparable<Athlete> {
         this.shoes = shoes;
     }
     
-    public boolean getAuthenticated() {
-        return authenticated;
-    }
-
-    public void setAuthenticated(boolean authenticated) {
-        this.authenticated = authenticated;
-    }
-    
-    public float getMilesYTD() {
-        return milesYTD;
-    }
-
-    public void setMilesYTD(float milesYTD) {
-        this.milesYTD = milesYTD;
-    }
-
-    public long getElevationYTD() {
-        return elevationYTD;
-    }
-
-    public void setElevationYTD(long elevationYTD) {
-        this.elevationYTD = elevationYTD;
-    }
-    
-    public int getPointsYTD() {
-        return pointsYTD;
-    }
-
-    public void setPointsYTD(int pointsYTD) {
-        this.pointsYTD = pointsYTD;
-    }
 
     public static class Comparators {
 
         public static Comparator<Athlete> NAME = new Comparator<Athlete>() {
             @Override
             public int compare(Athlete o1, Athlete o2) {
-                return o1.getLastname().toLowerCase().compareTo(o2.getLastname().toLowerCase());
-            }
+               	int ret = o1.getLastname().compareTo(o2.getLastname());
+               	if (ret == 0)
+               		return o1.getFirstname().compareTo(o2.getFirstname());
+               	return ret;
+               }
         };
     }
 }
