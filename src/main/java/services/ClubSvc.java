@@ -51,6 +51,8 @@ public class ClubSvc {
 				    
 				    member.setFirstName(athlete.getFirstname());
 				    member.setLastName(athlete.getLastname());
+				    MemberDAO memberDAODB = new MemberDAO();
+				    memberDAODB.saveMember(member);
 		
 					float totalMeters = 0;	
 					float elevation = 0;
