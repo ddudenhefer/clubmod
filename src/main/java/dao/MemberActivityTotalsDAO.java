@@ -126,7 +126,7 @@ public class MemberActivityTotalsDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				String sql = "SELECT memberId, fantasy_entry, fantasy_first, fantasy_second, fantasy_third, group_ride, event_ride FROM member_activity_totals where memberId=?";
+				String sql = "SELECT memberId, fantasy_entry, fantasy_first, fantasy_second, fantasy_third, group_ride, event_ride FROM member_activity_totals";
 				preparedStatement = connection.prepareStatement(sql);
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) {

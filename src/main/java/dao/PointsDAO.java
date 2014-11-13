@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Challenge;
+import model.MemberActivityTotal;
 import model.Point;
 
 public class PointsDAO {
@@ -125,11 +126,14 @@ public class PointsDAO {
 		
 		ChallengeDAO challengeDAO = new ChallengeDAO();
 		List<Challenge> challenges = challengeDAO.getChallengesByMemberId(memberId);
+		
+		//challenges
 		for (Challenge challenge : challenges) {
 			Point point = getPoints("challenge", challenge.getService());
 			points += point.getPoints();
 	    }
 		
+		// achievements
 		Point point = getPoints("achievements", "miles");
 		int miles = point.getIncrement();
 		if (distance > point.getLimit())
@@ -143,6 +147,29 @@ public class PointsDAO {
 			elevation = point.getLimit();
 		count = (int)elevation/feet;
 		points += (count*point.getPoints());
+
+		//fantasy
+		MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(); 
+		MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(memberId);
+
+		point = getPoints("fantasy", "entry");
+		points += (memberActivityTotal.getFantasyEntry()*point.getPoints());
+
+		point = getPoints("fantasy", "first");
+		points += (memberActivityTotal.getFantasyFirst()*point.getPoints());
+
+		point = getPoints("fantasy", "second");
+		points += (memberActivityTotal.getFantasySecond()*point.getPoints());
+		
+		point = getPoints("fantasy", "third");
+		points += (memberActivityTotal.getFantasyThird()*point.getPoints());
+		
+		//rides
+		point = getPoints("ride", "group");
+		points += (memberActivityTotal.getGroupRide()*point.getPoints());
+
+		point = getPoints("ride", "event");
+		points += (memberActivityTotal.getEventRide()*point.getPoints());
 
 		return points;
 	}

@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -13,9 +14,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import model.Member;
 import model.MemberActivityTotal;
+
 import com.google.gson.Gson;
+
 import dao.MemberActivityTotalsDAO;
+import dao.MemberDAO;
 
 @Path("/member/activty")
 public class MemberActivtySvc {
@@ -51,11 +56,19 @@ public class MemberActivtySvc {
 	@Path("/all")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getAllPoints() {
+	public String getAllMemberActivityTotals() {
 		List<MemberActivityTotal> memberActivityTotals = new ArrayList<MemberActivityTotal>();
 		
 		try {
-			memberActivityTotals = new MemberActivityTotalsDAO().getAllMemberActivityTotals();
+			MemberDAO memberDAO = new MemberDAO();
+			List<Member> members = memberDAO.getAllMembers();
+			Collections.sort(members, Member.Comparators.NAME);
+			
+			for (Member member : members) {
+				MemberActivityTotal memberActivityTotal = new MemberActivityTotalsDAO().getMemberData(member.getId());
+				if (memberActivityTotal != null)
+					memberActivityTotals.add(memberActivityTotal);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
