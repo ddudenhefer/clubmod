@@ -49,9 +49,6 @@ public class ClubSvc {
 				    if (athlete == null)
 				    	continue;
 				    
-				    member.setFirstName(athlete.getFirstname());
-				    member.setLastName(athlete.getLastname());
-		
 					float totalMeters = 0;	
 					float elevation = 0;
 				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
