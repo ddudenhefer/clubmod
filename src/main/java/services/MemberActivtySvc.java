@@ -66,8 +66,12 @@ public class MemberActivtySvc {
 			
 			for (Member member : members) {
 				MemberActivityTotal memberActivityTotal = new MemberActivityTotalsDAO().getMemberData(member.getId());
-				if (memberActivityTotal != null)
-					memberActivityTotals.add(memberActivityTotal);
+				if (memberActivityTotal == null) {
+					memberActivityTotal = new MemberActivityTotal();
+					memberActivityTotal.setMemberId(member.getId());				
+				}
+				memberActivityTotal.setMemberName(member.getFirstName() + " " + member.getLastName());				
+				memberActivityTotals.add(memberActivityTotal);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
