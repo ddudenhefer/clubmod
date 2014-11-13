@@ -36,12 +36,11 @@ public class ClubSvc {
         long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
 		long endSeconds = Constants.getEndOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
 
-		List<Member> membersIn = new ArrayList<Member>();
-		List<Member> membersOut = new ArrayList<Member>();
+		List<Member> members = new ArrayList<Member>();
 		MemberDAO memberDAO = new MemberDAO();
 		try {
-			membersIn = memberDAO.getAllMembers();
-			for (Member member : membersIn) {
+			members = memberDAO.getAllMembers();
+			for (Member member : members) {
 				if (member != null && member.getAccessToken() != null) {
 					JStravaV3 strava = new JStravaV3(member.getAccessToken());
 				    
@@ -75,7 +74,6 @@ public class ClubSvc {
 				    
 				    PointsDAO pointsDAO = new PointsDAO();
 				    member.setPointsYTD(pointsDAO.getMemberPoints(member.getId(), member.getMilesYTD(), member.getElevationYTD()));
-				    membersOut.add(member);
 				}
 			}
 		} catch (Exception e) {
@@ -83,12 +81,12 @@ public class ClubSvc {
 			e.printStackTrace();
 		}
 
-		Collections.sort(membersOut, Member.Comparators.NAME);
+		Collections.sort(members, Member.Comparators.NAME);
 
 		Gson gson = new Gson();
 		String ret = "";
-		if (membersOut != null) {
-			ret = gson.toJson(membersOut);
+		if (members != null) {
+			ret = gson.toJson(members);
 		}		
 		return ret;
 	}

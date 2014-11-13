@@ -155,13 +155,13 @@ public class PointsDAO {
 		point = getPoints("fantasy", "entry");
 		points += (memberActivityTotal.getFantasyEntry()*point.getPoints());
 
-		point = getPoints("fantasy", "first");
+		point = getPoints("fantasy", "1");
 		points += (memberActivityTotal.getFantasyFirst()*point.getPoints());
 
-		point = getPoints("fantasy", "second");
+		point = getPoints("fantasy", "2");
 		points += (memberActivityTotal.getFantasySecond()*point.getPoints());
 		
-		point = getPoints("fantasy", "third");
+		point = getPoints("fantasy", "3");
 		points += (memberActivityTotal.getFantasyThird()*point.getPoints());
 		
 		//rides
