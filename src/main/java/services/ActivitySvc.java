@@ -17,9 +17,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
+
+import model.Challenge;
 import model.Member;
 import utils.Constants;
 import connector.JStravaV3;
+import dao.ChallengeDAO;
 import dao.MemberDAO;
 import entities.activity.Activity;
 import entities.athlete.Athlete;
@@ -38,35 +41,48 @@ public class ActivitySvc {
 		MemberDAO memberDAO = new MemberDAO();
 		try {
 			List<Member> members = memberDAO.getAllMembers();
-			for (Member member : members) {
-				if (member != null && member.getAccessToken() != null) {
-					JStravaV3 strava = new JStravaV3(member.getAccessToken());
-				    
-				    // test authentication: if null, continue
-				    Athlete athlete = strava.getCurrentAthlete();
-				    if (athlete == null)
-				    	continue;
+			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 
-				    ChallengeResult challenge = new ChallengeResult();
-				    challenge.setAthleteId(athlete.getId());
-				    challenge.setFisrtName(athlete.getFirstname());
-				    challenge.setLastName(athlete.getLastname());
+			ChallengeDAO challengeDAO = new ChallengeDAO();
+			Date sd = df.parse(startDate);
+			java.sql.Date sDate = new java.sql.Date(sd.getTime());
+			Date ed = df.parse(endDate);
+			java.sql.Date eDate = new java.sql.Date(ed.getTime());
+			
+			Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
+			
+			for (Member member : members) {
+				
+				if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getName(), challenge.getSeason())) {				
 					
-					DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-					long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
-					long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
-					float totalMeters = 0;
-				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
-				    for (Activity activity : activities) {
-				    	if (activity.getType().equals("Ride")) {
-				    		totalMeters += activity.getDistance();
-				    	}
-				    }
-				    
-				    if (activities.size() > 0) {
-				    	challenge.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
-				    	challengeResults.add(challenge);
-				    }
+					if (member != null && member.getAccessToken() != null) {
+						JStravaV3 strava = new JStravaV3(member.getAccessToken());
+					    
+					    // test authentication: if null, continue
+					    Athlete athlete = strava.getCurrentAthlete();
+					    if (athlete == null)
+					    	continue;
+	
+					    ChallengeResult challengeResult = new ChallengeResult();
+					    challengeResult.setAthleteId(athlete.getId());
+					    challengeResult.setFisrtName(athlete.getFirstname());
+					    challengeResult.setLastName(athlete.getLastname());
+						
+						long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
+						long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
+						float totalMeters = 0;
+					    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+					    for (Activity activity : activities) {
+					    	if (activity.getType().equals("Ride")) {
+					    		totalMeters += activity.getDistance();
+					    	}
+					    }
+					    
+					    if (activities.size() > 0) {
+					    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
+					    	challengeResults.add(challengeResult);
+					    }
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -94,38 +110,51 @@ public class ActivitySvc {
 		MemberDAO memberDAO = new MemberDAO();
 		try {
 			List<Member> members = memberDAO.getAllMembers();
-			for (Member member : members) {
-				if (member != null && member.getAccessToken() != null) {
-					JStravaV3 strava = new JStravaV3(member.getAccessToken());
-				    
-				    // test authentication: if null, continue
-				    Athlete athlete = strava.getCurrentAthlete();
-				    if (athlete == null)
-				    	continue;
+			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 
-				    ChallengeResult challenge = new ChallengeResult();
-				    challenge.setAthleteId(athlete.getId());
-				    challenge.setFisrtName(athlete.getFirstname());
-				    challenge.setLastName(athlete.getLastname());
-					
-					DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-					long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
-					long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
-					int totalRides = 0;
-				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
-				    for (Activity activity : activities) {
-				    	if (activity.getType().equals("Ride")) {
-				    		float meters = activity.getDistance();
-				    		float feet = (float) (Math.round(Constants.ConvertMetersToMiles(meters, true) * 10) / 10.0);
-				    		if (feet >= 25)
-				    			totalRides ++;
-				    	}
-				    }
-				    
-				    if (activities.size() > 0) {
-				    	challenge.setRides(totalRides);
-				    	challengeResults.add(challenge);
-				    }
+			ChallengeDAO challengeDAO = new ChallengeDAO();
+			Date sd = df.parse(startDate);
+			java.sql.Date sDate = new java.sql.Date(sd.getTime());
+			Date ed = df.parse(endDate);
+			java.sql.Date eDate = new java.sql.Date(ed.getTime());
+			
+			Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
+			
+			for (Member member : members) {
+				
+				if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getName(), challenge.getSeason())) {				
+
+					if (member != null && member.getAccessToken() != null) {
+						JStravaV3 strava = new JStravaV3(member.getAccessToken());
+					    
+					    // test authentication: if null, continue
+					    Athlete athlete = strava.getCurrentAthlete();
+					    if (athlete == null)
+					    	continue;
+	
+					    ChallengeResult challengeResult = new ChallengeResult();
+					    challengeResult.setAthleteId(athlete.getId());
+					    challengeResult.setFisrtName(athlete.getFirstname());
+					    challengeResult.setLastName(athlete.getLastname());
+						
+						long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
+						long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
+						int totalRides = 0;
+					    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+					    for (Activity activity : activities) {
+					    	if (activity.getType().equals("Ride")) {
+					    		float meters = activity.getDistance();
+					    		float feet = (float) (Math.round(Constants.ConvertMetersToMiles(meters, true) * 10) / 10.0);
+					    		if (feet >= 25)
+					    			totalRides ++;
+					    	}
+					    }
+					    
+					    if (activities.size() > 0) {
+					    	challengeResult.setRides(totalRides);
+					    	challengeResults.add(challengeResult);
+					    }
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -153,36 +182,50 @@ public class ActivitySvc {
 		MemberDAO memberDAO = new MemberDAO();
 		try {
 			List<Member> members = memberDAO.getAllMembers();
-			for (Member member : members) {
-				if (member != null && member.getAccessToken() != null) {
-					JStravaV3 strava = new JStravaV3(member.getAccessToken());
-				    
-				    // test authentication: if null, continue
-				    Athlete athlete = strava.getCurrentAthlete();
-				    if (athlete == null)
-				    	continue;
+			
+			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 
-				    ChallengeResult challenge = new ChallengeResult();
-				    challenge.setAthleteId(athlete.getId());
-				    challenge.setFisrtName(athlete.getFirstname());
-				    challenge.setLastName(athlete.getLastname());
-					
-					DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-					long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
-					long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
-					float longestMeters = 0;
-				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
-				    for (Activity activity : activities) {
-				    	if (activity.getType().equals("Ride")) {
-				    		if (activity.getDistance() > longestMeters)
-				    			longestMeters = activity.getDistance();
-				    	}
-				    }
-				    
-				    if (activities.size() > 0) {
-				    	challenge.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(longestMeters, true) * 10) / 10.0));				    
-				    	challengeResults.add(challenge);
-				    }
+			ChallengeDAO challengeDAO = new ChallengeDAO();
+			Date sd = df.parse(startDate);
+			java.sql.Date sDate = new java.sql.Date(sd.getTime());
+			Date ed = df.parse(endDate);
+			java.sql.Date eDate = new java.sql.Date(ed.getTime());
+			
+			Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
+			
+			for (Member member : members) {
+				
+				if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getName(), challenge.getSeason())) {				
+				
+					if (member != null && member.getAccessToken() != null) {
+						JStravaV3 strava = new JStravaV3(member.getAccessToken());
+					    
+					    // test authentication: if null, continue
+					    Athlete athlete = strava.getCurrentAthlete();
+					    if (athlete == null)
+					    	continue;
+	
+					    ChallengeResult challengeResult = new ChallengeResult();
+					    challengeResult.setAthleteId(athlete.getId());
+					    challengeResult.setFisrtName(athlete.getFirstname());
+					    challengeResult.setLastName(athlete.getLastname());
+						
+						long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
+						long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
+						float longestMeters = 0;
+					    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+					    for (Activity activity : activities) {
+					    	if (activity.getType().equals("Ride")) {
+					    		if (activity.getDistance() > longestMeters)
+					    			longestMeters = activity.getDistance();
+					    	}
+					    }
+					    
+					    if (activities.size() > 0) {
+					    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(longestMeters, true) * 10) / 10.0));				    
+					    	challengeResults.add(challengeResult);
+					    }
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -210,45 +253,59 @@ public class ActivitySvc {
 		MemberDAO memberDAO = new MemberDAO();
 		try {
 			List<Member> members = memberDAO.getAllMembers();
-			for (Member member : members) {
-				if (member != null && member.getAccessToken() != null) {
-					JStravaV3 strava = new JStravaV3(member.getAccessToken());
-				    
-				    // test authentication: if null, continue
-				    Athlete athlete = strava.getCurrentAthlete();
-				    if (athlete == null)
-				    	continue;
+			
+			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 
-				    ChallengeResult challenge = new ChallengeResult();
-				    challenge.setAthleteId(athlete.getId());
-				    challenge.setFisrtName(athlete.getFirstname());
-				    challenge.setLastName(athlete.getLastname());
-					
-					DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-					long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
-					long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
-					float speed = 0;
-					int totalRides = 0;
-					float totalMeters = 0;
-				    challenge.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));					
-					
-				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
-				    for (Activity activity : activities) {
-				    	if (activity.getType().equals("Ride")) {
-				    		speed += activity.getAverage_speed();
-				    		totalMeters += activity.getDistance();
-				    		totalRides ++;
-				    	}
-				    }
-				    
-				    if (activities.size() > 0) {
-					    float miles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
-					    if (miles >= 50) {
-						    double mphSpeed = Math.round(Constants.ConvertMPStoMPH(speed, true) * 10) / 10.0;
-						    challenge.setSpeed((float) (Math.round((mphSpeed/totalRides) * 10) / 10.0));
-						    challengeResults.add(challenge);
+			ChallengeDAO challengeDAO = new ChallengeDAO();
+			Date sd = df.parse(startDate);
+			java.sql.Date sDate = new java.sql.Date(sd.getTime());
+			Date ed = df.parse(endDate);
+			java.sql.Date eDate = new java.sql.Date(ed.getTime());
+			
+			Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
+			
+			for (Member member : members) {
+				
+				if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getName(), challenge.getSeason())) {				
+				
+					if (member != null && member.getAccessToken() != null) {
+						JStravaV3 strava = new JStravaV3(member.getAccessToken());
+					    
+					    // test authentication: if null, continue
+					    Athlete athlete = strava.getCurrentAthlete();
+					    if (athlete == null)
+					    	continue;
+	
+					    ChallengeResult challengeResult = new ChallengeResult();
+					    challengeResult.setAthleteId(athlete.getId());
+					    challengeResult.setFisrtName(athlete.getFirstname());
+					    challengeResult.setLastName(athlete.getLastname());
+						
+						long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
+						long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
+						float speed = 0;
+						int totalRides = 0;
+						float totalMeters = 0;
+						challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));					
+						
+					    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+					    for (Activity activity : activities) {
+					    	if (activity.getType().equals("Ride")) {
+					    		speed += activity.getAverage_speed();
+					    		totalMeters += activity.getDistance();
+					    		totalRides ++;
+					    	}
 					    }
-				    }
+					    
+					    if (activities.size() > 0) {
+						    float miles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
+						    if (miles >= 50) {
+							    double mphSpeed = Math.round(Constants.ConvertMPStoMPH(speed, true) * 10) / 10.0;
+							    challengeResult.setSpeed((float) (Math.round((mphSpeed/totalRides) * 10) / 10.0));
+							    challengeResults.add(challengeResult);
+						    }
+					    }
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -276,35 +333,49 @@ public class ActivitySvc {
 		MemberDAO memberDAO = new MemberDAO();
 		try {
 			List<Member> members = memberDAO.getAllMembers();
-			for (Member member : members) {
-				if (member != null && member.getAccessToken() != null) {
-					JStravaV3 strava = new JStravaV3(member.getAccessToken());
-				    
-				    // test authentication: if null, continue
-				    Athlete athlete = strava.getCurrentAthlete();
-				    if (athlete == null)
-				    	continue;
+			
+			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 
-				    ChallengeResult challenge = new ChallengeResult();
-				    challenge.setAthleteId(athlete.getId());
-				    challenge.setFisrtName(athlete.getFirstname());
-				    challenge.setLastName(athlete.getLastname());
-					
-					DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-					long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
-					long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
-				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
-				    float elevation = 0;
-				    for (Activity activity : activities) {
-				    	if (activity.getType().equals("Ride")) {
-				    		elevation += activity.getTotal_elevation_gain();
-				    	}
-				    }
-				    
-				    if (activities.size() > 0) {
-				    	challenge.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
-				    	challengeResults.add(challenge);
-				    }
+			ChallengeDAO challengeDAO = new ChallengeDAO();
+			Date sd = df.parse(startDate);
+			java.sql.Date sDate = new java.sql.Date(sd.getTime());
+			Date ed = df.parse(endDate);
+			java.sql.Date eDate = new java.sql.Date(ed.getTime());
+			
+			Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
+			
+			for (Member member : members) {
+				
+				if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getName(), challenge.getSeason())) {				
+				
+					if (member != null && member.getAccessToken() != null) {
+						JStravaV3 strava = new JStravaV3(member.getAccessToken());
+					    
+					    // test authentication: if null, continue
+					    Athlete athlete = strava.getCurrentAthlete();
+					    if (athlete == null)
+					    	continue;
+	
+					    ChallengeResult challengeResult = new ChallengeResult();
+					    challengeResult.setAthleteId(athlete.getId());
+					    challengeResult.setFisrtName(athlete.getFirstname());
+					    challengeResult.setLastName(athlete.getLastname());
+						
+						long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
+						long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
+					    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+					    float elevation = 0;
+					    for (Activity activity : activities) {
+					    	if (activity.getType().equals("Ride")) {
+					    		elevation += activity.getTotal_elevation_gain();
+					    	}
+					    }
+					    
+					    if (activities.size() > 0) {
+					    	challengeResult.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
+					    	challengeResults.add(challengeResult);
+					    }
+					}
 				}
 			}
 		} catch (Exception e) {
