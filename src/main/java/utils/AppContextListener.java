@@ -41,7 +41,6 @@ public class AppContextListener implements ServletContextListener {
 
 		// Your code here
 		System.out.println("AppContextListener Listener has been shutdown");
-
 	}
 
 	@Override
