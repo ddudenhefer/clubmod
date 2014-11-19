@@ -176,7 +176,7 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges order by id");
+				preparedStatement = connection.prepareStatement("SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId, m.firstName + ' ' + m.lastName as fulleName FROM challenges, members m where memberId=m.id order by id");
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) {
 					challenge = new Challenge();
@@ -189,6 +189,7 @@ public class ChallengeDAO {
 					challenge.setLabel(rs.getString("label"));
 					challenge.setService(rs.getString("service"));
 					challenge.setMemberId(rs.getInt("memberId"));
+					challenge.setMemberFullName(rs.getString("fullName"));
 					challenges.add(challenge);
 				}
 			}

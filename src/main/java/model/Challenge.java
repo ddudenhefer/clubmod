@@ -15,6 +15,7 @@ public class Challenge implements Serializable {
    private String label;
    private String service;
    private int memberId;
+   private String memberFullName;
 
 
    public int getId() {
@@ -82,11 +83,19 @@ public class Challenge implements Serializable {
    }
    
    public int getMemberId() {
-	      return memberId;
-	   }
+	   return memberId;
+   }
 
    public void setMemberId(int memberId) {
 	      this.memberId = memberId;
-}
-   
+   }
+
+   public String getMemberFullName() {
+      return memberFullName;
+   }
+
+   public void setMemberFullName(String memberFullName) {
+      this.name = memberFullName;
+   }
+
 }
