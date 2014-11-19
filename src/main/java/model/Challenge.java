@@ -95,7 +95,7 @@ public class Challenge implements Serializable {
    }
 
    public void setMemberFullName(String memberFullName) {
-      this.name = memberFullName;
+      this.memberFullName = memberFullName;
    }
 
 }

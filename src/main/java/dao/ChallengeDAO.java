@@ -176,7 +176,7 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT c.id, c.challengeIndex, c.name, c.season, c.startDate, c.endDate, c.label, c.service, c.memberId, m.firstName + ' ' + m.lastName as fullName FROM challenges c, members m where c.memberId=m.id order by c.id");
+				preparedStatement = connection.prepareStatement("SELECT c.id, c.challengeIndex, c.name, c.season, c.startDate, c.endDate, c.label, c.service, c.memberId, concat(m.firstName, ' ', m.lastName) as fullName FROM challenges c, members m where c.memberId=m.id order by c.id");
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) {
 					challenge = new Challenge();
