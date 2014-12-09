@@ -61,6 +61,8 @@ public class ClubSvc {
 				    
 				    MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
 				    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
+				    float milesF = 0 ;
+				    long elevationL = 0;
 				    if (memberYTDTotal != null) {
 				    	float milesYTD_DB = memberYTDTotal.getMilesYTD();
 				    	long elevationYTD_DB = memberYTDTotal.getElevationYTD();
@@ -68,12 +70,12 @@ public class ClubSvc {
 				    	milesYTD_DB += (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
 				    	elevationYTD_DB += (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0);
 				    	
-				    	member.setMilesYTD((float)(Math.round(milesYTD_DB * 10) / 10.0));
-				    	member.setElevationYTD((long)(Math.round(elevationYTD_DB *10) /10.0));
+				    	milesF = (float)(Math.round(milesYTD_DB * 10) / 10.0);
+				    	elevationL = (long)(Math.round(elevationYTD_DB *10) /10.0);
 				    }
 				    
 				    PointsDAO pointsDAO = new PointsDAO();
-				    member.setPointsYTD(pointsDAO.getMemberPoints(member.getId(), member.getMilesYTD(), member.getElevationYTD()));
+				    member.setMemberPoints(pointsDAO.getMemberPoints(member.getId(), milesF, elevationL));
 				}
 			}
 		} catch (Exception e) {
@@ -81,7 +83,7 @@ public class ClubSvc {
 			e.printStackTrace();
 		}
 
-		Collections.sort(members, Member.Comparators.NAME);
+		Collections.sort(members, Member.Comparators.POINTS);
 
 		Gson gson = new Gson();
 		String ret = "";

@@ -8,6 +8,7 @@ import java.util.List;
 
 import model.Challenge;
 import model.MemberActivityTotal;
+import model.MemberPoints;
 import model.Point;
 
 public class PointsDAO {
@@ -121,17 +122,21 @@ public class PointsDAO {
 	}
 	
 	
-	public int getMemberPoints(int memberId, float distance, long elevation)throws Exception {
+	public MemberPoints getMemberPoints(int memberId, float distance, long elevation)throws Exception {
 		int points = 0;
+		MemberPoints mp = new MemberPoints();
 		
 		ChallengeDAO challengeDAO = new ChallengeDAO();
 		List<Challenge> challenges = challengeDAO.getChallengesByMemberId(memberId);
 		
 		//challenges
+		int challengePoints = 0;
 		for (Challenge challenge : challenges) {
 			Point point = getPoints("challenge", challenge.getService());
-			points += point.getPoints();
+			challengePoints += point.getPoints();
 	    }
+		mp.setChallenges(challengePoints);
+		points += challengePoints;
 		
 		// achievements
 		Point point = getPoints("achievements", "miles");
@@ -139,39 +144,59 @@ public class PointsDAO {
 		if (distance > point.getLimit())
 			distance = point.getLimit();
 		int count = (int)distance/miles;
-		points += (count*point.getPoints());
+		int milePoints = (count*point.getPoints());
+		
+		mp.setMiles(milePoints);
+		points += milePoints;
 		
 		point = getPoints("achievements", "feet");
 		int feet = point.getIncrement();
 		if (elevation > point.getLimit())
 			elevation = point.getLimit();
 		count = (int)elevation/feet;
-		points += (count*point.getPoints());
+		int elevationPoints = (count*point.getPoints());
+		
+		mp.setElevation(elevationPoints);
+		points += elevationPoints;
 
 		//fantasy
 		MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(); 
 		MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(memberId);
 
+		int fantasyPoints = 0;
 		point = getPoints("fantasy", "entry");
-		points += (memberActivityTotal.getFantasyEntry()*point.getPoints());
+		fantasyPoints += (memberActivityTotal.getFantasyEntry()*point.getPoints());
 
 		point = getPoints("fantasy", "1");
-		points += (memberActivityTotal.getFantasyFirst()*point.getPoints());
+		fantasyPoints += (memberActivityTotal.getFantasyFirst()*point.getPoints());
 
 		point = getPoints("fantasy", "2");
-		points += (memberActivityTotal.getFantasySecond()*point.getPoints());
+		fantasyPoints += (memberActivityTotal.getFantasySecond()*point.getPoints());
 		
 		point = getPoints("fantasy", "3");
-		points += (memberActivityTotal.getFantasyThird()*point.getPoints());
+		fantasyPoints += (memberActivityTotal.getFantasyThird()*point.getPoints());
+		
+		mp.setFantasy(fantasyPoints);
+		points += fantasyPoints;
 		
 		//rides
 		point = getPoints("ride", "group");
-		points += (memberActivityTotal.getGroupRide()*point.getPoints());
+		int groupPoints = (memberActivityTotal.getGroupRide()*point.getPoints());
+		
+		mp.setGroupRides(groupPoints);
+		points += groupPoints;
 
 		point = getPoints("ride", "event");
-		points += (memberActivityTotal.getEventRide()*point.getPoints());
+		int eventPoints = (memberActivityTotal.getEventRide()*point.getPoints());
+		
+		mp.setEventRides(eventPoints);
+		points += eventPoints;
+		
+		mp.setPointsYTD(points);
+		mp.setMilesYTD(distance);
+		mp.setElevationYTD(elevation);
 
-		return points;
+		return mp;
 	}
 	
 	public boolean updatePoint(Point point)throws Exception {

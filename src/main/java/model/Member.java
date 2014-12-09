@@ -14,9 +14,7 @@ public class Member implements Serializable {
    private String lastName;
    
    // not in db
-   private float milesYTD;
-   private long elevationYTD;
-   private int pointsYTD;   
+   private MemberPoints memberPoints;   
 
 
    public int getId() {
@@ -59,31 +57,13 @@ public class Member implements Serializable {
 	   this.lastName = lastName;
    }
    
-   //not in db
-   public float getMilesYTD() {
-       return milesYTD;
+   public MemberPoints getMemberPoints() {
+       return memberPoints;
    }
 
-   public void setMilesYTD(float milesYTD) {
-       this.milesYTD = milesYTD;
+   public void setMemberPoints(MemberPoints memberPoints) {
+       this.memberPoints = memberPoints;
    }
-
-   public long getElevationYTD() {
-       return elevationYTD;
-   }
-
-   public void setElevationYTD(long elevationYTD) {
-       this.elevationYTD = elevationYTD;
-   }
-   
-   public int getPointsYTD() {
-       return pointsYTD;
-   }
-
-   public void setPointsYTD(int pointsYTD) {
-       this.pointsYTD = pointsYTD;
-   }
-
 
    public static class Comparators {
 
@@ -94,6 +74,13 @@ public class Member implements Serializable {
            	if (ret == 0)
            		return o1.getFirstName().compareTo(o2.getFirstName());
            	return ret;
+           }
+       };
+
+       public static Comparator<Member> POINTS = new Comparator<Member>() {
+           @Override
+           public int compare(Member o1, Member o2) {
+           	return Integer.compare(o2.getMemberPoints().getPointsYTD(), o1.getMemberPoints().getPointsYTD());
            }
        };
    }
