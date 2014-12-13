@@ -56,11 +56,15 @@ public class ChallengeDAO {
 			connection = Database.getConnection();
 			if (connection != null) {
 				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where (? between startDate and endDate) ";
+				sql += "or (endDate = (select max(endDate) from challenges ";
 				if (challengeIndex > -1)
-					sql += "or (endDate = (select max(endDate) from challenges where challengeIndex=?))";
+					sql += "where challengeIndex=?";
+				sql += "))";
+					
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setDate(1,currentDate);
-				preparedStatement.setInt(2,challengeIndex);
+				if (challengeIndex > -1)
+					preparedStatement.setInt(2,challengeIndex);
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {
 					challenge = new Challenge();
