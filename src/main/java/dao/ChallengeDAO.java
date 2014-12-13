@@ -60,7 +60,6 @@ public class ChallengeDAO {
 				if (challengeIndex > -1)
 					sql += "where challengeIndex=?";
 				sql += "))";
-					
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setDate(1,currentDate);
 				if (challengeIndex > -1)
