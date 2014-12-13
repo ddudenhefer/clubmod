@@ -55,16 +55,11 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where (? between startDate and endDate) ";
-				sql += "or (endDate = (select max(endDate) from challenges ";
-				if (challengeIndex != 999)
-					sql += "where challengeIndex=?";
-				sql += "))";
+				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where (? between startDate and endDate) or ";
+				sql += "(endDate = (select max(endDate) from challenges where challengeIndex=?))";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setDate(1,currentDate);
-				if (challengeIndex != 999)
-					preparedStatement.setInt(2,challengeIndex);
-				
+				preparedStatement.setInt(2,challengeIndex);
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {
 					challenge = new Challenge();
@@ -92,6 +87,44 @@ public class ChallengeDAO {
 		return challenge;
 	}
 	
+	public Challenge getChallengeByDate(Date currentDate)throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		Challenge challenge = null;
+
+		try {
+			connection = Database.getConnection();
+			if (connection != null) {
+				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where (? between startDate and endDate) or ";
+				sql += "(endDate = (select max(endDate) from challenges))";
+				preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setDate(1,currentDate);
+				ResultSet rs = preparedStatement.executeQuery();
+				if (rs.next()) {
+					challenge = new Challenge();
+					challenge.setId(rs.getInt("id"));
+					challenge.setChallengeIndex(rs.getInt("challengeIndex"));
+					challenge.setName(rs.getString("name"));
+					challenge.setSeason(rs.getString("season"));
+					challenge.setStartDate(rs.getDate("startDate"));
+					challenge.setEndDate(rs.getDate("endDate"));
+					challenge.setLabel(rs.getString("label"));
+					challenge.setService(rs.getString("service"));
+					challenge.setMemberId(rs.getInt("memberId"));
+				}
+			}
+		
+		} catch (Exception e) {
+			throw e;
+		}
+		finally {
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (connection != null)
+				connection.close();
+		}
+		return challenge;
+	}
 	
 	public Challenge getChallengeById(int id)throws Exception {
 		Connection connection = null;

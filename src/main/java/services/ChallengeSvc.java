@@ -73,6 +73,34 @@ public class ChallengeSvc {
 		return ret;
 	}
 	
+
+	@GET
+	@Path("/byDate/{currentDate}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getChallengeByDate(@PathParam("currentDate") String currentDate) { 
+		Challenge challenge = null;
+		
+		try {
+			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+			challenge = new ChallengeDAO().getChallengeByDate(new java.sql.Date(df.parse(currentDate).getTime()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		Gson gson = new Gson();
+		String ret = "";
+		if (challenge != null) {
+			ret = gson.toJson(challenge);
+		}
+		else {
+			ret = gson.toJson("");
+		}
+		return ret;
+	}
+
+
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Path("/update/{jsonData}")
