@@ -65,6 +65,7 @@ public class ChallengeDAO {
 				preparedStatement.setDate(1,currentDate);
 				if (challengeIndex > -1)
 					preparedStatement.setInt(2,challengeIndex);
+				
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {
 					challenge = new Challenge();
