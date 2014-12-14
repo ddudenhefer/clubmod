@@ -122,16 +122,13 @@ public class PointsDAO {
 	}
 	
 	
-	public MemberPoints getMemberPoints(int memberId, float distance, long elevation)throws Exception {
+	public MemberPoints getMemberPoints(int memberId, float distance, long elevation, List<Challenge> challengeWins, MemberActivityTotal memberActivityTotal)throws Exception {
 		int points = 0;
 		MemberPoints mp = new MemberPoints();
 		
-		ChallengeDAO challengeDAO = new ChallengeDAO();
-		List<Challenge> challenges = challengeDAO.getChallengesByMemberId(memberId);
-		
 		//challenges
 		int challengePoints = 0;
-		for (Challenge challenge : challenges) {
+		for (Challenge challenge : challengeWins) {
 			Point point = getPoints("challenge", challenge.getService());
 			challengePoints += point.getPoints();
 	    }
@@ -160,9 +157,6 @@ public class PointsDAO {
 		points += elevationPoints;
 
 		//fantasy
-		MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(); 
-		MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(memberId);
-
 		int fantasyPoints = 0;
 		point = getPoints("fantasy", "entry");
 		fantasyPoints += (memberActivityTotal.getFantasyEntry()*point.getPoints());

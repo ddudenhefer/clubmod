@@ -11,12 +11,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import model.Challenge;
 import model.Member;
+import model.MemberActivityTotal;
 import model.MemberYTDTotal;
 
 import com.google.gson.Gson;
 
 import connector.JStravaV3;
+import dao.ChallengeDAO;
+import dao.MemberActivityTotalsDAO;
 import dao.MemberDAO;
 import dao.MemberYTDTotalsDAO;
 import dao.PointsDAO;
@@ -49,6 +53,8 @@ public class ClubSvc {
 				    if (athlete == null)
 				    	continue;
 				    
+				    member.setPictureURL(athlete.getProfile_medium());
+				    
 					float totalMeters = 0;	
 					float elevation = 0;
 				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
@@ -58,6 +64,8 @@ public class ClubSvc {
 				    		elevation += activity.getTotal_elevation_gain();
 				    	}
 				    }
+				    
+				    member.setTotalRides(activities.size());
 				    
 				    MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
 				    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
@@ -74,8 +82,21 @@ public class ClubSvc {
 				    	elevationL = (long)(Math.round(elevationYTD_DB *10) /10.0);
 				    }
 				    
+				    ChallengeDAO challengeDAO = new ChallengeDAO();
+					List<Challenge> challengeWins = challengeDAO.getChallengesByMemberId(member.getId());			
+					member.setsetChallengeWins(challengeWins);
+					
+					MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(); 
+					MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());	
+					member.setFantasyEntry(memberActivityTotal.getFantasyEntry());
+					member.setFantasyFirst(memberActivityTotal.getFantasyFirst());
+					member.setFantasySecond(memberActivityTotal.getFantasySecond());
+					member.setFantasyThird(memberActivityTotal.getFantasyThird());
+					member.setGroupRides(memberActivityTotal.getGroupRide());
+					member.setEventRides(memberActivityTotal.getEventRide());
+				    
 				    PointsDAO pointsDAO = new PointsDAO();
-				    member.setMemberPoints(pointsDAO.getMemberPoints(member.getId(), milesF, elevationL));
+				    member.setMemberPoints(pointsDAO.getMemberPoints(member.getId(), milesF, elevationL, challengeWins, memberActivityTotal));
 				}
 			}
 		} catch (Exception e) {
