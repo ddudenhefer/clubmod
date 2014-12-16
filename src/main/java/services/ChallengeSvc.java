@@ -77,7 +77,7 @@ public class ChallengeSvc {
 	@GET
 	@Path("/byDate/{currentDate}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public String getChallengeByDate(@PathParam("currentDate") String currentDate) { 
 		Challenge challenge = null;
 		
