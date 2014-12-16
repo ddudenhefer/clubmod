@@ -56,10 +56,13 @@ public class ChallengeDAO {
 			connection = Database.getConnection();
 			if (connection != null) {
 				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where (? between startDate and endDate) or ";
-				sql += "(endDate = (select max(endDate) from challenges where challengeIndex=?))";
+				sql += "(? < startDate and startDate = (select min(startDate) from challenges where challengeIndex=?)) or (? > endDate and endDate = (select max(endDate) from challenges where challengeIndex=?))";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setDate(1,currentDate);
-				preparedStatement.setInt(2,challengeIndex);
+				preparedStatement.setDate(2,currentDate);
+				preparedStatement.setInt(3,challengeIndex);
+				preparedStatement.setDate(4,currentDate);
+				preparedStatement.setInt(5,challengeIndex);
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {
 					challenge = new Challenge();
@@ -96,9 +99,11 @@ public class ChallengeDAO {
 			connection = Database.getConnection();
 			if (connection != null) {
 				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where (? between startDate and endDate) or ";
-				sql += "(endDate = (select max(endDate) from challenges))";
+				sql += "(? < startDate and startDate = (select min(startDate) from challenges)) or (? > endDate and endDate = (select max(endDate) from challenges))";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setDate(1,currentDate);
+				preparedStatement.setDate(2,currentDate);
+				preparedStatement.setDate(3,currentDate);
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {
 					challenge = new Challenge();
