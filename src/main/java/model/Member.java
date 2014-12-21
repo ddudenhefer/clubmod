@@ -79,7 +79,7 @@ public class Member implements Serializable {
        return challengeWins;
    }
 
-   public void setsetChallengeWins(List<Challenge> challengeWins) {
+   public void setChallengeWins(List<Challenge> challengeWins) {
        this.challengeWins = challengeWins;
    }
 

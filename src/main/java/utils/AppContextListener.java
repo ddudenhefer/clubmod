@@ -53,9 +53,9 @@ public class AppContextListener implements ServletContextListener {
 		challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 12), ONCE_PER_WEEK);
 		//challengeWinnerTimer.schedule(updateChallengeWinnerTask, 0);
 
-		TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
-		Timer memberYTDTimer = new Timer();
-		memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23,45), ONCE_PER_DAY);
+		//TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
+		//Timer memberYTDTimer = new Timer();
+		//memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23,45), ONCE_PER_DAY);
 	}
 	
 	private static Date getTomorrow(int hour, int mins){

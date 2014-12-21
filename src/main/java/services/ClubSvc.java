@@ -37,8 +37,10 @@ public class ClubSvc {
 	public String getClubMembers()  {
 		
 	    Calendar cal = Calendar.getInstance();
-        long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
 		long endSeconds = Constants.getEndOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
+	    
+		cal.set(Calendar.DAY_OF_YEAR,1); //first day of the year.	    
+        long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
 
 		List<Member> members = new ArrayList<Member>();
 		MemberDAO memberDAO = new MemberDAO();
@@ -67,24 +69,12 @@ public class ClubSvc {
 				    
 				    member.setTotalRides(activities.size());
 				    
-				    MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
-				    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
-				    float milesF = 0 ;
-				    long elevationL = 0;
-				    if (memberYTDTotal != null) {
-				    	float milesYTD_DB = memberYTDTotal.getMilesYTD();
-				    	long elevationYTD_DB = memberYTDTotal.getElevationYTD();
-				    	
-				    	milesYTD_DB += (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
-				    	elevationYTD_DB += (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0);
-				    	
-				    	milesF = (float)(Math.round(milesYTD_DB * 10) / 10.0);
-				    	elevationL = (long)(Math.round(elevationYTD_DB *10) /10.0);
-				    }
+				    float milesF = (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
+				    long elevationL = (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0);
 				    
 				    ChallengeDAO challengeDAO = new ChallengeDAO();
 					List<Challenge> challengeWins = challengeDAO.getChallengesByMemberId(member.getId());			
-					member.setsetChallengeWins(challengeWins);
+					member.setChallengeWins(challengeWins);
 					
 					MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(); 
 					MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());	
