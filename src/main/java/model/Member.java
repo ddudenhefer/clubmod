@@ -163,7 +163,14 @@ public class Member implements Serializable {
        public static Comparator<Member> POINTS = new Comparator<Member>() {
            @Override
            public int compare(Member o1, Member o2) {
-           	return Integer.compare(o2.getMemberPoints().getPointsYTD(), o1.getMemberPoints().getPointsYTD());
+           	int ret = Integer.compare(o2.getMemberPoints().getPointsYTD(), o1.getMemberPoints().getPointsYTD());
+           	if (ret == 0) {
+           		ret = Float.compare(o2.getMemberPoints().getMilesYTD(), o1.getMemberPoints().getMilesYTD());
+               	if (ret == 0)
+               		return Long.compare(o2.getMemberPoints().getElevationYTD(), o1.getMemberPoints().getElevationYTD());
+               	return ret;
+           	}
+           	return ret;
            }
        };
    }
