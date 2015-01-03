@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class Member implements Serializable {
    private String pictureURL; 
    
    // not in db
-   private MemberPoints memberPoints;   
-   private List<Challenge> challengeWins;   
+   private MemberPoints memberPoints = new MemberPoints();   
+   private List<Challenge> challengeWins = new ArrayList<Challenge>();   
    private int totalRides;   
    private int fantasyEntry;
    private int fantasyFirst;
