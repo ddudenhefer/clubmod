@@ -11,6 +11,7 @@ import model.MemberActivityTotal;
 public class MemberActivityTotalsDAO {
 	
 	public MemberActivityTotal getMemberData(int memberId)throws Exception {
+		
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		MemberActivityTotal memberActivityTotal = new MemberActivityTotal();
