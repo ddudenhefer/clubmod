@@ -234,12 +234,14 @@ public class ChallengeDAO {
 					challenge.setService(rs.getString("service"));
 					challenge.setMemberId(rs.getInt("memberId"));
 					
+					String fullname = "";
 					if (challenge.getMemberId() > 0) {
 						MemberDAO memberDB = new MemberDAO();
 						Member member = memberDB.getMemberById(challenge.getMemberId());
 						if (member != null)
-							challenge.setMemberFullName(member.getFirstName() + " " + member.getLastName());
+							fullname = member.getFirstName() + " " + member.getLastName();
 					}
+					challenge.setMemberFullName(fullname);
 					challenges.add(challenge);
 				}
 			}
