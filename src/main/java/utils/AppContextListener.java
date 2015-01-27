@@ -50,7 +50,7 @@ public class AppContextListener implements ServletContextListener {
 
 		TimerTask updateChallengeWinnerTask = new UpdateChallengeWinnerTask();
 		Timer challengeWinnerTimer = new Timer();
-		challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 12), ONCE_PER_WEEK);
+		challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 11), ONCE_PER_WEEK);
 		//challengeWinnerTimer.schedule(updateChallengeWinnerTask, 0);
 
 		//TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
@@ -105,13 +105,22 @@ public class AppContextListener implements ServletContextListener {
 			
 			List<Challenge> challenges = new ArrayList<Challenge>();
 			Date today = new Date();
+			
+			Calendar calToday = Calendar.getInstance();
+			calToday.setTime(today);
+			Calendar yesterday = Calendar.getInstance();
+			yesterday.setTime(today);
+			yesterday.add(Calendar.DAY_OF_YEAR, -1);
+			Date yesterdayDate = yesterday.getTime(); // if you need a Date object
+			yesterdayDate = Constants.getEndOfDay(yesterdayDate);
+			
 			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 			ActivitySvc activitySvc = new ActivitySvc();
 			
 			try {
 				challenges = new ChallengeDAO().getAllChallenges();
 				for (Challenge challenge : challenges) {
-					if (challenge.getMemberId() == 0 && today.after(challenge.getEndDate())) {
+					if (challenge.getMemberId() == 0 && yesterdayDate.equals(challenge.getEndDate())) {
 						String sDate = df.format(challenge.getStartDate());
 						String eDate = df.format(challenge.getEndDate());
 						String results = "";
@@ -140,6 +149,7 @@ public class AppContextListener implements ServletContextListener {
 				        	ChallengeDAO challengeDAO = new ChallengeDAO();
 				        	challengeDAO.saveChallenge(challenge);
 				        }
+				        Thread.sleep(360000); // 6 minutes
 					}
 				}
 			} catch (Exception e) {
