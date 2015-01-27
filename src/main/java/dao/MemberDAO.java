@@ -10,6 +10,39 @@ import model.Member;
 
 public class MemberDAO {
 	
+	public Member getMemberById(int memberId)throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		Member member = null;
+
+		try {
+			connection = Database.getConnection();
+			if (connection != null) {
+				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName FROM members where id=?");
+				preparedStatement.setLong(1,memberId);
+				ResultSet rs = preparedStatement.executeQuery();
+				if (rs.next()) {
+					member = new Member();
+					member.setId(rs.getInt("id"));
+					member.setAthleteId(rs.getInt("athleteId"));
+					member.setAccessToken(rs.getString("accessToken"));
+					member.setFirstName(rs.getString("firstName"));
+					member.setLastName(rs.getString("lastName"));
+				}
+			}
+		
+		} catch (Exception e) {
+			throw e;
+		}
+		finally {
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (connection != null)
+				connection.close();
+		}
+		return member;
+	}
+	
 	public Member getMemberByAthleteId(int athleteId)throws Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -42,7 +75,7 @@ public class MemberDAO {
 		}
 		return member;
 	}
-	
+
 	public List<Member> getAllMembers()throws Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;

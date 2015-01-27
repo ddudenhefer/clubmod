@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Challenge;
+import model.Member;
 
 public class ChallengeDAO {
 	
@@ -219,7 +220,7 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT c.id, c.challengeIndex, c.name, c.season, c.startDate, c.endDate, c.label, c.service, c.memberId, concat(m.firstName, ' ', m.lastName) as fullName FROM challenges c, members m where (c.memberId=0 or c.memberId=m.id) order by c.id");
+				preparedStatement = connection.prepareStatement("SELECT c.id, c.challengeIndex, c.name, c.season, c.startDate, c.endDate, c.label, c.service, c.memberId FROM challenges c order by c.id");
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) {
 					challenge = new Challenge();
@@ -232,7 +233,13 @@ public class ChallengeDAO {
 					challenge.setLabel(rs.getString("label"));
 					challenge.setService(rs.getString("service"));
 					challenge.setMemberId(rs.getInt("memberId"));
-					challenge.setMemberFullName(rs.getString("fullName"));
+					
+					if (challenge.getMemberId() > 0) {
+						MemberDAO memberDB = new MemberDAO();
+						Member member = memberDB.getMemberById(challenge.getMemberId());
+						if (member != null)
+							challenge.setMemberFullName(member.getFirstName() + " " + member.getLastName());
+					}
 					challenges.add(challenge);
 				}
 			}
