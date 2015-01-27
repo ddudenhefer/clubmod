@@ -111,8 +111,11 @@ public class AppContextListener implements ServletContextListener {
 			Calendar yesterday = Calendar.getInstance();
 			yesterday.setTime(today);
 			yesterday.add(Calendar.DAY_OF_YEAR, -1);
+			yesterday.set(Calendar.HOUR_OF_DAY, 0);
+			yesterday.set(Calendar.MINUTE, 0);
+			yesterday.set(Calendar.SECOND, 0);
+			yesterday.set(Calendar.MILLISECOND, 0);			
 			Date yesterdayDate = yesterday.getTime(); // if you need a Date object
-			yesterdayDate = Constants.getEndOfDay(yesterdayDate);
 			
 			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 			ActivitySvc activitySvc = new ActivitySvc();
