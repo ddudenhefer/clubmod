@@ -77,13 +77,15 @@ public class ClubSvc {
 					member.setChallengeWins(challengeWins);
 					
 					MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(); 
-					MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());	
-					member.setFantasyEntry(memberActivityTotal.getFantasyEntry());
-					member.setFantasyFirst(memberActivityTotal.getFantasyFirst());
-					member.setFantasySecond(memberActivityTotal.getFantasySecond());
-					member.setFantasyThird(memberActivityTotal.getFantasyThird());
-					member.setGroupRides(memberActivityTotal.getGroupRide());
-					member.setEventRides(memberActivityTotal.getEventRide());
+					MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
+					if (memberActivityTotal != null) {
+						member.setFantasyEntry(memberActivityTotal.getFantasyEntry());
+						member.setFantasyFirst(memberActivityTotal.getFantasyFirst());
+						member.setFantasySecond(memberActivityTotal.getFantasySecond());
+						member.setFantasyThird(memberActivityTotal.getFantasyThird());
+						member.setGroupRides(memberActivityTotal.getGroupRide());
+						member.setEventRides(memberActivityTotal.getEventRide());
+					}
 				    
 				    PointsDAO pointsDAO = new PointsDAO();
 				    member.setMemberPoints(pointsDAO.getMemberPoints(member.getId(), milesF, elevationL, challengeWins, memberActivityTotal));

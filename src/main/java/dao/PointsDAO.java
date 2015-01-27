@@ -156,35 +156,37 @@ public class PointsDAO {
 		mp.setElevation(elevationPoints);
 		points += elevationPoints;
 
-		//fantasy
-		int fantasyPoints = 0;
-		point = getPoints("fantasy", "entry");
-		fantasyPoints += (memberActivityTotal.getFantasyEntry()*point.getPoints());
-
-		point = getPoints("fantasy", "1");
-		fantasyPoints += (memberActivityTotal.getFantasyFirst()*point.getPoints());
-
-		point = getPoints("fantasy", "2");
-		fantasyPoints += (memberActivityTotal.getFantasySecond()*point.getPoints());
-		
-		point = getPoints("fantasy", "3");
-		fantasyPoints += (memberActivityTotal.getFantasyThird()*point.getPoints());
-		
-		mp.setFantasy(fantasyPoints);
-		points += fantasyPoints;
-		
-		//rides
-		point = getPoints("ride", "group");
-		int groupPoints = (memberActivityTotal.getGroupRide()*point.getPoints());
-		
-		mp.setGroupRides(groupPoints);
-		points += groupPoints;
-
-		point = getPoints("ride", "event");
-		int eventPoints = (memberActivityTotal.getEventRide()*point.getPoints());
-		
-		mp.setEventRides(eventPoints);
-		points += eventPoints;
+		if (memberActivityTotal != null) {
+			//fantasy
+			int fantasyPoints = 0;
+			point = getPoints("fantasy", "entry");
+			fantasyPoints += (memberActivityTotal.getFantasyEntry()*point.getPoints());
+	
+			point = getPoints("fantasy", "1");
+			fantasyPoints += (memberActivityTotal.getFantasyFirst()*point.getPoints());
+	
+			point = getPoints("fantasy", "2");
+			fantasyPoints += (memberActivityTotal.getFantasySecond()*point.getPoints());
+			
+			point = getPoints("fantasy", "3");
+			fantasyPoints += (memberActivityTotal.getFantasyThird()*point.getPoints());
+			
+			mp.setFantasy(fantasyPoints);
+			points += fantasyPoints;
+			
+			//rides
+			point = getPoints("ride", "group");
+			int groupPoints = (memberActivityTotal.getGroupRide()*point.getPoints());
+			
+			mp.setGroupRides(groupPoints);
+			points += groupPoints;
+	
+			point = getPoints("ride", "event");
+			int eventPoints = (memberActivityTotal.getEventRide()*point.getPoints());
+			
+			mp.setEventRides(eventPoints);
+			points += eventPoints;
+		}
 		
 		mp.setPointsYTD(points);
 		mp.setMilesYTD(distance);
