@@ -110,7 +110,7 @@ public class AppContextListener implements ServletContextListener {
 			calToday.setTime(today);
 			Calendar yesterday = Calendar.getInstance();
 			yesterday.setTime(today);
-			yesterday.add(Calendar.DAY_OF_YEAR, -1);
+			yesterday.add(Calendar.DAY_OF_YEAR, -2);
 			yesterday.set(Calendar.HOUR_OF_DAY, 0);
 			yesterday.set(Calendar.MINUTE, 0);
 			yesterday.set(Calendar.SECOND, 0);
