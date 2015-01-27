@@ -13,7 +13,7 @@ public class MemberActivityTotalsDAO {
 	public MemberActivityTotal getMemberData(int memberId)throws Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		MemberActivityTotal memberActivityTotal = null;
+		MemberActivityTotal memberActivityTotal = new MemberActivityTotal();
 
 		try {
 			connection = Database.getConnection();
