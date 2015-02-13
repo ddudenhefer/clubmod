@@ -155,7 +155,7 @@ public class AppContextListener implements ServletContextListener {
 				        	ChallengeDAO challengeDAO = new ChallengeDAO();
 				        	challengeDAO.saveChallenge(challenge);
 				        }
-				        Thread.sleep(360000); // 6 minutes
+					    Thread.sleep(60000); // 1 minute			    
 					}
 				}
 			} catch (Exception e) {
@@ -208,7 +208,7 @@ public class AppContextListener implements ServletContextListener {
 					    MemberYTDTotalsDAO memberYTDTotalsDAO = new MemberYTDTotalsDAO();
 					    memberYTDTotalsDAO.saveMemberYTDTotals(memberYTDTotal);
 					    
-					    Thread.sleep(360000); // 6 minutes					    
+					    Thread.sleep(60000); // 1 minute			    
 					}
 				}
 			} catch (Exception e) {
