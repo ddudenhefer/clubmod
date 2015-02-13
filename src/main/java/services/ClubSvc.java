@@ -57,20 +57,11 @@ public class ClubSvc {
 				    
 				    member.setPictureURL(athlete.getProfile_medium());
 				    
-					float totalMeters = 0;	
-					float elevation = 0;
-				    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
-				    for (Activity activity : activities) {
-				    	if (activity.getType().equals("Ride")) {
-				    		totalMeters += activity.getDistance();
-				    		elevation += activity.getTotal_elevation_gain();
-				    	}
-				    }
-				    
-				    member.setTotalRides(activities.size());
-				    
-				    float milesF = (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
-				    long elevationL = (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0);
+					MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
+				    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
+					
+				    float milesF = memberYTDTotal.getMilesYTD();
+				    long elevationL = memberYTDTotal.getElevationYTD();
 				    
 				    ChallengeDAO challengeDAO = new ChallengeDAO();
 					List<Challenge> challengeWins = challengeDAO.getChallengesByMemberId(member.getId());			

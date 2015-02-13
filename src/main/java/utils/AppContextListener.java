@@ -53,9 +53,9 @@ public class AppContextListener implements ServletContextListener {
 		challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 11), ONCE_PER_WEEK);
 		//challengeWinnerTimer.schedule(updateChallengeWinnerTask, 0);
 
-		//TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
-		//Timer memberYTDTimer = new Timer();
-		//memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23,45), ONCE_PER_DAY);
+		TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
+		Timer memberYTDTimer = new Timer();
+		memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23,00), ONCE_PER_DAY);
 	}
 	
 	private static Date getTomorrow(int hour, int mins){
@@ -171,17 +171,15 @@ public class AppContextListener implements ServletContextListener {
 			System.out.println("UpdateMemberYTDTask " + new Date().toString());
 			
 			Calendar cal = Calendar.getInstance();
-			boolean resetTotals = false;
-			if (cal.get(Calendar.MONTH) == Calendar.DECEMBER && cal.get(Calendar.DAY_OF_MONTH) == 31)
-				resetTotals = true;
-			
-	        long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
 			long endSeconds = Constants.getEndOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
+		    
+			cal.set(Calendar.DAY_OF_YEAR,1); //first day of the year.	    
+	        long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
 
-			List<Athlete> athletes = new ArrayList<Athlete>();
+			List<Member> members = new ArrayList<Member>();
 			MemberDAO memberDAO = new MemberDAO();
 			try {
-				List<Member> members = memberDAO.getAllMembers();
+				members = memberDAO.getAllMembers();
 				for (Member member : members) {
 					if (member != null && member.getAccessToken() != null) {
 						JStravaV3 strava = new JStravaV3(member.getAccessToken());
@@ -189,9 +187,8 @@ public class AppContextListener implements ServletContextListener {
 					    // test authentication: if null, continue
 					    Athlete athlete = strava.getCurrentAthlete();
 					    if (athlete == null)
-					    	continue;		
-					    athletes.add(athlete);
-			
+					    	continue;
+					    
 						float totalMeters = 0;	
 						float elevation = 0;
 					    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
@@ -201,24 +198,16 @@ public class AppContextListener implements ServletContextListener {
 					    		elevation += activity.getTotal_elevation_gain();
 					    	}
 					    }
-					    
-					    MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
-					    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
-					    if (memberYTDTotal == null) {
-					    	memberYTDTotal = new MemberYTDTotal();
-					    	memberYTDTotal.setMemberId(member.getId());
-					    }
-					    
-					    if (resetTotals) {
-					    	memberYTDTotal.setMilesYTD((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
-					    	memberYTDTotal.setElevationYTD((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
-					    }
-					    else {
-					    	memberYTDTotal.setMilesYTD(memberYTDTotal.getMilesYTD() + (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
-					    	memberYTDTotal.setElevationYTD(memberYTDTotal.getElevationYTD() + (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
-					    }
+
+					    MemberYTDTotal memberYTDTotal = new MemberYTDTotal();
+				    	memberYTDTotal.setMemberId(member.getId());
+				    	memberYTDTotal.setMilesYTD((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
+				    	memberYTDTotal.setElevationYTD((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
+				    	
 					    MemberYTDTotalsDAO memberYTDTotalsDAO = new MemberYTDTotalsDAO();
 					    memberYTDTotalsDAO.saveMemberYTDTotals(memberYTDTotal);
+					    
+					    Thread.sleep(360000); // 6 minutes					    
 					}
 				}
 			} catch (Exception e) {
