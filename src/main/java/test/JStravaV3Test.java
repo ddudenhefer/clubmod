@@ -695,8 +695,8 @@ public class JStravaV3Test {
 
 	    long startSeconds, endSeconds;
 		try {
-			startSeconds = df.parse("09/15/2014").getTime() / 1000l;
-			endSeconds = df.parse("09/27/2014").getTime() / 1000l;
+			startSeconds = df.parse("01/15/2015").getTime() / 1000l;
+			endSeconds = df.parse("01/27/2015").getTime() / 1000l;
 		    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds );
 		    for (Activity activity:activities) {
 		        System.out.println("Current Athlete Activity "+activity.toString());

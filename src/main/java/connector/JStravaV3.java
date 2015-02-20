@@ -292,7 +292,7 @@ public class JStravaV3 implements JStrava {
 
 
     public List<Activity> getAthleteActivitiesBetweenDates(long start, long end) {
-        String URL="https://www.strava.com/api/v3/athlete/activities?after="+start+"&before="+end/*+"&page=1&per_page=200"*/;
+        String URL="https://www.strava.com/api/v3/athlete/activities?after="+start+"&before="+end+"&page=1&per_page=200";
         String result=getResult(URL);
         Gson gson= new Gson();
         Activity[] activitiesArray =gson.fromJson(result,Activity[].class);
