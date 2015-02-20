@@ -55,8 +55,8 @@ public class AppContextListener implements ServletContextListener {
 
 		TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
 		Timer memberYTDTimer = new Timer();
-		memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23,00), ONCE_PER_DAY);
-		//memberYTDTimer.schedule(updateMemberYTDTask, 0);
+		//memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23,00), ONCE_PER_DAY);
+		memberYTDTimer.schedule(updateMemberYTDTask, 0);
 	}
 	
 	private static Date getTomorrow(int hour, int mins){
@@ -189,6 +189,13 @@ public class AppContextListener implements ServletContextListener {
 					    Athlete athlete = strava.getCurrentAthlete();
 					    if (athlete == null)
 					    	continue;
+					    
+					    // save member picture
+					    if (! athlete.getProfile_medium().equals(member.getPictureURL())) {
+					    	MemberDAO memberDB = new MemberDAO();
+						    member.setPictureURL(athlete.getProfile_medium());
+						    memberDB.saveMember(member);
+					    }
 					    
 						float totalMeters = 0;	
 						float elevation = 0;

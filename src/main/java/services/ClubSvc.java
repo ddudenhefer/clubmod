@@ -48,15 +48,7 @@ public class ClubSvc {
 			members = memberDAO.getAllMembers();
 			for (Member member : members) {
 				if (member != null && member.getAccessToken() != null) {
-					JStravaV3 strava = new JStravaV3(member.getAccessToken());
-				    
-				    // test authentication: if null, continue
-				    Athlete athlete = strava.getCurrentAthlete();
-				    if (athlete == null)
-				    	continue;
-				    
-				    member.setPictureURL(athlete.getProfile_medium());
-				    
+
 					MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
 				    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
 					

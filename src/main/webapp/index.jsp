@@ -17,6 +17,7 @@
 	        	member.setAccessToken(profile.getAccessToken());
 	        	member.setFirstName(profile.getAthlete().getFirstname());
 	        	member.setLastName(profile.getAthlete().getLastname());
+	        	member.setPictureURL(profile.getAthlete().getProfile_medium());
 	        	MemberSvc memberSvc = new MemberSvc();
 	        	success = memberSvc.saveMember (member);
 	        }

@@ -18,7 +18,7 @@ public class MemberDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName FROM members where id=?");
+				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName, pictureURL FROM members where id=?");
 				preparedStatement.setLong(1,memberId);
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {
@@ -28,6 +28,7 @@ public class MemberDAO {
 					member.setAccessToken(rs.getString("accessToken"));
 					member.setFirstName(rs.getString("firstName"));
 					member.setLastName(rs.getString("lastName"));
+					member.setPictureURL(rs.getString("pictureURL"));
 				}
 			}
 		
@@ -51,7 +52,7 @@ public class MemberDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName FROM members where athleteId=?");
+				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName, pictureURL FROM members where athleteId=?");
 				preparedStatement.setLong(1,athleteId);
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {
@@ -61,6 +62,7 @@ public class MemberDAO {
 					member.setAccessToken(rs.getString("accessToken"));
 					member.setFirstName(rs.getString("firstName"));
 					member.setLastName(rs.getString("lastName"));
+					member.setPictureURL(rs.getString("pictureURL"));
 				}
 			}
 		
@@ -85,7 +87,7 @@ public class MemberDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName FROM members");
+				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName, pictureURL FROM members");
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) {
 					member = new Member();
@@ -94,6 +96,7 @@ public class MemberDAO {
 					member.setAccessToken(rs.getString("accessToken"));
 					member.setFirstName(rs.getString("firstName"));
 					member.setLastName(rs.getString("lastName"));
+					member.setPictureURL(rs.getString("pictureURL"));
 					members.add(member);
 				}
 			}
@@ -124,24 +127,26 @@ public class MemberDAO {
 			if (connection != null) {
 				Member memberDB = getMemberByAthleteId(member.getAthleteId());
 				if (memberDB != null) {	// update
-					String sql = "update members set accessToken=?, firstName=?, lastName=? where athleteId=?";
+					String sql = "update members set accessToken=?, firstName=?, lastName=?, pictureURL=? where athleteId=?";
 					preparedStatement = connection.prepareStatement(sql);
 					preparedStatement.setString(1, member.getAccessToken());
 					preparedStatement.setString(2, member.getFirstName());
 					preparedStatement.setString(3, member.getLastName());
-					preparedStatement.setLong(4, member.getAthleteId());
+					preparedStatement.setString(4, member.getPictureURL());
+					preparedStatement.setLong(5, member.getAthleteId());
 		
 					int rowsAffected = preparedStatement.executeUpdate();
 					if (rowsAffected > 0)
 						return true;
 				}
 				else {	// insert
-					String sql = "insert into members (athleteId, accessToken, firstName, lastName) values (?,?,?,?)";
+					String sql = "insert into members (athleteId, accessToken, firstName, lastName, pictureURL) values (?,?,?,?,?)";
 					preparedStatement = connection.prepareStatement(sql);
 					preparedStatement.setLong(1, member.getAthleteId());
 					preparedStatement.setString(2, member.getAccessToken());
 					preparedStatement.setString(3, member.getFirstName());
 					preparedStatement.setString(4, member.getLastName());
+					preparedStatement.setString(5, member.getPictureURL());
 					int rowsAffected = preparedStatement.executeUpdate();
 					if (rowsAffected > 0)
 						return true;
