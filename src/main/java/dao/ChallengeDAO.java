@@ -184,8 +184,6 @@ public class ChallengeDAO {
 				preparedStatement.setDate(1,startDate);
 				preparedStatement.setDate(2,endDate);
 				
-				System.out.println("PREPARED " + preparedStatement.toString());
-				
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {
 					challenge = new Challenge();

@@ -53,6 +53,9 @@ public class ActivitySvc {
 			
 			for (Member member : members) {
 				
+				System.out.println("member: " + member);
+				System.out.println("challenge: " + challenge);
+				
 				if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getName(), challenge.getSeason())) {				
 					
 					if (member != null && member.getAccessToken() != null) {
