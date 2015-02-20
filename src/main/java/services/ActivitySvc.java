@@ -49,6 +49,9 @@ public class ActivitySvc {
 			Date ed = df.parse(endDate);
 			java.sql.Date eDate = new java.sql.Date(ed.getTime());
 			
+			System.out.println("sdate: " + sd);
+			System.out.println("edate: " + ed);
+			
 			Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
 			
 			for (Member member : members) {
