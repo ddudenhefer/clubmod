@@ -50,13 +50,13 @@ public class AppContextListener implements ServletContextListener {
 
 		TimerTask updateChallengeWinnerTask = new UpdateChallengeWinnerTask();
 		Timer challengeWinnerTimer = new Timer();
-		challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 11), ONCE_PER_WEEK);
+		challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 10), ONCE_PER_WEEK);
 		//challengeWinnerTimer.schedule(updateChallengeWinnerTask, 0);
 
 		TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
 		Timer memberYTDTimer = new Timer();
-		//memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23,00), ONCE_PER_DAY);
-		memberYTDTimer.schedule(updateMemberYTDTask, 0);
+		memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23,00), ONCE_PER_DAY);
+		//memberYTDTimer.schedule(updateMemberYTDTask, 0);
 	}
 	
 	private static Date getTomorrow(int hour, int mins){
@@ -155,9 +155,10 @@ public class AppContextListener implements ServletContextListener {
 				        	ChallengeDAO challengeDAO = new ChallengeDAO();
 				        	challengeDAO.saveChallenge(challenge);
 				        }
-					    Thread.sleep(60000); // 1 minute			    
+					    Thread.sleep(120000); // 2 minutes			    
 					}
 				}
+				System.out.println("UpdateChallengeWinnerTask -> DONE");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -220,6 +221,7 @@ public class AppContextListener implements ServletContextListener {
 					    Thread.sleep(60000); // 1 minute			    
 					}
 				}
+				System.out.println("UpdateMemberYTDTask -> DONE");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
