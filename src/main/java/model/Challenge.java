@@ -67,8 +67,8 @@ public class Challenge implements Serializable {
    }
 
    public String getLabel() {
-	      return label;
-	   }
+	   return label;
+   }
 
    public void setLabel(String label) {
       this.label = label;
