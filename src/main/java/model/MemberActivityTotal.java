@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class MemberActivityTotal implements Serializable {
    private static final long serialVersionUID = 1L;
 
-   private int memberId;
-   private String memberName;
-   private int fantasyEntry;
-   private int fantasyFirst;
-   private int fantasySecond;
-   private int fantasyThird;
-   private int groupRide;
-   private int eventRide;
+   private int memberId = 0;
+   private String memberName = "";
+   private int fantasyEntry = 0;
+   private int fantasyFirst = 0;
+   private int fantasySecond = 0;
+   private int fantasyThird = 0;
+   private int groupRide = 0;
+   private int eventRide = 0;
 
 
    public int getMemberId() {

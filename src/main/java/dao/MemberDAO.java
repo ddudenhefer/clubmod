@@ -6,7 +6,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.PathParam;
+
 import model.Member;
+import model.MemberActivityTotal;
 
 public class MemberDAO {
 	
@@ -148,8 +151,21 @@ public class MemberDAO {
 					preparedStatement.setString(4, member.getLastName());
 					preparedStatement.setString(5, member.getPictureURL());
 					int rowsAffected = preparedStatement.executeUpdate();
-					if (rowsAffected > 0)
-						return true;
+					if (rowsAffected > 0) {
+						MemberDAO memberDAO = new MemberDAO();
+						MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();
+						MemberActivityTotal memberActivityTotal = new MemberActivityTotal();
+						try {
+							Member memberLookup = memberDAO.getMemberByAthleteId(member.getAthleteId());
+							if (memberLookup.getId() > 0) {
+								memberActivityTotal.setMemberId(memberLookup.getId());
+								memberActivityTotalsDAO.saveMemberActivityTotals(memberActivityTotal);
+							}
+							return true;
+						} catch (Exception e) {
+							throw e;
+						}							
+					}
 				}
 			}
 		} catch (Exception e) {

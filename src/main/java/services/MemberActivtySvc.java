@@ -108,6 +108,25 @@ public class MemberActivtySvc {
 		return ret;
 	}
 	
+
+	@POST
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Path("/create/{memberId}")
+	public boolean createMemberActivityTotals(@PathParam("{memberId}") int memberId) {
+		MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();
+		MemberActivityTotal memberActivityTotal = new MemberActivityTotal();
+		boolean ret = false;
+		
+		try {
+			memberActivityTotal.setMemberId(memberId);
+			ret = memberActivityTotalsDAO.saveMemberActivityTotals(memberActivityTotal);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			ret = false;
+		}
+	    return ret; 
+	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
