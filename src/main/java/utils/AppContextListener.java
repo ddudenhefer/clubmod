@@ -50,8 +50,8 @@ public class AppContextListener implements ServletContextListener {
 
 		TimerTask updateChallengeWinnerTask = new UpdateChallengeWinnerTask();
 		Timer challengeWinnerTimer = new Timer();
-		//challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 11), ONCE_PER_WEEK);
-		challengeWinnerTimer.schedule(updateChallengeWinnerTask, 0);
+		challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 11), ONCE_PER_WEEK);
+		//challengeWinnerTimer.schedule(updateChallengeWinnerTask, 0);
 
 		TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
 		Timer memberYTDTimer = new Timer();
@@ -189,6 +189,8 @@ public class AppContextListener implements ServletContextListener {
 					    Athlete athlete = strava.getCurrentAthlete();
 					    if (athlete == null)
 					    	continue;
+					    
+					    System.out.println("UpdateMemberYTDTask: " + athlete.getFirstname() + " " + athlete.getLastname());
 					    
 					    // save member picture
 					    if (! athlete.getProfile_medium().equals(member.getPictureURL())) {
