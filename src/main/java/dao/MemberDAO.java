@@ -139,8 +139,21 @@ public class MemberDAO {
 					preparedStatement.setLong(5, member.getAthleteId());
 		
 					int rowsAffected = preparedStatement.executeUpdate();
-					if (rowsAffected > 0)
-						return true;
+					if (rowsAffected > 0) {
+						MemberDAO memberDAO = new MemberDAO();
+						MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();
+						MemberActivityTotal memberActivityTotal = new MemberActivityTotal();
+						try {
+							Member memberLookup = memberDAO.getMemberByAthleteId(member.getAthleteId());
+							if (memberLookup.getId() > 0) {
+								memberActivityTotal.setMemberId(memberLookup.getId());
+								memberActivityTotalsDAO.saveMemberActivityTotals(memberActivityTotal);
+							}
+							return true;
+						} catch (Exception e) {
+							throw e;
+						}							
+					}
 				}
 				else {	// insert
 					String sql = "insert into members (athleteId, accessToken, firstName, lastName, pictureURL) values (?,?,?,?,?)";

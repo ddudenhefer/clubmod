@@ -51,9 +51,8 @@ public class ClubSvc {
 
 					MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
 				    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
-					
-				    float milesF = memberYTDTotal.getMilesYTD();
-				    long elevationL = memberYTDTotal.getElevationYTD();
+				    float milesF = memberYTDTotal != null ? memberYTDTotal.getMilesYTD() : 0;
+				    long elevationL = memberYTDTotal != null ? memberYTDTotal.getElevationYTD() : 0;
 				    
 				    ChallengeDAO challengeDAO = new ChallengeDAO();
 					List<Challenge> challengeWins = challengeDAO.getChallengesByMemberId(member.getId());			
