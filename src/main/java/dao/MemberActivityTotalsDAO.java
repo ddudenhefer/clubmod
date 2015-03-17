@@ -76,8 +76,7 @@ public class MemberActivityTotalsDAO {
 			connection = Database.getConnection();
 			if (connection != null) {
 				MemberActivityTotal memberActivityTotalDB = getMemberData(memberActivityTotal.getMemberId());
-				if (memberActivityTotalDB != null) {	// update
-					System.out.println("found activity");
+				if (memberActivityTotalDB != null && memberActivityTotalDB.getMemberId() > 0) {	// update
 					String sql = "update member_activity_totals set fantasy_entry=?, fantasy_first=?, fantasy_second=?, fantasy_third=?, group_ride=?, event_ride=? where memberId=?";
 					preparedStatement = connection.prepareStatement(sql);
 					preparedStatement.setInt(1, memberActivityTotal.getFantasyEntry());
@@ -93,7 +92,6 @@ public class MemberActivityTotalsDAO {
 						return true;
 				}
 				else {	// insert
-					System.out.println("cannot find activity");
 					String sql = "insert into member_activity_totals (memberId, fantasy_entry, fantasy_first, fantasy_second, fantasy_third, group_ride, event_ride ) values (?,?,?,?,?,?,?)";
 					preparedStatement = connection.prepareStatement(sql);
 					preparedStatement.setLong(1, memberActivityTotal.getMemberId());
