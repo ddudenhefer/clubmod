@@ -144,9 +144,7 @@ public class MemberDAO {
 						MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();
 						MemberActivityTotal memberActivityTotal = new MemberActivityTotal();
 						try {
-							System.out.println("update activity: " + member.getAthleteId());
 							Member memberLookup = memberDAO.getMemberByAthleteId(member.getAthleteId());
-							System.out.println("update activity: " + memberLookup.getId());
 							if (memberLookup.getId() > 0) {
 								memberActivityTotal.setMemberId(memberLookup.getId());
 								memberActivityTotalsDAO.saveMemberActivityTotals(memberActivityTotal);
