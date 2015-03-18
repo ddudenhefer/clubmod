@@ -1,5 +1,6 @@
 <%@ page import="com.google.gson.Gson, connector.JStravaV3, entities.athlete.*, model.Member, utils.Constants, services.MemberSvc" %>
 
+
 <%
 		String code = request.getParameter("code");
 		String error = request.getParameter("error");
