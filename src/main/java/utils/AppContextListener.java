@@ -53,8 +53,8 @@ public class AppContextListener implements ServletContextListener {
 
 		TimerTask updateGroupRideTask = new UpdateGroupRideTask();
 		Timer groupRideTimer = new Timer();
-		//groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
-		groupRideTimer.schedule(updateGroupRideTask, 0);
+		groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
+		//groupRideTimer.schedule(updateGroupRideTask, 0);
 
 		TimerTask updateChallengeWinnerTask = new UpdateChallengeWinnerTask();
 		Timer challengeWinnerTimer = new Timer();
@@ -261,29 +261,23 @@ public class AppContextListener implements ServletContextListener {
 					    if (athlete == null)
 					    	continue;
 					    
-					    System.out.println("UpdateGroupRideTask: " + athlete.getFirstname() + " " + athlete.getLastname());				
-					    System.out.println("UpdateGroupRideTask: Looking for Segment->Club Mod Sunday Group Ride");				
 					    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(9110539,  athlete.getId(), df.format(startDate), df.format(endDate));
-					    
 					    if (segmentEfforts.size() > 0) {
-						    for (SegmentEffort segmentEffort : segmentEfforts) {
-							    System.out.println("segmentEffort found: " + segmentEffort.getName());
-							    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();	
-							    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
-							    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
-							    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO();
-							    	memberActivityTotal.setGroupRide(memberActivityTotal.getGroupRide()+1);
-							    	memberActivityTotalsDB.saveMemberActivityTotals(memberActivityTotal);
-							    }
-							    break;
+						    System.out.println("UpdateGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
+						    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();	
+						    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
+						    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
+						    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO();
+						    	memberActivityTotal.setGroupRide(memberActivityTotal.getGroupRide()+1);
+						    	memberActivityTotalsDB.saveMemberActivityTotals(memberActivityTotal);
 						    }
 					    }
 					    else
-						    System.out.println("segmentEffort NOT found: ");
+						    System.out.println("UpdateGroupRideTask: segmentEffort NOT found for : " + athlete.getFirstname() + " " + athlete.getLastname());
 			        }
 				    Thread.sleep(120000); // 2 minutes			    
 				}
-				System.out.println("UpdateChallengeWinnerTask -> DONE");
+				System.out.println("UpdateGroupRideTask -> DONE");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
