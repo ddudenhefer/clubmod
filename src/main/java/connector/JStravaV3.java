@@ -467,6 +467,16 @@ public class JStravaV3 implements JStrava {
     }
 
 
+    public List<SegmentEffort> findAthleteSegmentEffort(int segmentId, int athleteId, String start_date_local, String end_date_local) {
+        String URL="https://www.strava.com/api/v3/segments/"+segmentId+"/all_efforts?athlete_id="+athleteId+"&start_date_local="+start_date_local+"&end_date_local="+end_date_local;
+        String result=getResult(URL);
+        Gson gson= new Gson();
+        SegmentEffort[] segmentEffortArray=gson.fromJson(result,SegmentEffort[].class);
+        List<SegmentEffort>segmentEfforts= Arrays.asList(segmentEffortArray);
+        return segmentEfforts;        
+    }
+    
+    
     public List<Segment> getCurrentStarredSegment() {
         String URL="https://www.strava.com/api/v3/segments/starred";
         String result=getResult(URL);

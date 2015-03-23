@@ -20,13 +20,16 @@ import com.google.gson.Gson;
 import connector.JStravaV3;
 import model.Challenge;
 import model.Member;
+import model.MemberActivityTotal;
 import model.MemberYTDTotal;
 import dao.ChallengeDAO;
+import dao.MemberActivityTotalsDAO;
 import dao.MemberDAO;
 import dao.MemberYTDTotalsDAO;
 import entities.activity.Activity;
 import entities.athlete.Athlete;
 import entities.challenge.ChallengeResult;
+import entities.segment.SegmentEffort;
 import services.ActivitySvc;
 
 public class AppContextListener implements ServletContextListener {
@@ -48,9 +51,14 @@ public class AppContextListener implements ServletContextListener {
 
 		System.out.println("AppContextListener Listener initialized.");
 
+		TimerTask updateGroupRideTask = new UpdateGroupRideTask();
+		Timer groupRideTimer = new Timer();
+		//groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
+		groupRideTimer.schedule(updateGroupRideTask, 0);
+
 		TimerTask updateChallengeWinnerTask = new UpdateChallengeWinnerTask();
 		Timer challengeWinnerTimer = new Timer();
-		challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 13), ONCE_PER_WEEK);
+		challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 14), ONCE_PER_WEEK);
 		//challengeWinnerTimer.schedule(updateChallengeWinnerTask, 0);
 
 		TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
@@ -228,5 +236,58 @@ public class AppContextListener implements ServletContextListener {
 			}
 		}
 	}
-
+	
+	class UpdateGroupRideTask extends TimerTask {
+		
+		@Override
+		public void run() {
+			System.out.println("UpdateGroupRideTask " + new Date().toString());
+			
+			Calendar cal = Calendar.getInstance();
+	        Date startDate = Constants.getStartOfDay(new Date(cal.getTimeInMillis()));
+			Date endDate = Constants.getEndOfDay(new Date(cal.getTimeInMillis()));
+		    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+			
+			try {
+				List<Member> members = new ArrayList<Member>();
+				MemberDAO memberDAO = new MemberDAO();
+				members = memberDAO.getAllMembers();
+				for (Member member : members) {
+					if (member != null && member.getAccessToken() != null) {
+						JStravaV3 strava = new JStravaV3(member.getAccessToken());
+					    
+					    // test authentication: if null, continue
+					    Athlete athlete = strava.getCurrentAthlete();
+					    if (athlete == null)
+					    	continue;
+					    
+					    System.out.println("UpdateGroupRideTask: " + athlete.getFirstname() + " " + athlete.getLastname());				
+					    System.out.println("UpdateGroupRideTask: Looking for Segment->Club Mod Sunday Group Ride");				
+					    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(9110539,  athlete.getId(), df.format(startDate), df.format(endDate));
+					    
+					    if (segmentEfforts.size() > 0) {
+						    for (SegmentEffort segmentEffort : segmentEfforts) {
+							    System.out.println("segmentEffort found: " + segmentEffort.getName());
+							    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();	
+							    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
+							    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
+							    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO();
+							    	memberActivityTotal.setGroupRide(memberActivityTotal.getGroupRide()+1);
+							    	memberActivityTotalsDB.saveMemberActivityTotals(memberActivityTotal);
+							    }
+							    break;
+						    }
+					    }
+					    else
+						    System.out.println("segmentEffort NOT found: ");
+			        }
+				    Thread.sleep(120000); // 2 minutes			    
+				}
+				System.out.println("UpdateChallengeWinnerTask -> DONE");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}	
 }

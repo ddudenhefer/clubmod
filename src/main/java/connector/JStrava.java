@@ -63,6 +63,7 @@ public interface JStrava {
     public List<Club> getCurrentAthleteClubs();
     public Gear findGear(String id);
     public Segment findSegment(long segmentId);
+    public List<SegmentEffort> findAthleteSegmentEffort(int segmentId, int athleteId, String start_date_local, String end_date_local);    
     public List<Segment> getCurrentStarredSegment();
     public SegmentLeaderBoard findSegmentLeaderBoard (long segmentId);
     public SegmentLeaderBoard findSegmentLeaderBoard (long segmentId, int page, int per_page);

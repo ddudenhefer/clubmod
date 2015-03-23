@@ -20,6 +20,7 @@ import connector.JStravaV3;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -709,4 +710,28 @@ public class JStravaV3Test {
 		}
     }
     
+    
+    @Test
+    public void testGetAthleteSegmentEffort() {
+    	
+	    JStravaV3 strava= new JStravaV3("3ff761fc2568621422792aa096c8bb0746fdb15f");
+	    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+	    
+		try {
+			Calendar cal = Calendar.getInstance();
+	        Date startDate = Constants.getStartOfDay(new Date(cal.getTimeInMillis()));
+			Date endDate = Constants.getEndOfDay(new Date(cal.getTimeInMillis()));
+			List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(9110539, 419308, df.format(startDate), df.format(endDate));
+    
+			if (segmentEfforts.size() > 0) {
+				for (SegmentEffort segmentEffort : segmentEfforts)
+					System.out.println("segmentEffort found: " + segmentEffort.getName());
+		    }
+		    else
+			    System.out.println("segmentEffort NOT found: ");    
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 }
