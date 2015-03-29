@@ -53,6 +53,16 @@ public class Constants {
 	    int day = calendar.get(Calendar.DATE);
 	    calendar.set(year, month, day, 23, 59, 59);
 	    return calendar.getTime();
-	}					    
+	}
+    
+    public static Date getNoonOfDay(Date date) {
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(date);
+	    int year = calendar.get(Calendar.YEAR);
+	    int month = calendar.get(Calendar.MONTH);
+	    int day = calendar.get(Calendar.DATE);
+	    calendar.set(year, month, day, 14, 00, 00);
+	    return calendar.getTime();
+	}	    
 
 }
