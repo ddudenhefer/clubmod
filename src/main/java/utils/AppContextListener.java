@@ -261,7 +261,7 @@ public class AppContextListener implements ServletContextListener {
 					    if (athlete == null)
 					    	continue;
 					    
-					    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(9110539,  athlete.getId(), df.format(startDate), df.format(endDate));
+					    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(9150351,  athlete.getId(), df.format(startDate), df.format(endDate));
 					    if (segmentEfforts.size() > 0) {
 						    System.out.println("UpdateGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
 						    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();	
