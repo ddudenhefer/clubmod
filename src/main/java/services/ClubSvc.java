@@ -87,4 +87,61 @@ public class ClubSvc {
 		}		
 		return ret;
 	}
+	
+	@GET
+	@Path("/membersByName")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getClubMembersByName()  {
+		
+	    Calendar cal = Calendar.getInstance();
+		long endSeconds = Constants.getEndOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
+	    
+		cal.set(Calendar.DAY_OF_YEAR,1); //first day of the year.	    
+        long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
+
+		List<Member> members = new ArrayList<Member>();
+		MemberDAO memberDAO = new MemberDAO();
+		try {
+			members = memberDAO.getAllMembers();
+			for (Member member : members) {
+				if (member != null && member.getAccessToken() != null) {
+
+					MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
+				    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
+				    float milesF = memberYTDTotal != null ? memberYTDTotal.getMilesYTD() : 0;
+				    long elevationL = memberYTDTotal != null ? memberYTDTotal.getElevationYTD() : 0;
+				    
+				    ChallengeDAO challengeDAO = new ChallengeDAO();
+					List<Challenge> challengeWins = challengeDAO.getChallengesByMemberId(member.getId());			
+					member.setChallengeWins(challengeWins);
+					
+					MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(); 
+					MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
+					if (memberActivityTotal != null) {
+						member.setFantasyEntry(memberActivityTotal.getFantasyEntry());
+						member.setFantasyFirst(memberActivityTotal.getFantasyFirst());
+						member.setFantasySecond(memberActivityTotal.getFantasySecond());
+						member.setFantasyThird(memberActivityTotal.getFantasyThird());
+						member.setGroupRides(memberActivityTotal.getGroupRide());
+						member.setEventRides(memberActivityTotal.getEventRide());
+					}
+				    
+				    PointsDAO pointsDAO = new PointsDAO();
+				    member.setMemberPoints(pointsDAO.getMemberPoints(member.getId(), milesF, elevationL, challengeWins, memberActivityTotal));
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Collections.sort(members, Member.Comparators.NAME);
+
+		Gson gson = new Gson();
+		String ret = "";
+		if (members != null) {
+			ret = gson.toJson(members);
+		}		
+		return ret;
+	}	
 } 
