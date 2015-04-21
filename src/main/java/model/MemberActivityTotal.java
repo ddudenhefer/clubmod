@@ -13,6 +13,8 @@ public class MemberActivityTotal implements Serializable {
    private int fantasyThird = 0;
    private int groupRide = 0;
    private int eventRide = 0;
+   private int homePurchase = 0;
+   private int homeReferral = 0;
 
 
    public int getMemberId() {
@@ -78,4 +80,22 @@ public class MemberActivityTotal implements Serializable {
    public void setEventRide(int eventRide) {
 	   this.eventRide = eventRide;
    }
+
+   public int getHomePurchase() {
+	   return homePurchase;
+   }
+
+   public void setHomePurchase(int homePurchase) {
+	   this.homePurchase = homePurchase;
+   }
+
+   public int getHomeReferral() {
+	   return homeReferral;
+   }
+
+   public void setHomeReferral(int homeReferral) {
+	   this.homeReferral = homeReferral;
+   }
+
+
 }

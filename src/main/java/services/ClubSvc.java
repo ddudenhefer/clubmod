@@ -67,6 +67,8 @@ public class ClubSvc {
 						member.setFantasyThird(memberActivityTotal.getFantasyThird());
 						member.setGroupRides(memberActivityTotal.getGroupRide());
 						member.setEventRides(memberActivityTotal.getEventRide());
+						member.setHomePurchases(memberActivityTotal.getHomePurchase());
+						member.setHomeReferrals(memberActivityTotal.getHomeReferral());
 					}
 				    
 				    PointsDAO pointsDAO = new PointsDAO();
@@ -124,6 +126,8 @@ public class ClubSvc {
 						member.setFantasyThird(memberActivityTotal.getFantasyThird());
 						member.setGroupRides(memberActivityTotal.getGroupRide());
 						member.setEventRides(memberActivityTotal.getEventRide());
+						member.setHomePurchases(memberActivityTotal.getHomePurchase());
+						member.setHomeReferrals(memberActivityTotal.getHomeReferral());
 					}
 				    
 				    PointsDAO pointsDAO = new PointsDAO();

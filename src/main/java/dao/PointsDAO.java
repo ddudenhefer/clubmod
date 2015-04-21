@@ -186,6 +186,20 @@ public class PointsDAO {
 			
 			mp.setEventRides(eventPoints);
 			points += eventPoints;
+			
+			//home
+			point = getPoints("home", "purchase");
+			int purchasePoints = (memberActivityTotal.getHomePurchase()*point.getPoints());
+			
+			mp.setHomePurchases(purchasePoints);
+			points += purchasePoints;
+	
+			point = getPoints("home", "referral");
+			int referralPoints = (memberActivityTotal.getHomeReferral()*point.getPoints());
+			
+			mp.setHomeReferrals(referralPoints);
+			points += referralPoints;
+			
 		}
 		
 		mp.setPointsYTD(points);

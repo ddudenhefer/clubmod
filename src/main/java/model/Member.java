@@ -26,6 +26,8 @@ public class Member implements Serializable {
    private int fantasyThird;
    private int groupRides;
    private int eventRides;
+   private int homePurchases;
+   private int homeReferrals;
 
 
    public int getId() {
@@ -148,6 +150,22 @@ public class Member implements Serializable {
       this.eventRides = eventRides;
    }
    
+   public int getHomePurchases() {
+	   return homePurchases;
+   }
+
+   public void setHomePurchases(int homePurchases) {
+      this.homePurchases = homePurchases;
+   }
+
+   public int getHomeReferrals() {
+	   return homeReferrals;
+   }
+
+   public void setHomeReferrals(int homeReferrals) {
+      this.homeReferrals = homeReferrals;
+   }
+
    public static class Comparators {
 
        public static Comparator<Member> NAME = new Comparator<Member>() {

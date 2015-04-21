@@ -17,6 +17,8 @@ public class MemberPoints implements Serializable {
    private int eventRides;   
    private int miles;   
    private int elevation;   
+   private int homePurchases;   
+   private int homeReferrals;   
 
    
    public int getChallenges() {
@@ -50,6 +52,24 @@ public class MemberPoints implements Serializable {
    public void setEventRides(int eventRides) {
 	   this.eventRides = eventRides;
    }
+
+   public int getHomePurchases() {
+	   return homePurchases;
+   }
+
+   public void setHomePurchases(int homePurchases) {
+	   this.homePurchases = homePurchases;
+   }
+   
+   public int getHomeReferrals() {
+	   return homeReferrals;
+   }
+
+   public void setHomeReferrals(int homeReferrals) {
+	   this.homeReferrals = homeReferrals;
+   }
+   
+   
    
    public int getMiles() {
 	   return miles;
