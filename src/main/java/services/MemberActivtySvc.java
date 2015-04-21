@@ -87,8 +87,8 @@ public class MemberActivtySvc {
 	
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)
-	@Path("/update/{jsonData}")
-	public String updateMemberActivityTotals(@PathParam("jsonData") String jsonData) {
+	@Path("/update")
+	public String updateMemberActivityTotals(String jsonData) {
 		MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();
 		String ret = "success";
 		
