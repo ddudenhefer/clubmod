@@ -8,6 +8,8 @@ public class MemberYTDTotal implements Serializable {
    private int memberId;
    private float milesYTD;
    private long elevationYTD;
+   private long movingTimeYTD;
+   private long ridesYTD;
 
 
    public int getMemberId() {
@@ -32,5 +34,24 @@ public class MemberYTDTotal implements Serializable {
 
    public void setElevationYTD(long elevationYTD) {
 	      this.elevationYTD = elevationYTD;
+   }
+   
+   public long getMovingTimeYTD() {
+	      return movingTimeYTD;
+	   }
+
+   public void setMovingTimeYTD(long movingTimeYTD) {
+	   this.movingTimeYTD = movingTimeYTD;
+   }
+   
+   public long getRidesYTD() {
+	      return ridesYTD;
+	   }
+
+   public void setRidesYTD(long ridesYTD) {
+	   this.ridesYTD = ridesYTD;
 }
+   
+   
+   
 }

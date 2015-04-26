@@ -19,7 +19,7 @@ public class MemberYTDTotalsDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT memberId, milesYTD, elevationYTD FROM member_ytd_totals where memberId=?");
+				preparedStatement = connection.prepareStatement("SELECT memberId, milesYTD, elevationYTD, movingTimeYTD, ridesYTD FROM member_ytd_totals where memberId=?");
 				preparedStatement.setLong(1,memberId);
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {
@@ -27,6 +27,8 @@ public class MemberYTDTotalsDAO {
 					memberYTDTotal.setMemberId(rs.getInt("memberId"));
 					memberYTDTotal.setMilesYTD(rs.getFloat("milesYTD"));
 					memberYTDTotal.setElevationYTD(rs.getInt("elevationYTD"));
+					memberYTDTotal.setMovingTimeYTD(rs.getInt("movingTimeYTD"));
+					memberYTDTotal.setRidesYTD(rs.getInt("ridesYTD"));
 				}
 			}
 		
@@ -56,22 +58,26 @@ public class MemberYTDTotalsDAO {
 			if (connection != null) {
 				MemberYTDTotal memberYTDTotalDB = getMemberData(memberYTDTotal.getMemberId());
 				if (memberYTDTotalDB != null) {	// update
-					String sql = "update member_ytd_totals set milesYTD=?, elevationYTD=? where memberId=?";
+					String sql = "update member_ytd_totals set milesYTD=?, elevationYTD=?, movingTimeYTD=?, ridesYTD=? where memberId=?";
 					preparedStatement = connection.prepareStatement(sql);
 					preparedStatement.setFloat(1, memberYTDTotal.getMilesYTD());
 					preparedStatement.setLong(2, memberYTDTotal.getElevationYTD());
-					preparedStatement.setLong(3, memberYTDTotal.getMemberId());
+					preparedStatement.setLong(3, memberYTDTotal.getMovingTimeYTD());
+					preparedStatement.setLong(4, memberYTDTotal.getRidesYTD());
+					preparedStatement.setLong(5, memberYTDTotal.getMemberId());
 		
 					int rowsAffected = preparedStatement.executeUpdate();
 					if (rowsAffected > 0)
 						return true;
 				}
 				else {	// insert
-					String sql = "insert into member_ytd_totals (memberId, milesYTD, elevationYTD ) values (?,?,?)";
+					String sql = "insert into member_ytd_totals (memberId, milesYTD, elevationYTD, movingTimeYTD, ridesYTD ) values (?,?,?,?,?)";
 					preparedStatement = connection.prepareStatement(sql);
 					preparedStatement.setLong(1, memberYTDTotal.getMemberId());
 					preparedStatement.setFloat(2, memberYTDTotal.getMilesYTD());
 					preparedStatement.setLong(3, memberYTDTotal.getElevationYTD());
+					preparedStatement.setLong(4, memberYTDTotal.getMovingTimeYTD());
+					preparedStatement.setLong(5, memberYTDTotal.getRidesYTD());
 					int rowsAffected = preparedStatement.executeUpdate();
 					if (rowsAffected > 0)
 						return true;

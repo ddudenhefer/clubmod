@@ -210,11 +210,15 @@ public class AppContextListener implements ServletContextListener {
 					    
 						float totalMeters = 0;	
 						float elevation = 0;
+						long rides = 0;
+						long seconds = 0;
 					    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 					    for (Activity activity : activities) {
 					    	if (activity.getType().equals("Ride")) {
 					    		totalMeters += activity.getDistance();
 					    		elevation += activity.getTotal_elevation_gain();
+					    		seconds += activity.getMoving_time();
+					    		rides++;
 					    	}
 					    }
 
@@ -222,6 +226,8 @@ public class AppContextListener implements ServletContextListener {
 				    	memberYTDTotal.setMemberId(member.getId());
 				    	memberYTDTotal.setMilesYTD((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
 				    	memberYTDTotal.setElevationYTD((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
+				    	memberYTDTotal.setMovingTimeYTD(seconds);
+				    	memberYTDTotal.setRidesYTD(rides);
 				    	
 					    MemberYTDTotalsDAO memberYTDTotalsDAO = new MemberYTDTotalsDAO();
 					    memberYTDTotalsDAO.saveMemberYTDTotals(memberYTDTotal);
