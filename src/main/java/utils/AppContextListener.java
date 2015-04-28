@@ -202,9 +202,15 @@ public class AppContextListener implements ServletContextListener {
 					    System.out.println("UpdateMemberYTDTask: " + athlete.getFirstname() + " " + athlete.getLastname());
 					    
 					    // save member picture
-					    if (! athlete.getProfile_medium().equals(member.getPictureURL())) {
+					    if (! athlete.getProfile_medium().equals(member.getPictureURL()) || 
+					    		! athlete.getCity().equals(member.getCity()) ||
+					    		! athlete.getState().equals(member.getState()) ||
+					    		! athlete.getEmail().equals(member.getEmail())) {
 					    	MemberDAO memberDB = new MemberDAO();
 						    member.setPictureURL(athlete.getProfile_medium());
+						    member.setCity(athlete.getCity());
+						    member.setState(athlete.getState());
+						    member.setEmail(athlete.getEmail());
 						    memberDB.saveMember(member);
 					    }
 					    

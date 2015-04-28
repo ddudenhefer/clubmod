@@ -19,6 +19,9 @@
 	        	member.setFirstName(profile.getAthlete().getFirstname());
 	        	member.setLastName(profile.getAthlete().getLastname());
 	        	member.setPictureURL(profile.getAthlete().getProfile_medium());
+	        	member.setCity(profile.getAthlete().getCity());
+	        	member.setState(profile.getAthlete().getState());
+	        	member.setEmail(profile.getAthlete().getEmail());
 	        	MemberSvc memberSvc = new MemberSvc();
 	        	success = memberSvc.saveMember (member);
 	        }
