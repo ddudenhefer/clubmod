@@ -1,9 +1,7 @@
 package services;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -18,15 +16,11 @@ import model.MemberYTDTotal;
 
 import com.google.gson.Gson;
 
-import connector.JStravaV3;
 import dao.ChallengeDAO;
 import dao.MemberActivityTotalsDAO;
 import dao.MemberDAO;
 import dao.MemberYTDTotalsDAO;
 import dao.PointsDAO;
-import entities.activity.Activity;
-import entities.athlete.Athlete;
-import utils.Constants;
 
 @Path("/club")
 public class ClubSvc {
@@ -36,12 +30,6 @@ public class ClubSvc {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getClubMembers()  {
 		
-	    Calendar cal = Calendar.getInstance();
-		long endSeconds = Constants.getEndOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
-	    
-		cal.set(Calendar.DAY_OF_YEAR,1); //first day of the year.	    
-        long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
-
 		List<Member> members = new ArrayList<Member>();
 		MemberDAO memberDAO = new MemberDAO();
 		try {
@@ -95,12 +83,6 @@ public class ClubSvc {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getClubMembersByName()  {
 		
-	    Calendar cal = Calendar.getInstance();
-		long endSeconds = Constants.getEndOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
-	    
-		cal.set(Calendar.DAY_OF_YEAR,1); //first day of the year.	    
-        long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
-
 		List<Member> members = new ArrayList<Member>();
 		MemberDAO memberDAO = new MemberDAO();
 		try {
