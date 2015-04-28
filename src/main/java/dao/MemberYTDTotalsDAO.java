@@ -94,4 +94,36 @@ public class MemberYTDTotalsDAO {
 		}
 		return false;
 	}
+	
+	public MemberYTDTotal getTotals()throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		MemberYTDTotal memberYTDTotal = null;
+
+		try {
+			connection = Database.getConnection();
+			if (connection != null) {
+				preparedStatement = connection.prepareStatement("SELECT sum(milesYTD) as miles, sum(elevationYTD) as elevation, sum(movingTimeYTD) as time, sum(ridesYTD) as rides FROM member_ytd_totals");
+				ResultSet rs = preparedStatement.executeQuery();
+				if (rs.next()) {
+					memberYTDTotal = new MemberYTDTotal();
+					memberYTDTotal.setMilesYTD(rs.getFloat("miles"));
+					memberYTDTotal.setElevationYTD(rs.getInt("elevation"));
+					memberYTDTotal.setMovingTimeYTD(rs.getInt("time"));
+					memberYTDTotal.setRidesYTD(rs.getInt("rides"));
+				}
+			}
+		
+		} catch (Exception e) {
+			throw e;
+		}
+		finally {
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (connection != null)
+				connection.close();
+		}
+		return memberYTDTotal;
+	}
+	
 }

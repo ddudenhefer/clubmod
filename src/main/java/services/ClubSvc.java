@@ -148,4 +148,28 @@ public class ClubSvc {
 		}		
 		return ret;
 	}	
+	
+
+	@GET
+	@Path("/totals")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getClubTotals()  {
+		
+		MemberYTDTotal memberYTDTotal = new MemberYTDTotal();
+		
+		try {
+			MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
+			memberYTDTotal = memberYTDTotalsDB.getTotals();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Gson gson = new Gson();
+		String ret = "";
+		if (memberYTDTotal != null) {
+			ret = gson.toJson(memberYTDTotal);
+		}		
+		return ret;
+	}
+	
 } 
