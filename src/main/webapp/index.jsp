@@ -62,7 +62,7 @@
 </div>
 <br><br><br><br>
 <a href="http://www.modboulder.com/" target="_blank"><img alt="ModBoulder" src="/css/images/logo.jpg" title="ModBoulder" width="20%" /></a>
-<H3>© 2009-2014 Mod Boulder<br>
+<H3>© 2009-2015 Mod Boulder<br>
 3030 Washington, Boulder, CO  80304 | 720.252.6051 | <a href="mailto:info@modboulder.com?Subject=" target="_top">info@modboulder.com</a>
 </H3>
 </div>

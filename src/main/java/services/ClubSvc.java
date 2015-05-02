@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import model.Challenge;
 import model.Member;
 import model.MemberActivityTotal;
+import model.MemberPoints;
 import model.MemberYTDTotal;
 
 import com.google.gson.Gson;
@@ -79,9 +80,9 @@ public class ClubSvc {
 	}
 	
 	@GET
-	@Path("/membersByName")
+	@Path("/memberTotalsByName")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getClubMembersByName()  {
+	public String getClubMemberTotalsByName()  {
 		
 		List<Member> members = new ArrayList<Member>();
 		MemberDAO memberDAO = new MemberDAO();
@@ -89,31 +90,14 @@ public class ClubSvc {
 			members = memberDAO.getAllMembers();
 			for (Member member : members) {
 				if (member != null && member.getAccessToken() != null) {
-
 					MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
 				    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
 				    float milesF = memberYTDTotal != null ? memberYTDTotal.getMilesYTD() : 0;
 				    long elevationL = memberYTDTotal != null ? memberYTDTotal.getElevationYTD() : 0;
-				    
-				    ChallengeDAO challengeDAO = new ChallengeDAO();
-					List<Challenge> challengeWins = challengeDAO.getChallengesByMemberId(member.getId());			
-					member.setChallengeWins(challengeWins);
-					
-					MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(); 
-					MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
-					if (memberActivityTotal != null) {
-						member.setFantasyEntry(memberActivityTotal.getFantasyEntry());
-						member.setFantasyFirst(memberActivityTotal.getFantasyFirst());
-						member.setFantasySecond(memberActivityTotal.getFantasySecond());
-						member.setFantasyThird(memberActivityTotal.getFantasyThird());
-						member.setGroupRides(memberActivityTotal.getGroupRide());
-						member.setEventRides(memberActivityTotal.getEventRide());
-						member.setHomePurchases(memberActivityTotal.getHomePurchase());
-						member.setHomeReferrals(memberActivityTotal.getHomeReferral());
-					}
-				    
-				    PointsDAO pointsDAO = new PointsDAO();
-				    member.setMemberPoints(pointsDAO.getMemberPoints(member.getId(), milesF, elevationL, challengeWins, memberActivityTotal));
+					MemberPoints mp = new MemberPoints();
+					mp.setElevationYTD(elevationL);
+					mp.setMilesYTD(milesF);
+				    member.setMemberPoints(mp);
 				}
 			}
 		} catch (Exception e) {
@@ -131,6 +115,31 @@ public class ClubSvc {
 		return ret;
 	}	
 	
+
+	@GET
+	@Path("/membersByName")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getClubMembersByName()  {
+		
+		List<Member> members = new ArrayList<Member>();
+		MemberDAO memberDAO = new MemberDAO();
+		try {
+			members = memberDAO.getAllMembers();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Collections.sort(members, Member.Comparators.NAME);
+
+		Gson gson = new Gson();
+		String ret = "";
+		if (members != null) {
+			ret = gson.toJson(members);
+		}		
+		return ret;
+	}	
+
 
 	@GET
 	@Path("/totals")

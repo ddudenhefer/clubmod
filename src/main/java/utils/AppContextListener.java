@@ -53,7 +53,7 @@ public class AppContextListener implements ServletContextListener {
 
 		TimerTask updateGroupRideTask = new UpdateGroupRideTask();
 		Timer groupRideTimer = new Timer();
-		groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
+		//groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
 		//groupRideTimer.schedule(updateGroupRideTask, 0);
 
 		TimerTask updateChallengeWinnerTask = new UpdateChallengeWinnerTask();
