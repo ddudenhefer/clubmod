@@ -15,6 +15,7 @@ import model.Member;
 public class ChallengeDAO {
 	
 	
+	
 	public boolean saveChallenge(Challenge challenge)throws Exception {
 		
 		if (challenge == null)
