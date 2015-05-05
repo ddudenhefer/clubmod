@@ -93,7 +93,7 @@ public class ActivitySvc {
 						    	}
 						    }
 						    
-						    if (activities.size() > 0) {
+						    if (totalMeters > 0) {
 						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
 						    	challengeResults.add(challengeResult);
 						    }
@@ -177,7 +177,7 @@ public class ActivitySvc {
 						    	}
 						    }
 						    
-						    if (activities.size() > 0) {
+						    if (totalRides > 0) {
 						    	challengeResult.setRides(totalRides);
 						    	challengeResults.add(challengeResult);
 						    }
@@ -259,7 +259,7 @@ public class ActivitySvc {
 						    	}
 						    }
 						    
-						    if (activities.size() > 0) {
+						    if (longestMeters > 0) {
 						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(longestMeters, true) * 10) / 10.0));				    
 						    	challengeResults.add(challengeResult);
 						    }
@@ -346,7 +346,7 @@ public class ActivitySvc {
 						    	}
 						    }
 						    
-						    if (activities.size() > 0) {
+						    if (speed > 0) {
 							    float miles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
 							    if (miles >= 50) {
 								    double mphSpeed = Math.round(Constants.ConvertMPStoMPH(speed, true) * 10) / 10.0;
@@ -431,7 +431,7 @@ public class ActivitySvc {
 						    	}
 						    }
 						    
-						    if (activities.size() > 0) {
+						    if (elevation > 0) {
 						    	challengeResult.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
 						    	challengeResults.add(challengeResult);
 						    }
