@@ -129,7 +129,6 @@ public class AppContextListener implements ServletContextListener {
 			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 			ActivitySvc activitySvc = new ActivitySvc();
 			
-			
 			try {
 				challenges = new ChallengeDAO().getAllChallenges();
 				for (Challenge challenge : challenges) {
