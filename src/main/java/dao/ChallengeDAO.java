@@ -88,6 +88,7 @@ public class ChallengeDAO {
 		return challenge;
 	}
 	
+	
 	public Challenge getChallengeByDate(Date currentDate)throws Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
