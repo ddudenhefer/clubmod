@@ -48,15 +48,15 @@ public class ChallengeSvc {
 	
 	
 	@GET
-	@Path("/{challengeIndex}/{currentDate}")
+	@Path("/{challengeIndex}/{season}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getChallenge(@PathParam("challengeIndex") int challengeIndex, @PathParam("currentDate") String currentDate) { 
+	public String getChallenge(@PathParam("challengeIndex") int challengeIndex, @PathParam("season") String season) { 
 		Challenge challenge = null;
 		
 		try {
 			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-			challenge = new ChallengeDAO().getChallenge(challengeIndex, new java.sql.Date(df.parse(currentDate).getTime()));
+			challenge = new ChallengeDAO().getChallenge(challengeIndex, season);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

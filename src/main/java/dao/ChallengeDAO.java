@@ -49,7 +49,7 @@ public class ChallengeDAO {
 	}
 	
 	
-	public Challenge getChallenge(int challengeIndex, Date currentDate)throws Exception {
+	public Challenge getChallenge(int challengeIndex, String season)throws Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		Challenge challenge = null;
@@ -57,14 +57,10 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where (? between startDate and endDate) or ";
-				sql += "(? < startDate and startDate = (select min(startDate) from challenges where challengeIndex=?)) or (? > endDate and endDate = (select max(endDate) from challenges where challengeIndex=?))";
+				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where challengeIndex=? and season like '%?%'";
 				preparedStatement = connection.prepareStatement(sql);
-				preparedStatement.setDate(1,currentDate);
-				preparedStatement.setDate(2,currentDate);
-				preparedStatement.setInt(3,challengeIndex);
-				preparedStatement.setDate(4,currentDate);
-				preparedStatement.setInt(5,challengeIndex);
+				preparedStatement.setInt(1,challengeIndex);
+				preparedStatement.setString(2,season);
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {
 					challenge = new Challenge();
