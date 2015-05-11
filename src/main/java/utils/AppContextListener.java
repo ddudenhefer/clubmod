@@ -119,7 +119,7 @@ public class AppContextListener implements ServletContextListener {
 			calToday.setTime(today);
 			Calendar yesterday = Calendar.getInstance();
 			yesterday.setTime(today);
-			yesterday.add(Calendar.DAY_OF_YEAR, -2);
+			yesterday.add(Calendar.DAY_OF_YEAR, -1);
 			yesterday.set(Calendar.HOUR_OF_DAY, 0);
 			yesterday.set(Calendar.MINUTE, 0);
 			yesterday.set(Calendar.SECOND, 0);
@@ -132,7 +132,7 @@ public class AppContextListener implements ServletContextListener {
 			try {
 				challenges = new ChallengeDAO().getAllChallenges();
 				for (Challenge challenge : challenges) {
-					System.out.println("end date: " + challenge.getEndDate());
+					System.out.println("challenge end date: " + challenge.getEndDate());
 					System.out.println("compare date: " + yesterdayDate);
 					if (challenge.getMemberId() == 0 && yesterdayDate.equals(challenge.getEndDate())) {
 						String sDate = df.format(challenge.getStartDate());
