@@ -57,10 +57,10 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where challengeIndex=? and season like '%?%'";
+				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where challengeIndex=? and season like ?";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setInt(1,challengeIndex);
-				preparedStatement.setString(2,season);
+				preparedStatement.setString(2,"%"+season+"%");
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {
 					challenge = new Challenge();
