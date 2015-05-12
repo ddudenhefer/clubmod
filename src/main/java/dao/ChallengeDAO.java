@@ -301,7 +301,7 @@ public class ChallengeDAO {
 	}
 	
 
-	public boolean hasMemberWonChallengeOrSeason(int memberId, String challengeName, String season)throws Exception {
+	public boolean hasMemberWonChallengeOrSeason(int memberId, int challengeId, String challengeName, String season)throws Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		boolean retVal = false;
@@ -309,10 +309,11 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT * FROM challenges where memberId=? and (name=? or season=?)");
+				preparedStatement = connection.prepareStatement("SELECT * FROM challenges where memberId=? and id<>? and (name=? or season=?)");
 				preparedStatement.setInt(1,memberId);
-				preparedStatement.setString(2,challengeName);
-				preparedStatement.setString(3,season);
+				preparedStatement.setInt(2,challengeId);
+				preparedStatement.setString(3,challengeName);
+				preparedStatement.setString(4,season);
 				
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {

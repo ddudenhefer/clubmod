@@ -68,7 +68,7 @@ public class ActivitySvc {
 					System.out.println("member: " + member);
 					System.out.println("challenge: " + challenge);
 					
-					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getName(), challenge.getSeason())) {				
+					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 						
 						if (member != null && member.getAccessToken() != null) {
 							JStravaV3 strava = new JStravaV3(member.getAccessToken());
@@ -149,7 +149,7 @@ public class ActivitySvc {
 				
 				for (Member member : members) {
 					
-					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getName(), challenge.getSeason())) {				
+					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 	
 						if (member != null && member.getAccessToken() != null) {
 							JStravaV3 strava = new JStravaV3(member.getAccessToken());
@@ -233,7 +233,7 @@ public class ActivitySvc {
 				
 				for (Member member : members) {
 					
-					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getName(), challenge.getSeason())) {				
+					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 					
 						if (member != null && member.getAccessToken() != null) {
 							JStravaV3 strava = new JStravaV3(member.getAccessToken());
@@ -315,7 +315,7 @@ public class ActivitySvc {
 				
 				for (Member member : members) {
 					
-					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getName(), challenge.getSeason())) {				
+					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 					
 						if (member != null && member.getAccessToken() != null) {
 							JStravaV3 strava = new JStravaV3(member.getAccessToken());
@@ -406,7 +406,7 @@ public class ActivitySvc {
 				
 				for (Member member : members) {
 					
-					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getName(), challenge.getSeason())) {				
+					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 					
 						if (member != null && member.getAccessToken() != null) {
 							JStravaV3 strava = new JStravaV3(member.getAccessToken());
