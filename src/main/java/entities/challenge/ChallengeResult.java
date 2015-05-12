@@ -103,35 +103,50 @@ public class ChallengeResult implements Comparable<ChallengeResult> {
         public static Comparator<ChallengeResult> MILES = new Comparator<ChallengeResult>() {
             @Override
             public int compare(ChallengeResult o1, ChallengeResult o2) {
-            	return Float.compare(o2.getMiles(), o1.getMiles());
+            	int ret =  Float.compare(o2.getMiles(), o1.getMiles());
+               	if (ret == 0)
+               		ret = Float.compare(o2.getElevation(), o1.getElevation());
+               	return ret;
             }
         };
 
         public static Comparator<ChallengeResult> RIDES = new Comparator<ChallengeResult>() {
             @Override
             public int compare(ChallengeResult o1, ChallengeResult o2) {
-            	return Integer.compare(o2.getRides(), o1.getRides());
+            	int ret = Integer.compare(o2.getRides(), o1.getRides());
+               	if (ret == 0)
+               		ret = Float.compare(o2.getMiles(), o1.getMiles());
+               	return ret;
             }
         };
 
         public static Comparator<ChallengeResult> SPEED = new Comparator<ChallengeResult>() {
             @Override
             public int compare(ChallengeResult o1, ChallengeResult o2) {
-            	return Float.compare(o2.getSpeed(), o1.getSpeed());
+            	int ret = Float.compare(o2.getSpeed(), o1.getSpeed());
+               	if (ret == 0)
+               		ret = Float.compare(o2.getMiles(), o1.getMiles());
+               	return ret;
             }
         };
 
         public static Comparator<ChallengeResult> TIME = new Comparator<ChallengeResult>() {
             @Override
             public int compare(ChallengeResult o1, ChallengeResult o2) {
-            	return Long.compare(o2.getTime(), o1.getTime());
+            	int ret = Long.compare(o2.getTime(), o1.getTime());
+               	if (ret == 0)
+               		ret = Float.compare(o2.getMiles(), o1.getMiles());
+               	return ret;
             }
         };
 
         public static Comparator<ChallengeResult> ELEVATION = new Comparator<ChallengeResult>() {
             @Override
             public int compare(ChallengeResult o1, ChallengeResult o2) {
-            	return Long.compare(o2.getElevation(), o1.getElevation());
+            	int ret = Long.compare(o2.getElevation(), o1.getElevation());
+               	if (ret == 0)
+               		ret = Float.compare(o2.getMiles(), o1.getMiles());
+               	return ret;
             }
         };
 

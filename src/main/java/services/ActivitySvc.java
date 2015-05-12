@@ -86,15 +86,18 @@ public class ActivitySvc {
 							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
 							float totalMeters = 0;
+							long totalElevation = 0;
 						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 						    for (Activity activity : activities) {
 						    	if (activity.getType().equals("Ride")) {
 						    		totalMeters += activity.getDistance();
+						    		totalElevation += activity.getTotal_elevation_gain();						    		
 						    	}
 						    }
 						    
 						    if (totalMeters > 0) {
 						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
+						    	challengeResult.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(totalElevation, true) * 10) / 10.0));						    	
 						    	challengeResults.add(challengeResult);
 						    }
 						}
@@ -167,18 +170,22 @@ public class ActivitySvc {
 							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
 							int totalRides = 0;
+							float totalMiles = 0;
 						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 						    for (Activity activity : activities) {
 						    	if (activity.getType().equals("Ride")) {
 						    		float meters = activity.getDistance();
-						    		float feet = (float) (Math.round(Constants.ConvertMetersToMiles(meters, true) * 10) / 10.0);
-						    		if (feet >= 25)
+						    		float miles = (float) (Math.round(Constants.ConvertMetersToMiles(meters, true) * 10) / 10.0);
+						    		if (miles >= 25) {
 						    			totalRides ++;
+						    			totalMiles += miles;
+						    		}
 						    	}
 						    }
 						    
 						    if (totalRides > 0) {
 						    	challengeResult.setRides(totalRides);
+						    	challengeResult.setMiles(totalMiles);
 						    	challengeResults.add(challengeResult);
 						    }
 						}
@@ -251,16 +258,19 @@ public class ActivitySvc {
 							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
 							float longestMeters = 0;
+							long totalElevation = 0;
 						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 						    for (Activity activity : activities) {
 						    	if (activity.getType().equals("Ride")) {
+						    		totalElevation += activity.getTotal_elevation_gain();
 						    		if (activity.getDistance() > longestMeters)
 						    			longestMeters = activity.getDistance();
 						    	}
 						    }
 						    
 						    if (longestMeters > 0) {
-						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(longestMeters, true) * 10) / 10.0));				    
+						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(longestMeters, true) * 10) / 10.0));	
+						    	challengeResult.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(totalElevation, true) * 10) / 10.0));						    	
 						    	challengeResults.add(challengeResult);
 						    }
 						}
@@ -351,6 +361,7 @@ public class ActivitySvc {
 							    if (miles >= 50) {
 								    double mphSpeed = Math.round(Constants.ConvertMPStoMPH(speed, true) * 10) / 10.0;
 								    challengeResult.setSpeed((float) (Math.round((mphSpeed/totalRides) * 10) / 10.0));
+							    	challengeResult.setMiles(miles);	
 								    challengeResults.add(challengeResult);
 							    }
 						    }
@@ -425,14 +436,17 @@ public class ActivitySvc {
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
 						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 						    float elevation = 0;
+						    float totalMiles = 0;						    
 						    for (Activity activity : activities) {
 						    	if (activity.getType().equals("Ride")) {
 						    		elevation += activity.getTotal_elevation_gain();
+						    		totalMiles += activity.getDistance();						    		
 						    	}
 						    }
 						    
 						    if (elevation > 0) {
 						    	challengeResult.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
+						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0));	
 						    	challengeResults.add(challengeResult);
 						    }
 						}
