@@ -259,6 +259,9 @@ public class AppContextListener implements ServletContextListener {
 	        Date startDate = Constants.getStartOfDay(new Date(cal.getTimeInMillis()));
 			Date endDate = Constants.getNoonOfDay(new Date(cal.getTimeInMillis()));
 		    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+		    
+		    //int segmentID = 9150556;
+		    int segmentID = 5179616;
 			
 			try {
 				List<Member> members = new ArrayList<Member>();
@@ -273,7 +276,7 @@ public class AppContextListener implements ServletContextListener {
 					    if (athlete == null)
 					    	continue;
 					    
-					    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(9150556,  athlete.getId(), df.format(startDate), df.format(endDate));
+					    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(segmentID,  athlete.getId(), df.format(startDate), df.format(endDate));
 					    if (segmentEfforts.size() > 0) {
 						    System.out.println("UpdateGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
 						    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();	
