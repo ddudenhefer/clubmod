@@ -56,9 +56,13 @@ public class AppContextListener implements ServletContextListener {
 
         HashMap optionalParameters= new HashMap();
 
+        try {
         float temp=84;
         optionalParameters.put("average_temp",temp);
         Activity activity=strava.updateActivity(329634020,optionalParameters);
+        } catch (Exception ex) {
+        	ex.printStackTrace();        	
+        }
 
 /*		
 		
