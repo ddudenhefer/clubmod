@@ -52,14 +52,6 @@ public class AppContextListener implements ServletContextListener {
 
 		System.out.println("AppContextListener Listener initialized.");
 		
-		 JStravaV3 strava= new JStravaV3("e581792ffe9d458123259088cccf19c46c03f876");
-
-	        HashMap optionalParameters= new HashMap();
-
-	        String temp="83";
-	        optionalParameters.put("average_temp",temp);
-	        Activity activity=strava.updateActivity(329634020,optionalParameters);
-
 		TimerTask updateGroupRideTask = new UpdateGroupRideTask();
 		Timer groupRideTimer = new Timer();
 		groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
