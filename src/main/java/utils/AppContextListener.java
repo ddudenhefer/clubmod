@@ -51,6 +51,17 @@ public class AppContextListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 
 		
+		System.out.println("update temp.");
+        JStravaV3 strava= new JStravaV3("e581792ffe9d458123259088cccf19c46c03f876");
+
+        HashMap optionalParameters= new HashMap();
+
+        float temp=84;
+        optionalParameters.put("average_temp",temp);
+        Activity activity=strava.updateActivity(329634020,optionalParameters);
+
+/*		
+		
 		System.out.println("AppContextListener Listener initialized.");
 		
 		TimerTask updateGroupRideTask = new UpdateGroupRideTask();
@@ -67,7 +78,7 @@ public class AppContextListener implements ServletContextListener {
 		Timer memberYTDTimer = new Timer();
 		memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23,00), ONCE_PER_DAY);
 		//memberYTDTimer.schedule(updateMemberYTDTask, 0);
-	}
+*/	}
 	
 	private static Date getTomorrow(int hour, int mins){
 		Calendar tomorrow = Calendar.getInstance();

@@ -294,16 +294,13 @@ public class JStravaV3Test {
     @Test
     public void testUpdateActivity() throws Exception {
 
-        JStravaV3 strava= new JStravaV3(accessToken);
+        JStravaV3 strava= new JStravaV3("e581792ffe9d458123259088cccf19c46c03f876");
 
         HashMap optionalParameters= new HashMap();
 
-        double weight=71;
-        String description="Autodromo mañanero";
-        String name="Autodromo en la mañana";
-        optionalParameters.put("description",description);
-        optionalParameters.put("name",name);
-        Activity activity=strava.updateActivity(updateActivityId,optionalParameters);
+        float temp=84;
+        optionalParameters.put("average_temp",temp);
+        Activity activity=strava.updateActivity(329634020,optionalParameters);
         assertNotNull(activity);
     }
 
