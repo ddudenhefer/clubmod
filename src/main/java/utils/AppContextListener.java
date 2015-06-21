@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -50,6 +51,14 @@ public class AppContextListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 
 		System.out.println("AppContextListener Listener initialized.");
+		
+		 JStravaV3 strava= new JStravaV3("e581792ffe9d458123259088cccf19c46c03f876");
+
+	        HashMap optionalParameters= new HashMap();
+
+	        String temp="83";
+	        optionalParameters.put("average_temp",temp);
+	        Activity activity=strava.updateActivity(329634020,optionalParameters);
 
 		TimerTask updateGroupRideTask = new UpdateGroupRideTask();
 		Timer groupRideTimer = new Timer();
