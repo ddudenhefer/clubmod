@@ -264,7 +264,7 @@ public class AppContextListener implements ServletContextListener {
 		    
 		    //int segmentID = 9150556; lyons
 		    //int segmentID = 5179616; nelson
-		    int segmentID = 1090795;
+		    int segmentID = 1090795; //valmont
 			
 			try {
 				List<Member> members = new ArrayList<Member>();
