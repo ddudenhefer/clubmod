@@ -262,8 +262,9 @@ public class AppContextListener implements ServletContextListener {
 			Date endDate = Constants.getNoonOfDay(new Date(cal.getTimeInMillis()));
 		    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
 		    
-		    //int segmentID = 9150556;
-		    int segmentID = 5179616;
+		    //int segmentID = 9150556; lyons
+		    //int segmentID = 5179616; nelson
+		    int segmentID = 1090795;
 			
 			try {
 				List<Member> members = new ArrayList<Member>();

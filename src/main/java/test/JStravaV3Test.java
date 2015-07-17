@@ -46,7 +46,7 @@ public class JStravaV3Test {
         activityId=188000027;
         clubId=43953;
         gearId="";
-        segmentId=0L;
+        segmentId=1090795;
         updateActivityId=0;
     }
 
