@@ -80,6 +80,64 @@ public class ClubSvc {
 	}
 	
 	@GET
+	@Path("/membersTop3")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getClubMembersTop3()  {
+		
+		List<Member> members = new ArrayList<Member>();
+		MemberDAO memberDAO = new MemberDAO();
+		try {
+			members = memberDAO.getAllMembers();
+			for (Member member : members) {
+				if (member != null && member.getAccessToken() != null) {
+
+					MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
+				    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
+				    float milesF = memberYTDTotal != null ? memberYTDTotal.getMilesYTD() : 0;
+				    long elevationL = memberYTDTotal != null ? memberYTDTotal.getElevationYTD() : 0;
+				    
+				    ChallengeDAO challengeDAO = new ChallengeDAO();
+					List<Challenge> challengeWins = challengeDAO.getChallengesByMemberId(member.getId());			
+					member.setChallengeWins(challengeWins);
+					
+					MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(); 
+					MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
+					if (memberActivityTotal != null) {
+						member.setFantasyEntry(memberActivityTotal.getFantasyEntry());
+						member.setFantasyFirst(memberActivityTotal.getFantasyFirst());
+						member.setFantasySecond(memberActivityTotal.getFantasySecond());
+						member.setFantasyThird(memberActivityTotal.getFantasyThird());
+						member.setGroupRides(memberActivityTotal.getGroupRide());
+						member.setEventRides(memberActivityTotal.getEventRide());
+						member.setHomePurchases(memberActivityTotal.getHomePurchase());
+						member.setHomeReferrals(memberActivityTotal.getHomeReferral());
+					}
+				    
+				    PointsDAO pointsDAO = new PointsDAO();
+				    member.setMemberPoints(pointsDAO.getMemberPoints(member.getId(), milesF, elevationL, challengeWins, memberActivityTotal));
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Collections.sort(members, Member.Comparators.POINTS);
+		
+		List<Member> membersTop3 = new ArrayList<Member>();
+		membersTop3.add(members.get(0));
+		membersTop3.add(members.get(1));
+		membersTop3.add(members.get(2));
+
+		Gson gson = new Gson();
+		String ret = "";
+		if (membersTop3 != null) {
+			ret = gson.toJson(membersTop3);
+		}		
+		return ret;
+	}	
+	
+	@GET
 	@Path("/memberTotalsByName")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getClubMemberTotalsByName()  {
