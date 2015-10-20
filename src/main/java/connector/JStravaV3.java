@@ -15,6 +15,7 @@ import entities.stream.Stream;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -296,7 +297,27 @@ public class JStravaV3 implements JStrava {
         String result=getResult(URL);
         Gson gson= new Gson();
         Activity[] activitiesArray =gson.fromJson(result,Activity[].class);
-        List<Activity>currentActivities= Arrays.asList(activitiesArray);
+        ArrayList<Activity>currentActivities= new ArrayList<Activity>();
+        currentActivities.addAll(Arrays.asList(activitiesArray));
+        if (currentActivities.size() == 200) {	//get next page
+            URL="https://www.strava.com/api/v3/athlete/activities?after="+start+"&before="+end+"&page=2&per_page=200";
+            result=getResult(URL);
+            if (result != null && !result.isEmpty()) {
+	            gson= new Gson();
+	            activitiesArray =gson.fromJson(result,Activity[].class);
+	            currentActivities.addAll(Arrays.asList(activitiesArray));
+	            if (currentActivities.size() == 400) {	//get next page
+	                URL="https://www.strava.com/api/v3/athlete/activities?after="+start+"&before="+end+"&page=3&per_page=200";
+	                result=getResult(URL);
+	                if (result != null && !result.isEmpty()) {
+		                gson= new Gson();
+		                activitiesArray =gson.fromJson(result,Activity[].class);
+		                currentActivities.addAll(Arrays.asList(activitiesArray));
+	                }
+	            }
+            }
+        }
+        
         return currentActivities;
     }
 
