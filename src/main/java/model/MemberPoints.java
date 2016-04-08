@@ -19,6 +19,8 @@ public class MemberPoints implements Serializable {
    private int elevation;   
    private int homePurchases;   
    private int homeReferrals;   
+   private int pointsRedeemed;   
+   private int availablePoints;   
 
    
    public int getChallenges() {
@@ -68,8 +70,20 @@ public class MemberPoints implements Serializable {
    public void setHomeReferrals(int homeReferrals) {
 	   this.homeReferrals = homeReferrals;
    }
-   
-   
+
+   public int getPointsRedeemed() {
+	   return pointsRedeemed;
+   }
+
+   public void setPointsRedeemed(int pointsRedeemed) {
+	   this.pointsRedeemed = pointsRedeemed;
+	   this.availablePoints = pointsYTD - pointsRedeemed;
+   }
+
+   public int getAvailablePoints() {
+	   return availablePoints;
+   }
+
    
    public int getMiles() {
 	   return miles;

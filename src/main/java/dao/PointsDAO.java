@@ -129,8 +129,30 @@ public class PointsDAO {
 		//challenges
 		int challengePoints = 0;
 		for (Challenge challenge : challengeWins) {
-			Point point = getPoints("challenge", challenge.getService());
-			challengePoints += point.getPoints();
+			//Point point = getPoints("challenge", challenge.getService());
+			//challengePoints += point.getPoints();
+			
+			// hard coded for now
+			if (challenge.getMemberId() > 0)
+				challengePoints += 25;
+			else if (challenge.getMemberId2() > 0)
+				challengePoints += 20;
+			else if (challenge.getMemberId3() > 0)
+				challengePoints += 15;
+			else if (challenge.getMemberId4() > 0)
+				challengePoints += 12;
+			else if (challenge.getMemberId5() > 0)
+				challengePoints += 10;
+			else if (challenge.getMemberId6() > 0)
+				challengePoints += 8;
+			else if (challenge.getMemberId7() > 0)
+				challengePoints += 6;
+			else if (challenge.getMemberId8() > 0)
+				challengePoints += 4;
+			else if (challenge.getMemberId9() > 0)
+				challengePoints += 2;
+			else if (challenge.getMemberId10() > 0)
+				challengePoints += 1;
 	    }
 		mp.setChallenges(challengePoints);
 		points += challengePoints;
@@ -200,6 +222,7 @@ public class PointsDAO {
 			mp.setHomeReferrals(referralPoints);
 			points += referralPoints;
 			
+			mp.setPointsRedeemed(memberActivityTotal.getPointsRedeemed());
 		}
 		
 		mp.setPointsYTD(points);

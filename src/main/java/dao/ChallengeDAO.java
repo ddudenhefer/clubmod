@@ -27,10 +27,19 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				String sql = "update challenges set memberId=? where id=?";
+				String sql = "update challenges set memberId=?, memberId2=?, memberId3=?, memberId4=?, memberId5=?, memberId6=?, memberId7=?, memberId8=?, memberId9=?, memberId10=? where id=?";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setInt(1, challenge.getMemberId());
-				preparedStatement.setInt(2, challenge.getId());
+				preparedStatement.setInt(2, challenge.getMemberId2());
+				preparedStatement.setInt(3, challenge.getMemberId3());
+				preparedStatement.setInt(4, challenge.getMemberId4());
+				preparedStatement.setInt(5, challenge.getMemberId5());
+				preparedStatement.setInt(6, challenge.getMemberId6());
+				preparedStatement.setInt(7, challenge.getMemberId7());
+				preparedStatement.setInt(8, challenge.getMemberId8());
+				preparedStatement.setInt(9, challenge.getMemberId9());
+				preparedStatement.setInt(10, challenge.getMemberId10());
+				preparedStatement.setInt(11, challenge.getId());
 		
 				int rowsAffected = preparedStatement.executeUpdate();
 				if (rowsAffected > 0)
@@ -57,7 +66,7 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where challengeIndex=? and season like ?";
+				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId, memberId2, memberId3, memberId4, memberId5, memberId6, memberId7, memberId8, memberId9, memberId10 FROM challenges where challengeIndex=? and season like ?";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setInt(1,challengeIndex);
 				preparedStatement.setString(2,"%"+season+"%");
@@ -73,6 +82,15 @@ public class ChallengeDAO {
 					challenge.setLabel(rs.getString("label"));
 					challenge.setService(rs.getString("service"));
 					challenge.setMemberId(rs.getInt("memberId"));
+					challenge.setMemberId2(rs.getInt("memberId2"));
+					challenge.setMemberId3(rs.getInt("memberId3"));
+					challenge.setMemberId4(rs.getInt("memberId4"));
+					challenge.setMemberId5(rs.getInt("memberId5"));
+					challenge.setMemberId6(rs.getInt("memberId6"));
+					challenge.setMemberId7(rs.getInt("memberId7"));
+					challenge.setMemberId8(rs.getInt("memberId8"));
+					challenge.setMemberId9(rs.getInt("memberId9"));
+					challenge.setMemberId10(rs.getInt("memberId10"));
 				}
 			}
 		
@@ -97,7 +115,7 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where (? between startDate and endDate) or ";
+				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId, memberId2, memberId3, memberId4, memberId5, memberId6, memberId7, memberId8, memberId9, memberId10 FROM challenges where (? between startDate and endDate) or ";
 				sql += "(? < startDate and startDate = (select min(startDate) from challenges)) or (? > endDate and endDate = (select max(endDate) from challenges))";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setDate(1,currentDate);
@@ -115,6 +133,15 @@ public class ChallengeDAO {
 					challenge.setLabel(rs.getString("label"));
 					challenge.setService(rs.getString("service"));
 					challenge.setMemberId(rs.getInt("memberId"));
+					challenge.setMemberId2(rs.getInt("memberId2"));
+					challenge.setMemberId3(rs.getInt("memberId3"));
+					challenge.setMemberId4(rs.getInt("memberId4"));
+					challenge.setMemberId5(rs.getInt("memberId5"));
+					challenge.setMemberId6(rs.getInt("memberId6"));
+					challenge.setMemberId7(rs.getInt("memberId7"));
+					challenge.setMemberId8(rs.getInt("memberId8"));
+					challenge.setMemberId9(rs.getInt("memberId9"));
+					challenge.setMemberId10(rs.getInt("memberId10"));
 				}
 			}
 		
@@ -138,7 +165,7 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where id=?";
+				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId, memberId2, memberId3, memberId4, memberId5, memberId6, memberId7, memberId8, memberId9, memberId10 FROM challenges where id=?";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setInt(1,id);
 				ResultSet rs = preparedStatement.executeQuery();
@@ -153,6 +180,15 @@ public class ChallengeDAO {
 					challenge.setLabel(rs.getString("label"));
 					challenge.setService(rs.getString("service"));
 					challenge.setMemberId(rs.getInt("memberId"));
+					challenge.setMemberId2(rs.getInt("memberId2"));
+					challenge.setMemberId3(rs.getInt("memberId3"));
+					challenge.setMemberId4(rs.getInt("memberId4"));
+					challenge.setMemberId5(rs.getInt("memberId5"));
+					challenge.setMemberId6(rs.getInt("memberId6"));
+					challenge.setMemberId7(rs.getInt("memberId7"));
+					challenge.setMemberId8(rs.getInt("memberId8"));
+					challenge.setMemberId9(rs.getInt("memberId9"));
+					challenge.setMemberId10(rs.getInt("memberId10"));
 				}
 			}
 		
@@ -177,7 +213,7 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where startDate=? and endDate=?";
+				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId, memberId2, memberId3, memberId4, memberId5, memberId6, memberId7, memberId8, memberId9, memberId10 FROM challenges where startDate=? and endDate=?";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setDate(1,startDate);
 				preparedStatement.setDate(2,endDate);
@@ -194,6 +230,15 @@ public class ChallengeDAO {
 					challenge.setLabel(rs.getString("label"));
 					challenge.setService(rs.getString("service"));
 					challenge.setMemberId(rs.getInt("memberId"));
+					challenge.setMemberId2(rs.getInt("memberId2"));
+					challenge.setMemberId3(rs.getInt("memberId3"));
+					challenge.setMemberId4(rs.getInt("memberId4"));
+					challenge.setMemberId5(rs.getInt("memberId5"));
+					challenge.setMemberId6(rs.getInt("memberId6"));
+					challenge.setMemberId7(rs.getInt("memberId7"));
+					challenge.setMemberId8(rs.getInt("memberId8"));
+					challenge.setMemberId9(rs.getInt("memberId9"));
+					challenge.setMemberId10(rs.getInt("memberId10"));
 				}
 			}
 		
@@ -219,7 +264,7 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT c.id, c.challengeIndex, c.name, c.season, c.startDate, c.endDate, c.label, c.service, c.memberId FROM challenges c order by c.id");
+				preparedStatement = connection.prepareStatement("SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId, memberId2, memberId3, memberId4, memberId5, memberId6, memberId7, memberId8, memberId9, memberId10 FROM challenges order by id");
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) {
 					challenge = new Challenge();
@@ -232,6 +277,15 @@ public class ChallengeDAO {
 					challenge.setLabel(rs.getString("label"));
 					challenge.setService(rs.getString("service"));
 					challenge.setMemberId(rs.getInt("memberId"));
+					challenge.setMemberId2(rs.getInt("memberId2"));
+					challenge.setMemberId3(rs.getInt("memberId3"));
+					challenge.setMemberId4(rs.getInt("memberId4"));
+					challenge.setMemberId5(rs.getInt("memberId5"));
+					challenge.setMemberId6(rs.getInt("memberId6"));
+					challenge.setMemberId7(rs.getInt("memberId7"));
+					challenge.setMemberId8(rs.getInt("memberId8"));
+					challenge.setMemberId9(rs.getInt("memberId9"));
+					challenge.setMemberId10(rs.getInt("memberId10"));
 					
 					String fullname = "";
 					if (challenge.getMemberId() > 0) {
@@ -268,8 +322,20 @@ public class ChallengeDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId FROM challenges where memberId=?");
+				
+				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId, memberId2, memberId3, memberId4, memberId5, memberId6, memberId7, memberId8, memberId9, memberId10 FROM challenges where ";
+				sql += "memberId=? or memberId2=? or memberId3=? or memberId4=? or memberId5=? or memberId6=? or memberId7=? or memberId8=? or memberId9=? or memberId10=?";
+				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setInt(1,memberId);
+				preparedStatement.setInt(2,memberId);
+				preparedStatement.setInt(3,memberId);
+				preparedStatement.setInt(4,memberId);
+				preparedStatement.setInt(5,memberId);
+				preparedStatement.setInt(6,memberId);
+				preparedStatement.setInt(7,memberId);
+				preparedStatement.setInt(8,memberId);
+				preparedStatement.setInt(9,memberId);
+				preparedStatement.setInt(10,memberId);
 				
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) {
@@ -283,6 +349,15 @@ public class ChallengeDAO {
 					challenge.setLabel(rs.getString("label"));
 					challenge.setService(rs.getString("service"));
 					challenge.setMemberId(rs.getInt("memberId"));
+					challenge.setMemberId2(rs.getInt("memberId2"));
+					challenge.setMemberId3(rs.getInt("memberId3"));
+					challenge.setMemberId4(rs.getInt("memberId4"));
+					challenge.setMemberId5(rs.getInt("memberId5"));
+					challenge.setMemberId6(rs.getInt("memberId6"));
+					challenge.setMemberId7(rs.getInt("memberId7"));
+					challenge.setMemberId8(rs.getInt("memberId8"));
+					challenge.setMemberId9(rs.getInt("memberId9"));
+					challenge.setMemberId10(rs.getInt("memberId10"));
 					challenges.add(challenge);
 				}
 			}
@@ -306,7 +381,7 @@ public class ChallengeDAO {
 		PreparedStatement preparedStatement = null;
 		boolean retVal = false;
 
-		try {
+/*		try {
 			connection = Database.getConnection();
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT * FROM challenges where memberId=? and id<>? and (name=? or season=?)");
@@ -331,7 +406,7 @@ public class ChallengeDAO {
 			if (connection != null)
 				connection.close();
 		}
-		
+*/		
 		return retVal;
 	}
 	
