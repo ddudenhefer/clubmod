@@ -31,6 +31,7 @@ public class Member implements Serializable {
    private int eventRides;
    private int homePurchases;
    private int homeReferrals;
+   private int pointsRedeemed;
 
 
    public int getId() {
@@ -193,6 +194,15 @@ public class Member implements Serializable {
       this.homeReferrals = homeReferrals;
    }
 
+   public int getPointsRedeemed() {
+	   return pointsRedeemed;
+   }
+
+   public void setPointsRedeemed(int pointsRedeemed) {
+      this.pointsRedeemed = pointsRedeemed;
+   }
+   
+   
    public static class Comparators {
 
        public static Comparator<Member> NAME = new Comparator<Member>() {
