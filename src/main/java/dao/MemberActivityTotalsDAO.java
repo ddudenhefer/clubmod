@@ -19,7 +19,7 @@ public class MemberActivityTotalsDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT memberId, fantasy_entry, fantasy_first, fantasy_second, fantasy_third, group_ride, event_ride, home_purchase, home_referral FROM member_activity_totals where memberId=?");
+				preparedStatement = connection.prepareStatement("SELECT memberId, fantasy_entry, fantasy_first, fantasy_second, fantasy_third, group_ride, event_ride, home_purchase, home_referral, points_redeemed FROM member_activity_totals where memberId=?");
 				preparedStatement.setLong(1,memberId);
 				ResultSet rs = preparedStatement.executeQuery();
 				if (rs.next()) {
@@ -33,6 +33,7 @@ public class MemberActivityTotalsDAO {
 					memberActivityTotal.setEventRide(rs.getInt("event_ride"));
 					memberActivityTotal.setHomePurchase(rs.getInt("home_purchase"));
 					memberActivityTotal.setHomeReferral(rs.getInt("home_referral"));
+					memberActivityTotal.setPointsRedeemed(rs.getInt("points_redeemed"));
 				}
 			}
 		
@@ -79,7 +80,7 @@ public class MemberActivityTotalsDAO {
 			if (connection != null) {
 				MemberActivityTotal memberActivityTotalDB = getMemberData(memberActivityTotal.getMemberId());
 				if (memberActivityTotalDB != null && memberActivityTotalDB.getMemberId() > 0) {	// update
-					String sql = "update member_activity_totals set fantasy_entry=?, fantasy_first=?, fantasy_second=?, fantasy_third=?, group_ride=?, event_ride=?, home_purchase=?, home_referral=? where memberId=?";
+					String sql = "update member_activity_totals set fantasy_entry=?, fantasy_first=?, fantasy_second=?, fantasy_third=?, group_ride=?, event_ride=?, home_purchase=?, home_referral=?, points_redeemed=? where memberId=?";
 					preparedStatement = connection.prepareStatement(sql);
 					preparedStatement.setInt(1, memberActivityTotal.getFantasyEntry());
 					preparedStatement.setInt(2, memberActivityTotal.getFantasyFirst());
@@ -89,14 +90,15 @@ public class MemberActivityTotalsDAO {
 					preparedStatement.setInt(6, memberActivityTotal.getEventRide());
 					preparedStatement.setInt(7, memberActivityTotal.getHomePurchase());
 					preparedStatement.setInt(8, memberActivityTotal.getHomeReferral());
-					preparedStatement.setLong(9, memberActivityTotal.getMemberId());
+					preparedStatement.setLong(9, memberActivityTotal.getPointsRedeemed());
+					preparedStatement.setLong(10, memberActivityTotal.getMemberId());
 		
 					int rowsAffected = preparedStatement.executeUpdate();
 					if (rowsAffected > 0)
 						return true;
 				}
 				else {	// insert
-					String sql = "insert into member_activity_totals (memberId, fantasy_entry, fantasy_first, fantasy_second, fantasy_third, group_ride, event_ride, home_purchase, home_referral) values (?,?,?,?,?,?,?,?,?)";
+					String sql = "insert into member_activity_totals (memberId, fantasy_entry, fantasy_first, fantasy_second, fantasy_third, group_ride, event_ride, home_purchase, home_referral, points_redeemed) values (?,?,?,?,?,?,?,?,?,?)";
 					preparedStatement = connection.prepareStatement(sql);
 					preparedStatement.setLong(1, memberActivityTotal.getMemberId());
 					preparedStatement.setInt(2, memberActivityTotal.getFantasyEntry());
@@ -107,6 +109,7 @@ public class MemberActivityTotalsDAO {
 					preparedStatement.setInt(7, memberActivityTotal.getEventRide());
 					preparedStatement.setInt(8, memberActivityTotal.getHomePurchase());
 					preparedStatement.setInt(9, memberActivityTotal.getHomeReferral());
+					preparedStatement.setInt(10, memberActivityTotal.getPointsRedeemed());
 					int rowsAffected = preparedStatement.executeUpdate();
 					if (rowsAffected > 0)
 						return true;
@@ -134,7 +137,7 @@ public class MemberActivityTotalsDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				String sql = "SELECT memberId, fantasy_entry, fantasy_first, fantasy_second, fantasy_third, group_ride, event_ride, home_purchase, home_referral FROM member_activity_totals";
+				String sql = "SELECT memberId, fantasy_entry, fantasy_first, fantasy_second, fantasy_third, group_ride, event_ride, home_purchase, home_referral, points_redeemed FROM member_activity_totals";
 				preparedStatement = connection.prepareStatement(sql);
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) {
@@ -148,6 +151,7 @@ public class MemberActivityTotalsDAO {
 					memberActivityTotal.setEventRide(rs.getInt("event_ride"));
 					memberActivityTotal.setHomePurchase(rs.getInt("home_purchase"));
 					memberActivityTotal.setHomeReferral(rs.getInt("home_referral"));
+					memberActivityTotal.setPointsRedeemed(rs.getInt("points_redeemed"));
 					memberActivityTotals.add(memberActivityTotal);
 				}
 			}

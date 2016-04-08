@@ -15,6 +15,7 @@ public class MemberActivityTotal implements Serializable {
    private int eventRide = 0;
    private int homePurchase = 0;
    private int homeReferral = 0;
+   private int pointsRedeemed = 0;
 
 
    public int getMemberId() {
@@ -97,5 +98,12 @@ public class MemberActivityTotal implements Serializable {
 	   this.homeReferral = homeReferral;
    }
 
+   public int getPointsRedeemed() {
+	   return pointsRedeemed;
+   }
+
+   public void setPointsRedeemed(int pointsRedeemed) {
+	   this.pointsRedeemed = pointsRedeemed;
+   }
 
 }
