@@ -228,6 +228,7 @@ public class PointsDAO {
 		mp.setPointsYTD(points);
 		mp.setMilesYTD(distance);
 		mp.setElevationYTD(elevation);
+		mp.setAvailablePoints(points -  mp.getPointsRedeemed());
 
 		return mp;
 	}

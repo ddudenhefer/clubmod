@@ -77,11 +77,14 @@ public class MemberPoints implements Serializable {
 
    public void setPointsRedeemed(int pointsRedeemed) {
 	   this.pointsRedeemed = pointsRedeemed;
-	   this.availablePoints = pointsYTD - pointsRedeemed;
    }
 
    public int getAvailablePoints() {
 	   return availablePoints;
+   }
+
+   public void setAvailablePoints(int availablePoints) {
+	   this.availablePoints = availablePoints;
    }
 
    
