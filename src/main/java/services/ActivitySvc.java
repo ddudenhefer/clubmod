@@ -65,7 +65,7 @@ public class ActivitySvc {
 				
 				for (Member member : members) {
 					
-					System.out.println("member: " + member);
+					System.out.println("member: " + member.getFirstName() + " " + member.getLastName());
 					//System.out.println("challenge: " + challenge);
 					
 					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
@@ -152,6 +152,7 @@ public class ActivitySvc {
 				
 				for (Member member : members) {
 					
+					System.out.println("member: " + member.getFirstName() + " " + member.getLastName());
 					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 	
 						if (member != null && member.getAccessToken() != null) {
@@ -240,6 +241,7 @@ public class ActivitySvc {
 				
 				for (Member member : members) {
 					
+					System.out.println("member: " + member.getFirstName() + " " + member.getLastName());
 					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 					
 						if (member != null && member.getAccessToken() != null) {
@@ -325,6 +327,7 @@ public class ActivitySvc {
 				
 				for (Member member : members) {
 					
+					System.out.println("member: " + member.getFirstName() + " " + member.getLastName());
 					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 					
 						if (member != null && member.getAccessToken() != null) {
@@ -420,6 +423,7 @@ public class ActivitySvc {
 				
 				for (Member member : members) {
 					
+					System.out.println("member: " + member.getFirstName() + " " + member.getLastName());
 					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 					
 						if (member != null && member.getAccessToken() != null) {
