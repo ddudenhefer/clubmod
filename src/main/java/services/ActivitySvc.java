@@ -60,15 +60,15 @@ public class ActivitySvc {
 			try {
 				List<Member> members = memberDAO.getAllMembers();
 				
-				ChallengeDAO challengeDAO = new ChallengeDAO();
-				Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
+				//ChallengeDAO challengeDAO = new ChallengeDAO();
+				//Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
 				
 				for (Member member : members) {
 					
 					System.out.println("member: " + member);
-					System.out.println("challenge: " + challenge);
+					//System.out.println("challenge: " + challenge);
 					
-					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
+					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 						
 						if (member != null && member.getAccessToken() != null) {
 							JStravaV3 strava = new JStravaV3(member.getAccessToken());
@@ -101,7 +101,7 @@ public class ActivitySvc {
 						    	challengeResults.add(challengeResult);
 						    }
 						}
-					}
+					//}
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -147,12 +147,12 @@ public class ActivitySvc {
 			try {
 				List<Member> members = memberDAO.getAllMembers();
 
-				ChallengeDAO challengeDAO = new ChallengeDAO();
-				Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
+				//ChallengeDAO challengeDAO = new ChallengeDAO();
+				//Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
 				
 				for (Member member : members) {
 					
-					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
+					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 	
 						if (member != null && member.getAccessToken() != null) {
 							JStravaV3 strava = new JStravaV3(member.getAccessToken());
@@ -189,7 +189,7 @@ public class ActivitySvc {
 						    	challengeResults.add(challengeResult);
 						    }
 						}
-					}
+					//}
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -235,12 +235,12 @@ public class ActivitySvc {
 			try {
 				List<Member> members = memberDAO.getAllMembers();
 				
-				ChallengeDAO challengeDAO = new ChallengeDAO();
-				Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
+				//ChallengeDAO challengeDAO = new ChallengeDAO();
+				//Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
 				
 				for (Member member : members) {
 					
-					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
+					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 					
 						if (member != null && member.getAccessToken() != null) {
 							JStravaV3 strava = new JStravaV3(member.getAccessToken());
@@ -274,7 +274,7 @@ public class ActivitySvc {
 						    	challengeResults.add(challengeResult);
 						    }
 						}
-					}
+					//}
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -320,12 +320,12 @@ public class ActivitySvc {
 			try {
 				List<Member> members = memberDAO.getAllMembers();
 				
-				ChallengeDAO challengeDAO = new ChallengeDAO();
-				Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
+				//ChallengeDAO challengeDAO = new ChallengeDAO();
+				//Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
 				
 				for (Member member : members) {
 					
-					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
+					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 					
 						if (member != null && member.getAccessToken() != null) {
 							JStravaV3 strava = new JStravaV3(member.getAccessToken());
@@ -369,7 +369,7 @@ public class ActivitySvc {
 							    }
 						    }
 						}
-					}
+					//}
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -415,12 +415,12 @@ public class ActivitySvc {
 			try {
 				List<Member> members = memberDAO.getAllMembers();
 				
-				ChallengeDAO challengeDAO = new ChallengeDAO();
-				Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
+				//ChallengeDAO challengeDAO = new ChallengeDAO();
+				//Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
 				
 				for (Member member : members) {
 					
-					if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
+					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 					
 						if (member != null && member.getAccessToken() != null) {
 							JStravaV3 strava = new JStravaV3(member.getAccessToken());
@@ -453,7 +453,7 @@ public class ActivitySvc {
 						    	challengeResults.add(challengeResult);
 						    }
 						}
-					}
+					//}
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

@@ -134,8 +134,10 @@ public class AppContextListener implements ServletContextListener {
 			try {
 				challenges = new ChallengeDAO().getAllChallenges();
 				for (Challenge challenge : challenges) {
+					System.out.println("challenge name: " + challenge.getName());
 					System.out.println("challenge end date: " + challenge.getEndDate());
 					System.out.println("compare date: " + yesterdayDate);
+					// assume of memberid is not set, none of them are set
 					if (challenge.getMemberId() == 0 && yesterdayDate.equals(challenge.getEndDate())) {
 						String sDate = df.format(challenge.getStartDate());
 						String eDate = df.format(challenge.getEndDate());
@@ -157,10 +159,76 @@ public class AppContextListener implements ServletContextListener {
 				        List<ChallengeResult> challengeResults=Arrays.asList(challengeResultsArray);	
 				        
 				        if (challengeResults.size() > 0) {
-				        	int athleteId = challengeResults.get(0).getAthleteId();
-				        	MemberDAO memberDAO = new MemberDAO();
-				        	Member member = memberDAO.getMemberByAthleteId(athleteId);
-				        	challenge.setMemberId(member.getId());
+					        if (challengeResults.size() > 0) {
+					        	int athleteId = challengeResults.get(0).getAthleteId();
+					        	MemberDAO memberDAO = new MemberDAO();
+					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
+					        	challenge.setMemberId(member.getId());
+								System.out.println("challenge 1st: " + member.getFirstName() + " " +  member.getLastName());
+					        }
+					        if (challengeResults.size() > 1) {
+					        	int athleteId = challengeResults.get(1).getAthleteId();
+					        	MemberDAO memberDAO = new MemberDAO();
+					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
+					        	challenge.setMemberId2(member.getId());
+								System.out.println("challenge 2nd: " + member.getFirstName() + " " +  member.getLastName());
+					        }
+					        if (challengeResults.size() > 2) {
+					        	int athleteId = challengeResults.get(2).getAthleteId();
+					        	MemberDAO memberDAO = new MemberDAO();
+					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
+					        	challenge.setMemberId3(member.getId());
+								System.out.println("challenge 3rd: " + member.getFirstName() + " " +  member.getLastName());
+					        }
+					        if (challengeResults.size() > 3) {
+					        	int athleteId = challengeResults.get(3).getAthleteId();
+					        	MemberDAO memberDAO = new MemberDAO();
+					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
+					        	challenge.setMemberId4(member.getId());
+								System.out.println("challenge 4th: " + member.getFirstName() + " " +  member.getLastName());
+					        }
+					        if (challengeResults.size() > 4) {
+					        	int athleteId = challengeResults.get(4).getAthleteId();
+					        	MemberDAO memberDAO = new MemberDAO();
+					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
+					        	challenge.setMemberId5(member.getId());
+								System.out.println("challenge 5th: " + member.getFirstName() + " " +  member.getLastName());
+					        }
+					        if (challengeResults.size() > 5) {
+					        	int athleteId = challengeResults.get(5).getAthleteId();
+					        	MemberDAO memberDAO = new MemberDAO();
+					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
+					        	challenge.setMemberId6(member.getId());
+								System.out.println("challenge 6th: " + member.getFirstName() + " " +  member.getLastName());
+					        }
+					        if (challengeResults.size() > 6) {
+					        	int athleteId = challengeResults.get(6).getAthleteId();
+					        	MemberDAO memberDAO = new MemberDAO();
+					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
+					        	challenge.setMemberId7(member.getId());
+								System.out.println("challenge 7th: " + member.getFirstName() + " " +  member.getLastName());
+					        }
+					        if (challengeResults.size() > 7) {
+					        	int athleteId = challengeResults.get(7).getAthleteId();
+					        	MemberDAO memberDAO = new MemberDAO();
+					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
+					        	challenge.setMemberId8(member.getId());
+								System.out.println("challenge 8th: " + member.getFirstName() + " " +  member.getLastName());
+					        }
+					        if (challengeResults.size() > 8) {
+					        	int athleteId = challengeResults.get(8).getAthleteId();
+					        	MemberDAO memberDAO = new MemberDAO();
+					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
+					        	challenge.setMemberId9(member.getId());
+								System.out.println("challenge 9th: " + member.getFirstName() + " " +  member.getLastName());
+					        }
+					        if (challengeResults.size() > 9) {
+					        	int athleteId = challengeResults.get(9).getAthleteId();
+					        	MemberDAO memberDAO = new MemberDAO();
+					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
+					        	challenge.setMemberId10(member.getId());
+								System.out.println("challenge 10th: " + member.getFirstName() + " " +  member.getLastName());
+					        }
 				        	
 				        	ChallengeDAO challengeDAO = new ChallengeDAO();
 				        	challengeDAO.saveChallenge(challenge);
