@@ -133,25 +133,25 @@ public class PointsDAO {
 			//challengePoints += point.getPoints();
 			
 			// hard coded for now
-			if (challenge.getMemberId() > 0)
+			if (challenge.getMemberId() == memberId)
 				challengePoints += 25;
-			else if (challenge.getMemberId2() > 0)
+			else if (challenge.getMemberId2() == memberId)
 				challengePoints += 20;
-			else if (challenge.getMemberId3() > 0)
+			else if (challenge.getMemberId3() == memberId)
 				challengePoints += 15;
-			else if (challenge.getMemberId4() > 0)
+			else if (challenge.getMemberId4() == memberId)
 				challengePoints += 12;
-			else if (challenge.getMemberId5() > 0)
+			else if (challenge.getMemberId5() == memberId)
 				challengePoints += 10;
-			else if (challenge.getMemberId6() > 0)
+			else if (challenge.getMemberId6() == memberId)
 				challengePoints += 8;
-			else if (challenge.getMemberId7() > 0)
+			else if (challenge.getMemberId7() == memberId)
 				challengePoints += 6;
-			else if (challenge.getMemberId8() > 0)
+			else if (challenge.getMemberId8() == memberId)
 				challengePoints += 4;
-			else if (challenge.getMemberId9() > 0)
+			else if (challenge.getMemberId9() == memberId)
 				challengePoints += 2;
-			else if (challenge.getMemberId10() > 0)
+			else if (challenge.getMemberId10() == memberId)
 				challengePoints += 1;
 	    }
 		mp.setChallenges(challengePoints);
