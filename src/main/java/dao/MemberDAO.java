@@ -145,9 +145,9 @@ public class MemberDAO {
 					preparedStatement.setString(2, member.getFirstName());
 					preparedStatement.setString(3, member.getLastName());
 					preparedStatement.setString(4, member.getPictureURL());
-					preparedStatement.setString(5, member.getCity());
-					preparedStatement.setString(6, member.getState());
-					preparedStatement.setString(7, member.getEmail());
+					preparedStatement.setString(5, member.getCity() != null ? member.getCity() : "");
+					preparedStatement.setString(6, member.getState() != null ? member.getState() : "");
+					preparedStatement.setString(7, member.getEmail() != null ? member.getEmail() : "");
 					preparedStatement.setLong(8, member.getAthleteId());
 		
 					int rowsAffected = preparedStatement.executeUpdate();
@@ -162,9 +162,9 @@ public class MemberDAO {
 					preparedStatement.setString(3, member.getFirstName());
 					preparedStatement.setString(4, member.getLastName());
 					preparedStatement.setString(5, member.getPictureURL());
-					preparedStatement.setString(6, member.getCity());
-					preparedStatement.setString(7, member.getState());
-					preparedStatement.setString(8, member.getEmail());
+					preparedStatement.setString(6, member.getCity() != null ? member.getCity() : "");
+					preparedStatement.setString(7, member.getState() != null ? member.getState() : "");
+					preparedStatement.setString(8, member.getEmail() != null ? member.getEmail() : "");
 					int rowsAffected = preparedStatement.executeUpdate();
 					if (rowsAffected > 0) {
 						MemberDAO memberDAO = new MemberDAO();
