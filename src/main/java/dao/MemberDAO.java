@@ -96,7 +96,7 @@ public class MemberDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName, pictureURL, city, state, email FROM members");
+				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName, pictureURL, city, state, email, waiver FROM members");
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) {
 					member = new Member();
@@ -109,6 +109,7 @@ public class MemberDAO {
 					member.setCity(rs.getString("city"));
 					member.setState(rs.getString("state"));
 					member.setEmail(rs.getString("email"));
+					member.setWaiver(rs.getString("waiver"));
 					members.add(member);
 				}
 			}
