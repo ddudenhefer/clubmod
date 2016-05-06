@@ -257,17 +257,14 @@ public class MemberDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				Member memberDB = getMemberById(member.getId());
-				if (memberDB != null) {	// update
-					String sql = "update members set waiver=? where id=?";
-					preparedStatement = connection.prepareStatement(sql);
-					preparedStatement.setString(1, member.getWaiver());
-					preparedStatement.setLong(2, member.getId());
+				String sql = "update members set waiver=? where id=?";
+				preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setString(1, member.getWaiver());
+				preparedStatement.setLong(2, member.getId());
 		
-					int rowsAffected = preparedStatement.executeUpdate();
-					if (rowsAffected > 0)
-						return true;
-				}
+				int rowsAffected = preparedStatement.executeUpdate();
+				if (rowsAffected > 0)
+					return true;
 			}
 		} catch (Exception e) {
 			throw e;
