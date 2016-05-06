@@ -229,4 +229,54 @@ public class MemberDAO {
 		
 		return false;
 	}
+	
+	public boolean updateMemberWaivers(List<Member> members)throws Exception {
+		
+		if (members == null || members.size() == 0)
+			return false;
+		
+		try {
+			for (Member member : members) {
+				saveMemberWaiver(member);
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		return true;
+	}
+	
+	public boolean saveMemberWaiver(Member member)throws Exception {
+		
+		if (member == null)
+			return false;
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connection = Database.getConnection();
+			if (connection != null) {
+				Member memberDB = getMemberByAthleteId(member.getAthleteId());
+				if (memberDB != null) {	// update
+					String sql = "update members set waiver=? where id=?";
+					preparedStatement = connection.prepareStatement(sql);
+					preparedStatement.setString(1, member.getWaiver());
+					preparedStatement.setLong(2, member.getId());
+		
+					int rowsAffected = preparedStatement.executeUpdate();
+					if (rowsAffected > 0)
+						return true;
+				}
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		finally {
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (connection != null)
+			connection.close();
+		}
+		return false;
+	}
 }

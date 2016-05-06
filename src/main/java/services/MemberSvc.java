@@ -2,6 +2,7 @@ package services;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -13,9 +14,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import model.Member;
+import model.MemberActivityTotal;
 
 import com.google.gson.Gson;
 
+import dao.MemberActivityTotalsDAO;
 import dao.MemberDAO;
 import entities.challenge.ChallengeResult;
 
@@ -103,4 +106,28 @@ public class MemberSvc {
 		}
 	    return ret; 
 	}	
+	
+	@POST
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Path("/updateWaiver")
+	public String updateMemberWaivers(String jsonData) {
+		MemberDAO memberDAO = new MemberDAO();
+		String ret = "success";
+		
+		try {
+			Gson gson = new Gson();
+			Member[]memberArray = gson.fromJson(jsonData, Member[].class); 
+	        List<Member> member=Arrays.asList(memberArray);	
+
+			boolean ok = memberDAO.updateMemberWaivers(member);
+			if (! ok)
+				ret = "failed"; 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			ret = "failed";
+		}
+		return ret;
+	}
+	
 } 

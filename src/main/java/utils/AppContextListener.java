@@ -53,9 +53,9 @@ public class AppContextListener implements ServletContextListener {
 		
 		System.out.println("AppContextListener Listener initialized.");
 		
-		//TimerTask updateGroupRideTask = new UpdateGroupRideTask();
-		//Timer groupRideTimer = new Timer();
-		//groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
+		TimerTask updateGroupRideTask = new UpdateGroupRideTask();
+		Timer groupRideTimer = new Timer();
+		groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
 		//groupRideTimer.schedule(updateGroupRideTask, 0);
 
 		TimerTask updateChallengeWinnerTask = new UpdateChallengeWinnerTask();
@@ -332,7 +332,8 @@ public class AppContextListener implements ServletContextListener {
 		    
 		    //int segmentID = 9150556; lyons
 		    //int segmentID = 5179616; nelson
-		    int segmentID = 1090795; //valmont
+		    //int segmentID = 1090795; //valmont
+		    int segmentID = 716757; //valmont roller 
 			
 			try {
 				List<Member> members = new ArrayList<Member>();

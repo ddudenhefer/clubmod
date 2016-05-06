@@ -18,6 +18,7 @@ public class Member implements Serializable {
    private String city; 
    private String state; 
    private String email; 
+   private String waiver; 
    
    // not in db
    private MemberPoints memberPoints = new MemberPoints();   
@@ -122,6 +123,14 @@ public class Member implements Serializable {
        this.email = email;
    }   
    
+   public String getWaiver() {
+       return waiver;
+   }
+
+   public void setWaiver(String waiver) {
+       this.waiver = waiver;
+   }   
+
    public int getTotalRides() {
       return totalRides;
    }
