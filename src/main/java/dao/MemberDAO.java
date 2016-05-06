@@ -257,7 +257,7 @@ public class MemberDAO {
 		try {
 			connection = Database.getConnection();
 			if (connection != null) {
-				Member memberDB = getMemberByAthleteId(member.getAthleteId());
+				Member memberDB = getMemberById(member.getId());
 				if (memberDB != null) {	// update
 					String sql = "update members set waiver=? where id=?";
 					preparedStatement = connection.prepareStatement(sql);
