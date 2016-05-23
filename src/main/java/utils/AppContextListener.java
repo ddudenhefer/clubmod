@@ -273,10 +273,14 @@ public class AppContextListener implements ServletContextListener {
 					    
 					    // save member picture
 					    if (! athlete.getProfile_medium().equals(member.getPictureURL()) || 
+					    		! athlete.getFirstname().equals(member.getFirstName()) ||
+					    		! athlete.getLastname().equals(member.getLastName()) ||
 					    		! athlete.getCity().equals(member.getCity()) ||
 					    		! athlete.getState().equals(member.getState()) ||
 					    		! athlete.getEmail().equals(member.getEmail())) {
 					    	MemberDAO memberDB = new MemberDAO();
+						    member.setFirstName(athlete.getFirstname());
+						    member.setLastName(athlete.getLastname());
 						    member.setPictureURL(athlete.getProfile_medium());
 						    member.setCity(athlete.getCity());
 						    member.setState(athlete.getState());
