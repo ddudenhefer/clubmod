@@ -372,9 +372,8 @@ public class ActivitySvc {
 							    	bSec = new BigDecimal(time);
 							    	bHour = bSec.divide(new BigDecimal(3600), 2, RoundingMode.CEILING);
 
-							        // divide bg1 with bg2 with 3 scale
-							    	bmph = bDistance.divide(bHour, 2, RoundingMode.CEILING);
-								    challengeResult.setSpeed(bmph.floatValue());
+							    	float mph = (float)(Math.round(bDistance.divide(bHour, 2, RoundingMode.CEILING).floatValue() * 10) / 10.0);
+								    challengeResult.setSpeed(mph);
 							    	challengeResult.setMiles(totalMiles);	
 								    challengeResults.add(challengeResult);
 							    }
