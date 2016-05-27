@@ -363,7 +363,9 @@ public class ActivitySvc {
 						    if (time > 0) {
 							    float totalMiles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
 							    if (totalMiles >= 50) {
-							    	float hours = (float)((Math.round(time/3600) * 10) / 10.0);
+							    	System.out.println("seconds: " + time);
+							    	float hours = time/3600;
+							    	System.out.println("hours: " + hours);
 								    float mphSpeed = (float)((Math.round(totalMiles/hours) * 10) / 10.0);
 								    challengeResult.setSpeed(mphSpeed);
 							    	challengeResult.setMiles(totalMiles);	
