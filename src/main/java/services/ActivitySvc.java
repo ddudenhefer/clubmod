@@ -345,8 +345,7 @@ public class ActivitySvc {
 							
 							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
-							float speed = 0;
-							int totalRides = 0;
+							int time = 0;
 							float totalMeters = 0;
 							challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));					
 							
@@ -356,17 +355,17 @@ public class ActivitySvc {
 						    		float miles = (float) (Math.round(Constants.ConvertMetersToMiles(activity.getDistance(), true) * 10) / 10.0);
 						    		if (miles < 15)
 						    			continue;
-						    		speed += activity.getAverage_speed();
+						    		time += activity.getMoving_time();
 						    		totalMeters += activity.getDistance();
-						    		totalRides ++;
 						    	}
 						    }
 						    
-						    if (speed > 0) {
+						    if (time > 0) {
 							    float totalMiles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
 							    if (totalMiles >= 50) {
-								    double mphSpeed = Math.round(Constants.ConvertMPStoMPH(speed, true) * 10) / 10.0;
-								    challengeResult.setSpeed((float) (Math.round((mphSpeed/totalRides) * 10) / 10.0));
+							    	float hours = (float)((Math.round(time/3600) * 10) / 10.0);
+								    float mphSpeed = (float)((Math.round(totalMiles/hours) * 10) / 10.0);
+								    challengeResult.setSpeed(mphSpeed);
 							    	challengeResult.setMiles(totalMiles);	
 								    challengeResults.add(challengeResult);
 							    }
