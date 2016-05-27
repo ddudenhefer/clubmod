@@ -1,6 +1,8 @@
 package services;
 
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -363,11 +365,16 @@ public class ActivitySvc {
 						    if (time > 0) {
 							    float totalMiles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
 							    if (totalMiles >= 50) {
-							    	System.out.println("seconds: " + time);
-							    	float hours = time/3600;
-							    	System.out.println("hours: " + hours);
-								    float mphSpeed = (float)((Math.round(totalMiles/hours) * 10) / 10.0);
-								    challengeResult.setSpeed(mphSpeed);
+							    	
+							    	BigDecimal bDistance, bTime, bmph, bSec, bHour;
+
+							    	bDistance = new BigDecimal(totalMiles);
+							    	bSec = new BigDecimal(time);
+							    	bHour = bSec.divide(new BigDecimal(3600), 2, RoundingMode.CEILING);
+
+							        // divide bg1 with bg2 with 3 scale
+							    	bmph = bDistance.divide(bHour, 1, RoundingMode.CEILING);
+								    challengeResult.setSpeed(bmph.floatValue());
 							    	challengeResult.setMiles(totalMiles);	
 								    challengeResults.add(challengeResult);
 							    }
