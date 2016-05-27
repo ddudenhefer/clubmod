@@ -366,14 +366,14 @@ public class ActivitySvc {
 							    float totalMiles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
 							    if (totalMiles >= 50) {
 							    	
-							    	BigDecimal bDistance, bTime, bmph, bSec, bHour;
+							    	BigDecimal bDistance, bmph, bSec, bHour;
 
 							    	bDistance = new BigDecimal(totalMiles);
 							    	bSec = new BigDecimal(time);
 							    	bHour = bSec.divide(new BigDecimal(3600), 2, RoundingMode.CEILING);
 
 							        // divide bg1 with bg2 with 3 scale
-							    	bmph = bDistance.divide(bHour, 1, RoundingMode.CEILING);
+							    	bmph = bDistance.divide(bHour, 2, RoundingMode.CEILING);
 								    challengeResult.setSpeed(bmph.floatValue());
 							    	challengeResult.setMiles(totalMiles);	
 								    challengeResults.add(challengeResult);
