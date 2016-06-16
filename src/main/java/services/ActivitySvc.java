@@ -133,7 +133,10 @@ public class ActivitySvc {
 		Date ed = null;
 		java.sql.Date sDate = null;
 		java.sql.Date eDate = null;
-
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		long hoursBetween = 3 * 60 * 60;
+		
 		try {
 			sd = df.parse(startDate);
 			sDate = new java.sql.Date(sd.getTime());
@@ -175,12 +178,20 @@ public class ActivitySvc {
 							int totalRides = 0;
 							float totalMiles = 0;
 						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+						    long finishedTime = 0;
 						    for (Activity activity : activities) {
 						    	if (activity.getType().equals("Ride")) {
 						    		float meters = activity.getDistance();
 						    		float miles = (float) (Math.round(Constants.ConvertMetersToMiles(meters, true) * 10) / 10.0);
+						    		
 						    		if (miles >= 25) {
-						    			totalRides ++;
+							    		String localStartDate = activity.getStart_date_local();
+							    		Date d = sdf.parse(localStartDate);
+							    		long startTime = d.getTime();
+							    		long elaspedTime = activity.getElapsed_time() * 1000;
+							    		if (finishedTime > 0 && (finishedTime + hoursBetween >= startTime))
+							    			totalRides ++;
+							    		finishedTime = startTime + elaspedTime;
 						    			totalMiles += miles;
 						    		}
 						    	}
