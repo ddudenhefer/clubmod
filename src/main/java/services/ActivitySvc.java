@@ -135,7 +135,7 @@ public class ActivitySvc {
 		java.sql.Date eDate = null;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-		long hoursBetween = 3 * 60 * 60;
+		long hoursBetween = 3 * 60 * 60 * 1000;
 		
 		try {
 			sd = df.parse(startDate);
