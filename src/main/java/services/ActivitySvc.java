@@ -189,14 +189,14 @@ public class ActivitySvc {
 							    		Date d = sdf.parse(localStartDate);
 							    		long startTime = d.getTime();
 							    		System.out.println("start time: " + startTime);
-							    		long elaspedTime = activity.getElapsed_time() * 1000;
-							    		System.out.println("elasped time: " + elaspedTime);
+							    		long elapsedTime = activity.getElapsed_time() * 1000;
+							    		System.out.println("elapsed time: " + elapsedTime);
 							    		System.out.println("finished time: " + finishedTime);
 							    		System.out.println("hours between time: " + hoursBetween);
 							    		
-							    		if (finishedTime == 0 || (startTime >= finishedTime + hoursBetween))
+							    		if (finishedTime == 0 || (finishedTime <= startTime + hoursBetween))
 							    			totalRides ++;
-							    		finishedTime = startTime + elaspedTime;
+							    		finishedTime = startTime + elapsedTime;
 						    			totalMiles += miles;
 						    		}
 						    	}
