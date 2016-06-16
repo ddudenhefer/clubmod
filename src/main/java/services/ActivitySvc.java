@@ -178,7 +178,9 @@ public class ActivitySvc {
 							int totalRides = 0;
 							float totalMiles = 0;
 						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+						    Collections.reverse(activities);
 						    long finishedTime = 0;
+						    
 						    for (Activity activity : activities) {
 						    	if (activity.getType().equals("Ride")) {
 						    		float meters = activity.getDistance();
@@ -194,7 +196,7 @@ public class ActivitySvc {
 							    		System.out.println("finished time: " + finishedTime);
 							    		System.out.println("hours between time: " + hoursBetween);
 							    		
-							    		if (finishedTime == 0 || (finishedTime <= startTime + hoursBetween))
+							    		if (finishedTime == 0 || (startTime >= finishedTime + hoursBetween))
 							    			totalRides ++;
 							    		finishedTime = startTime + elapsedTime;
 						    			totalMiles += miles;
