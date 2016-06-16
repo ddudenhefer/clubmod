@@ -189,7 +189,7 @@ public class ActivitySvc {
 							    		Date d = sdf.parse(localStartDate);
 							    		long startTime = d.getTime();
 							    		long elaspedTime = activity.getElapsed_time() * 1000;
-							    		if (finishedTime > 0 && (finishedTime + hoursBetween >= startTime))
+							    		if (finishedTime == 0 || (startTime >= finishedTime + hoursBetween))
 							    			totalRides ++;
 							    		finishedTime = startTime + elaspedTime;
 						    			totalMiles += miles;
