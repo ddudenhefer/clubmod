@@ -188,7 +188,12 @@ public class ActivitySvc {
 							    		String localStartDate = activity.getStart_date_local();
 							    		Date d = sdf.parse(localStartDate);
 							    		long startTime = d.getTime();
+							    		System.out.println("start time: " + startTime);
 							    		long elaspedTime = activity.getElapsed_time() * 1000;
+							    		System.out.println("elasped time: " + elaspedTime);
+							    		System.out.println("finished time: " + finishedTime);
+							    		System.out.println("hours between time: " + hoursBetween);
+							    		
 							    		if (finishedTime == 0 || (startTime >= finishedTime + hoursBetween))
 							    			totalRides ++;
 							    		finishedTime = startTime + elaspedTime;
