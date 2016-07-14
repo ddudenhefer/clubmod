@@ -338,7 +338,9 @@ public class AppContextListener implements ServletContextListener {
 		    //int segmentID = 5179616; nelson
 		    //int segmentID = 1090795; //valmont
 		    //int segmentID = 716757; //valmont roller 
-		    int segmentID = 1415852; //n 65th climb
+		    //int segmentID = 1415852; //n 65th climb
+		    int segmentID = 1045527; //Niwot Rd. Hill
+		    
 			
 			try {
 				List<Member> members = new ArrayList<Member>();
