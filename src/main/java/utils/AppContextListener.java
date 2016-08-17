@@ -339,8 +339,9 @@ public class AppContextListener implements ServletContextListener {
 		    //int segmentID = 1090795; //valmont
 		    //int segmentID = 716757; //valmont roller 
 		    //int segmentID = 1415852; //n 65th climb
-		    int segmentID = 1045527; //Niwot Rd. Hill
-		    
+		    //int segmentID = 1045527; //Niwot Rd. Hill
+		    int segmentID = 791408; //Col d'Nelson
+		    int bonusSegmentID = 2707469; //Middle Fork Climb
 			
 			try {
 				List<Member> members = new ArrayList<Member>();
@@ -354,7 +355,8 @@ public class AppContextListener implements ServletContextListener {
 					    Athlete athlete = strava.getCurrentAthlete();
 					    if (athlete == null)
 					    	continue;
-					    
+
+					    // group ride segment
 					    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(segmentID,  athlete.getId(), df.format(startDate), df.format(endDate));
 					    if (segmentEfforts.size() > 0) {
 						    System.out.println("UpdateGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
@@ -363,6 +365,17 @@ public class AppContextListener implements ServletContextListener {
 						    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
 						    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO();
 						    	memberActivityTotal.setGroupRide(memberActivityTotal.getGroupRide()+1);
+						    	
+							    // bonus ride segment
+							    if (bonusSegmentID > 0) {
+								    segmentEfforts = strava.findAthleteSegmentEffort(bonusSegmentID,  athlete.getId(), df.format(startDate), df.format(endDate));
+								    if (segmentEfforts.size() > 0) {
+									    System.out.println("UpdateBonusRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
+									    memberActivityTotal.setEventRide(memberActivityTotal.getEventRide()+1);
+								    }
+								    else
+									    System.out.println("UpdateBonusRideTask: segmentEffort NOT found for : " + athlete.getFirstname() + " " + athlete.getLastname());
+							    }
 						    	memberActivityTotalsDB.saveMemberActivityTotals(memberActivityTotal);
 						    }
 					    }
