@@ -44,14 +44,10 @@ public class ActivitySvc {
 		DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 		Date sd = null;;
 		Date ed = null;
-		java.sql.Date sDate = null;
-		java.sql.Date eDate = null;
 
 		try {
 			sd = df.parse(startDate);
-			sDate = new java.sql.Date(sd.getTime());
 			ed = df.parse(endDate);
-			eDate = new java.sql.Date(ed.getTime());		
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -122,6 +118,89 @@ public class ActivitySvc {
 
 
 	@GET
+	@Path("/time/{startDate}/{endDate}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getTimeByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
+		
+		List<ChallengeResult> challengeResults = new ArrayList<ChallengeResult>();
+		
+		DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+		Date sd = null;;
+		Date ed = null;
+
+		try {
+			sd = df.parse(startDate);
+			ed = df.parse(endDate);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		if (sd.before(new Date())) {
+			MemberDAO memberDAO = new MemberDAO();
+			try {
+				List<Member> members = memberDAO.getAllMembers();
+				
+				//ChallengeDAO challengeDAO = new ChallengeDAO();
+				//Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
+				
+				for (Member member : members) {
+					
+					System.out.println("member: " + member.getFirstName() + " " + member.getLastName());
+					//System.out.println("challenge: " + challenge);
+					
+					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
+						
+						if (member != null && member.getAccessToken() != null) {
+							JStravaV3 strava = new JStravaV3(member.getAccessToken());
+						    
+						    // test authentication: if null, continue
+						    Athlete athlete = strava.getCurrentAthlete();
+						    if (athlete == null)
+						    	continue;
+		
+						    ChallengeResult challengeResult = new ChallengeResult();
+						    challengeResult.setAthleteId(athlete.getId());
+						    challengeResult.setFisrtName(athlete.getFirstname());
+						    challengeResult.setLastName(athlete.getLastname());
+							
+							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
+							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
+						    float totalMiles = 0;						    
+							long time = 0;
+						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+						    for (Activity activity : activities) {
+						    	if (activity.getType().equals("Ride")) {
+						    		time += activity.getMoving_time();
+						    		totalMiles += activity.getDistance();						    		
+						    	}
+						    }
+						    
+						    if (time > 0) {
+						    	challengeResult.setTime(time);
+						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0));	
+						    	challengeResults.add(challengeResult);
+						    }						    
+						}
+					//}
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    Collections.sort(challengeResults, ChallengeResult.Comparators.TIME);
+		}
+	    
+	    Gson gson = new Gson();
+		String ret = "";
+		if (challengeResults != null) {
+			ret = gson.toJson(challengeResults);
+		}		
+		return ret;	    
+	}
+
+	
+	@GET
 	@Path("/rides/{startDate}/{endDate}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getRidesByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
@@ -131,17 +210,13 @@ public class ActivitySvc {
 		DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 		Date sd = null;;
 		Date ed = null;
-		java.sql.Date sDate = null;
-		java.sql.Date eDate = null;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		long hoursBetween = 3 * 60 * 60 * 1000;
 		
 		try {
 			sd = df.parse(startDate);
-			sDate = new java.sql.Date(sd.getTime());
 			ed = df.parse(endDate);
-			eDate = new java.sql.Date(ed.getTime());		
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -227,21 +302,17 @@ public class ActivitySvc {
 	@GET
 	@Path("/longest/{startDate}/{endDate}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getTimeByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
+	public String getMilesByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
 		
 		List<ChallengeResult> challengeResults = new ArrayList<ChallengeResult>();
 		
 		DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 		Date sd = null;;
 		Date ed = null;
-		java.sql.Date sDate = null;
-		java.sql.Date eDate = null;
 
 		try {
 			sd = df.parse(startDate);
-			sDate = new java.sql.Date(sd.getTime());
 			ed = df.parse(endDate);
-			eDate = new java.sql.Date(ed.getTime());		
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -287,7 +358,7 @@ public class ActivitySvc {
 						    }
 						    
 						    if (longestMeters > 0) {
-						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(longestMeters, true) * 10) / 10.0));	
+						    	challengeResult.setTime((long) (Math.round(Constants.ConvertMetersToMiles(longestMeters, true) * 10) / 10.0));	
 						    	challengeResult.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(totalElevation, true) * 10) / 10.0));						    	
 						    	challengeResults.add(challengeResult);
 						    }
@@ -320,14 +391,10 @@ public class ActivitySvc {
 		DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 		Date sd = null;;
 		Date ed = null;
-		java.sql.Date sDate = null;
-		java.sql.Date eDate = null;
 
 		try {
 			sd = df.parse(startDate);
-			sDate = new java.sql.Date(sd.getTime());
 			ed = df.parse(endDate);
-			eDate = new java.sql.Date(ed.getTime());		
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -421,14 +488,10 @@ public class ActivitySvc {
 		DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 		Date sd = null;;
 		Date ed = null;
-		java.sql.Date sDate = null;
-		java.sql.Date eDate = null;
 
 		try {
 			sd = df.parse(startDate);
-			sDate = new java.sql.Date(sd.getTime());
 			ed = df.parse(endDate);
-			eDate = new java.sql.Date(ed.getTime());		
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
