@@ -425,13 +425,11 @@ public class AppContextListener implements ServletContextListener {
 		    ArrayList<Date> tuesday2_1409600 = new ArrayList<Date>();
 		    
 		    try {
-		    	tuesday_9038097.add(tuesdayDF.parse("04/18/2017"));
 		    	tuesday_9038097.add(tuesdayDF.parse("05/09/2017"));
 		    	tuesday_9038097.add(tuesdayDF.parse("06/13/2017"));
 		    	tuesday_9038097.add(tuesdayDF.parse("07/18/2017"));
 		    	tuesday_9038097.add(tuesdayDF.parse("08/22/2017"));
 		    
-		    	tuesday_1409600.add(tuesdayDF.parse("04/18/2017"));
 		    	tuesday_1409600.add(tuesdayDF.parse("05/16/2017"));
 		    	tuesday_1409600.add(tuesdayDF.parse("06/20/2017"));
 		    	tuesday_1409600.add(tuesdayDF.parse("07/25/2017"));
@@ -443,13 +441,11 @@ public class AppContextListener implements ServletContextListener {
 		    	tuesday_699176.add(tuesdayDF.parse("08/01/2017"));
 		    	tuesday_699176.add(tuesdayDF.parse("09/05/2017"));
 
-		    	tuesday_2671433.add(tuesdayDF.parse("04/18/2017"));
 		    	tuesday_2671433.add(tuesdayDF.parse("05/30/2017"));
 		    	tuesday_2671433.add(tuesdayDF.parse("07/04/2017"));
 		    	tuesday_2671433.add(tuesdayDF.parse("08/08/2017"));
 		    	tuesday_2671433.add(tuesdayDF.parse("09/12/2017"));
 
-		    	tuesday2_1409600.add(tuesdayDF.parse("04/18/2017"));
 		    	tuesday2_1409600.add(tuesdayDF.parse("06/06/2017"));
 		    	tuesday2_1409600.add(tuesdayDF.parse("07/11/2017"));
 		    	tuesday2_1409600.add(tuesdayDF.parse("08/15/2017"));
