@@ -531,8 +531,8 @@ public class AppContextListener implements ServletContextListener {
 						    }
 */						    
 					    }
-					    else
-						    System.out.println("UpdateBCCGroupRideTask: segmentEffort NOT found for : " + athlete.getFirstname() + " " + athlete.getLastname());
+					    else 
+						    System.out.println("UpdateBCCGroupRideTask: segmentEffort->" + segmentID + " NOT found for : " + athlete.getFirstname() + " " + athlete.getLastname() + " " + df.format(startDate) + "-->" + df.format(endDate));
 			        }
 				    Thread.sleep(120000); // 2 minutes			    
 				}
