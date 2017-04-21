@@ -50,7 +50,6 @@ public class AppContextListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-
 		
 		System.out.println("AppContextListener Listener initialized.");
 		
@@ -62,7 +61,7 @@ public class AppContextListener implements ServletContextListener {
 		TimerTask updateBCCGroupRideTask = new UpdateBCCGroupRideTask();
 		Timer bccGroupRideTimer = new Timer();
 		//bccGroupRideTimer.scheduleAtFixedRate(updateBCCGroupRideTask, getRunDate(Calendar.WEDNESDAY, 20), ONCE_PER_WEEK);
-		bccGroupRideTimer.schedule(updateBCCGroupRideTask, 0);
+		//bccGroupRideTimer.schedule(updateBCCGroupRideTask, 0);
 
 		TimerTask updateChallengeWinnerTask = new UpdateChallengeWinnerTask();
 		Timer challengeWinnerTimer = new Timer();
@@ -405,7 +404,7 @@ public class AppContextListener implements ServletContextListener {
 			System.out.println("UpdateBCCGroupRideTask " + new Date().toString());
 			
 			Calendar yesterday = Calendar.getInstance();
-			yesterday.add(Calendar.DAY_OF_YEAR, -2);
+			yesterday.add(Calendar.DAY_OF_YEAR, -1);
 			yesterday.set(Calendar.HOUR_OF_DAY, 0);
 			yesterday.set(Calendar.MINUTE, 0);
 			yesterday.set(Calendar.SECOND, 0);
@@ -435,7 +434,6 @@ public class AppContextListener implements ServletContextListener {
 		    	tuesday_1409600.add(tuesdayDF.parse("07/25/2017"));
 		    	tuesday_1409600.add(tuesdayDF.parse("08/29/2017"));
 
-		    	tuesday_699176.add(tuesdayDF.parse("04/18/2017"));
 		    	tuesday_699176.add(tuesdayDF.parse("05/23/2017"));
 		    	tuesday_699176.add(tuesdayDF.parse("06/27/2017"));
 		    	tuesday_699176.add(tuesdayDF.parse("08/01/2017"));
@@ -521,15 +519,13 @@ public class AppContextListener implements ServletContextListener {
 					    if (segmentEfforts.size() > 0) {
 						    System.out.println("UpdateBCCGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
 						    
-						    
-/*						    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();	
+						    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();	
 						    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
 						    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
 						    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO();
 						    	memberActivityTotal.setEventRide(memberActivityTotal.getEventRide()+1);
 						    	memberActivityTotalsDB.saveMemberActivityTotals(memberActivityTotal);
 						    }
-*/						    
 					    }
 					    else 
 						    System.out.println("UpdateBCCGroupRideTask: segmentEffort->" + segmentID + " NOT found for : " + athlete.getFirstname() + " " + athlete.getLastname() + " " + df.format(startDate) + "-->" + df.format(endDate));
