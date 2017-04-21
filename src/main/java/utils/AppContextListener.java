@@ -1,6 +1,7 @@
 package utils;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,6 +58,11 @@ public class AppContextListener implements ServletContextListener {
 		Timer groupRideTimer = new Timer();
 		//groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
 		//groupRideTimer.schedule(updateGroupRideTask, 0);
+
+		TimerTask updateBCCGroupRideTask = new UpdateBCCGroupRideTask();
+		Timer bccGroupRideTimer = new Timer();
+		//bccGroupRideTimer.scheduleAtFixedRate(updateBCCGroupRideTask, getRunDate(Calendar.WEDNESDAY, 20), ONCE_PER_WEEK);
+		bccGroupRideTimer.schedule(updateBCCGroupRideTask, 0);
 
 		TimerTask updateChallengeWinnerTask = new UpdateChallengeWinnerTask();
 		Timer challengeWinnerTimer = new Timer();
@@ -391,4 +397,155 @@ public class AppContextListener implements ServletContextListener {
 			}
 		}
 	}	
+	
+	class UpdateBCCGroupRideTask extends TimerTask {
+		
+		@Override
+		public void run() {
+			System.out.println("UpdateBCCGroupRideTask " + new Date().toString());
+			
+			Calendar yesterday = Calendar.getInstance();
+			yesterday.add(Calendar.DAY_OF_YEAR, -2);
+			yesterday.set(Calendar.HOUR_OF_DAY, 0);
+			yesterday.set(Calendar.MINUTE, 0);
+			yesterday.set(Calendar.SECOND, 0);
+			yesterday.set(Calendar.MILLISECOND, 0);			
+			Date yesterdayDate = yesterday.getTime();
+			
+	        Date startDate = Constants.getEveningOfDay(new Date(yesterday.getTimeInMillis()));
+			Date endDate = Constants.getEndOfDay(new Date(yesterday.getTimeInMillis()));
+		    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+		    DateFormat tuesdayDF = new SimpleDateFormat("MM/dd/yyyy");
+		    
+		    int segmentID = 0;
+		    ArrayList<Date> tuesday_9038097 = new ArrayList<Date>();
+		    ArrayList<Date> tuesday_1409600 = new ArrayList<Date>();
+		    ArrayList<Date> tuesday_699176 = new ArrayList<Date>();
+		    ArrayList<Date> tuesday_2671433 = new ArrayList<Date>();
+		    ArrayList<Date> tuesday2_1409600 = new ArrayList<Date>();
+		    
+		    try {
+		    	tuesday_9038097.add(tuesdayDF.parse("04/18/2017"));
+		    	tuesday_9038097.add(tuesdayDF.parse("05/09/2017"));
+		    	tuesday_9038097.add(tuesdayDF.parse("06/13/2017"));
+		    	tuesday_9038097.add(tuesdayDF.parse("07/18/2017"));
+		    	tuesday_9038097.add(tuesdayDF.parse("08/22/2017"));
+		    
+		    	tuesday_1409600.add(tuesdayDF.parse("04/18/2017"));
+		    	tuesday_1409600.add(tuesdayDF.parse("05/16/2017"));
+		    	tuesday_1409600.add(tuesdayDF.parse("06/20/2017"));
+		    	tuesday_1409600.add(tuesdayDF.parse("07/25/2017"));
+		    	tuesday_1409600.add(tuesdayDF.parse("08/29/2017"));
+
+		    	tuesday_699176.add(tuesdayDF.parse("04/18/2017"));
+		    	tuesday_699176.add(tuesdayDF.parse("05/23/2017"));
+		    	tuesday_699176.add(tuesdayDF.parse("06/27/2017"));
+		    	tuesday_699176.add(tuesdayDF.parse("08/01/2017"));
+		    	tuesday_699176.add(tuesdayDF.parse("09/05/2017"));
+
+		    	tuesday_2671433.add(tuesdayDF.parse("04/18/2017"));
+		    	tuesday_2671433.add(tuesdayDF.parse("05/30/2017"));
+		    	tuesday_2671433.add(tuesdayDF.parse("07/04/2017"));
+		    	tuesday_2671433.add(tuesdayDF.parse("08/08/2017"));
+		    	tuesday_2671433.add(tuesdayDF.parse("09/12/2017"));
+
+		    	tuesday2_1409600.add(tuesdayDF.parse("04/18/2017"));
+		    	tuesday2_1409600.add(tuesdayDF.parse("06/06/2017"));
+		    	tuesday2_1409600.add(tuesdayDF.parse("07/11/2017"));
+		    	tuesday2_1409600.add(tuesdayDF.parse("08/15/2017"));
+
+		    } catch (ParseException e1){// TODO Auto-generated catch block
+		    	e1.printStackTrace();
+		    	return;
+			}
+
+		    for (Date tues : tuesday_9038097) {
+		    	if (yesterdayDate.equals(tues)) {
+		    		segmentID = 9038097;
+		    		break;
+		    	}
+		    }
+		    
+		    if (segmentID == 0) {
+			    for (Date tues : tuesday_1409600) {
+			    	if (yesterdayDate.equals(tues)) {
+			    		segmentID = 1409600;
+			    		break;
+			    	}
+			    }
+		    }
+
+		    if (segmentID == 0) {
+			    for (Date tues : tuesday_699176) {
+			    	if (yesterdayDate.equals(tues)) {
+			    		segmentID = 699176;
+			    		break;
+			    	}
+			    }
+		    }
+
+		    if (segmentID == 0) {
+			    for (Date tues : tuesday_2671433) {
+			    	if (yesterdayDate.equals(tues)) {
+			    		segmentID = 2671433;
+			    		break;
+			    	}
+			    }
+		    }
+
+		    if (segmentID == 0) {
+			    for (Date tues : tuesday2_1409600) {
+			    	if (yesterdayDate.equals(tues)) {
+			    		segmentID = 1409600;
+			    		break;
+			    	}
+			    }
+		    }
+		    
+		    if (segmentID == 0) {
+		    	System.out.println("UpdateBCCGroupRideTask: Segment Not Set");
+		    	return;
+		    }
+
+			try {
+				List<Member> members = new ArrayList<Member>();
+				MemberDAO memberDAO = new MemberDAO();
+				members = memberDAO.getAllMembers();
+				for (Member member : members) {
+					if (member != null && member.getAccessToken() != null) {
+						JStravaV3 strava = new JStravaV3(member.getAccessToken());
+					    
+					    // test authentication: if null, continue
+					    Athlete athlete = strava.getCurrentAthlete();
+					    if (athlete == null)
+					    	continue;
+
+					    // group ride segment
+					    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(segmentID,  athlete.getId(), df.format(startDate), df.format(endDate));
+					    if (segmentEfforts.size() > 0) {
+						    System.out.println("UpdateBCCGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
+						    
+						    
+/*						    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();	
+						    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
+						    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
+						    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO();
+						    	memberActivityTotal.setEventRide(memberActivityTotal.getEventRide()+1);
+						    	memberActivityTotalsDB.saveMemberActivityTotals(memberActivityTotal);
+						    }
+*/						    
+					    }
+					    else
+						    System.out.println("UpdateBCCGroupRideTask: segmentEffort NOT found for : " + athlete.getFirstname() + " " + athlete.getLastname());
+			        }
+				    Thread.sleep(120000); // 2 minutes			    
+				}
+				System.out.println("UpdateBCCGroupRideTask -> DONE");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}	
+	
 }
