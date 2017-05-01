@@ -55,17 +55,17 @@ public class AppContextListener implements ServletContextListener {
 		
 		TimerTask updateGroupRideTask = new UpdateGroupRideTask();
 		Timer groupRideTimer = new Timer();
-		//groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
+		groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
 		//groupRideTimer.schedule(updateGroupRideTask, 0);
 
 		TimerTask updateBCCGroupRideTask = new UpdateBCCGroupRideTask();
 		Timer bccGroupRideTimer = new Timer();
-		//bccGroupRideTimer.scheduleAtFixedRate(updateBCCGroupRideTask, getRunDate(Calendar.WEDNESDAY, 20), ONCE_PER_WEEK);
+		bccGroupRideTimer.scheduleAtFixedRate(updateBCCGroupRideTask, getRunDate(Calendar.WEDNESDAY, 20), ONCE_PER_WEEK);
 		//bccGroupRideTimer.schedule(updateBCCGroupRideTask, 0);
 
 		TimerTask updateChallengeWinnerTask = new UpdateChallengeWinnerTask();
 		Timer challengeWinnerTimer = new Timer();
-		//challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 14), ONCE_PER_WEEK);
+		challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 14), ONCE_PER_WEEK);
 		//challengeWinnerTimer.schedule(updateChallengeWinnerTask, 0);
 
 		TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
@@ -345,8 +345,11 @@ public class AppContextListener implements ServletContextListener {
 		    //int segmentID = 716757; //valmont roller 
 		    //int segmentID = 1415852; //n 65th climb
 		    //int segmentID = 1045527; //Niwot Rd. Hill
-		    int segmentID = 791408; //Col d'Nelson
-		    int bonusSegmentID = 2707469; //Middle Fork Climb
+		    //int segmentID = 791408; //Col d'Nelson
+		    int segmentID = 721688; //95th street climb
+		    
+		    //int bonusSegmentID = 2707469; //Middle Fork Climb
+		    int bonusSegmentID = 0;
 			
 			try {
 				List<Member> members = new ArrayList<Member>();
@@ -444,6 +447,7 @@ public class AppContextListener implements ServletContextListener {
 		    	tuesday_2671433.add(tuesdayDF.parse("08/08/2017"));
 		    	tuesday_2671433.add(tuesdayDF.parse("09/12/2017"));
 
+		    	tuesday2_1409600.add(tuesdayDF.parse("05/02/2017"));
 		    	tuesday2_1409600.add(tuesdayDF.parse("06/06/2017"));
 		    	tuesday2_1409600.add(tuesdayDF.parse("07/11/2017"));
 		    	tuesday2_1409600.add(tuesdayDF.parse("08/15/2017"));
