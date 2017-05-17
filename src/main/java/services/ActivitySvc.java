@@ -358,7 +358,7 @@ public class ActivitySvc {
 						    }
 						    
 						    if (longestMeters > 0) {
-						    	challengeResult.setTime((long) (Math.round(Constants.ConvertMetersToMiles(longestMeters, true) * 10) / 10.0));	
+						    	challengeResult.setMiles((long) (Math.round(Constants.ConvertMetersToMiles(longestMeters, true) * 10) / 10.0));	
 						    	challengeResult.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(totalElevation, true) * 10) / 10.0));						    	
 						    	challengeResults.add(challengeResult);
 						    }
