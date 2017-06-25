@@ -275,31 +275,61 @@ public class AppContextListener implements ServletContextListener {
 					    	continue;
 					    
 					    System.out.println("UpdateMemberYTDTask: " + athlete.getFirstname() + " " + athlete.getLastname());
-					    System.out.println("getProfile_medium: " + athlete.getProfile_medium());
-					    System.out.println("getCity: " + athlete.getCity());
-					    System.out.println("getState: " + athlete.getState());
-					    System.out.println("getEmail: " + athlete.getEmail());
-					    
-					    System.out.println("getPictureURL: " + member.getPictureURL());
-					    System.out.println("getCity: " + member.getCity());
-					    System.out.println("getState: " + member.getState());
-					    System.out.println("getEmail: " + member.getEmail());
+					    String a_first = "";
+					    String a_last = "";
+					    String a_profile = "";
+					    String a_city = "";
+					    String a_state = "";
+					    String a_email = "";
 
+					    String m_first = "";
+					    String m_last = "";
+					    String m_picture = "";
+					    String m_city = "";
+					    String m_state = "";
+					    String m_email = "";
+					    
+					    if (athlete.getFirstname() != null)
+					    	a_first = athlete.getFirstname();
+					    if (athlete.getLastname() != null)
+					    	a_last = athlete.getLastname();
+					    if (athlete.getProfile_medium() != null)
+					    	a_profile = athlete.getProfile_medium();
+					    if (athlete.getCity() != null)
+					    	a_city = athlete.getCity();
+					    if (athlete.getState() != null)
+					    	a_state = athlete.getState();
+					    if (athlete.getEmail() != null)
+					    	a_email = athlete.getEmail();
+
+					    if (member.getFirstName() != null)
+					    	m_first = member.getFirstName();
+					    if (member.getLastName() != null)
+					    	m_last = member.getLastName();
+					    if (member.getPictureURL() != null)
+					    	m_picture = member.getPictureURL();
+					    if (member.getCity() != null)
+					    	m_city = member.getCity();
+					    if (member.getState() != null)
+					    	m_state = member.getState();
+					    if (member.getEmail() != null)
+					    	m_email = member.getEmail();
+					    
 					    
 					    // save member picture
-					    if (! athlete.getProfile_medium().equals(member.getPictureURL()) || 
-					    		! athlete.getFirstname().equals(member.getFirstName()) ||
-					    		! athlete.getLastname().equals(member.getLastName()) ||
-					    		! athlete.getCity().equals(member.getCity()) ||
-					    		! athlete.getState().equals(member.getState()) ||
-					    		! athlete.getEmail().equals(member.getEmail())) {
+					    if (! a_profile.equals(m_picture) || 
+					    		! a_first.equals(m_first) ||
+					    		! a_last.equals(m_last) ||
+					    		! a_city.equals(m_city) ||
+					    		! a_state.equals(m_state) ||
+					    		! a_email.equals(m_email)) {
 					    	MemberDAO memberDB = new MemberDAO();
-						    member.setFirstName(athlete.getFirstname());
-						    member.setLastName(athlete.getLastname());
-						    member.setPictureURL(athlete.getProfile_medium());
-						    member.setCity(athlete.getCity());
-						    member.setState(athlete.getState());
-						    member.setEmail(athlete.getEmail());
+						    member.setFirstName(a_first);
+						    member.setLastName(a_last);
+						    member.setPictureURL(a_profile);
+						    member.setCity(a_city);
+						    member.setState(a_state);
+						    member.setEmail(a_email);
 						    memberDB.saveMember(member);
 					    }
 					    
