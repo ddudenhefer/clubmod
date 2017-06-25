@@ -275,6 +275,16 @@ public class AppContextListener implements ServletContextListener {
 					    	continue;
 					    
 					    System.out.println("UpdateMemberYTDTask: " + athlete.getFirstname() + " " + athlete.getLastname());
+					    System.out.println("getProfile_medium: " + athlete.getProfile_medium());
+					    System.out.println("getCity: " + athlete.getCity());
+					    System.out.println("getState: " + athlete.getState());
+					    System.out.println("getEmail: " + athlete.getEmail());
+					    
+					    System.out.println("getPictureURL: " + member.getPictureURL());
+					    System.out.println("getCity: " + member.getCity());
+					    System.out.println("getState: " + member.getState());
+					    System.out.println("getEmail: " + member.getEmail());
+
 					    
 					    // save member picture
 					    if (! athlete.getProfile_medium().equals(member.getPictureURL()) || 
