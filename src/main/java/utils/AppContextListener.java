@@ -55,23 +55,23 @@ public class AppContextListener implements ServletContextListener {
 		
 		TimerTask updateGroupRideTask = new UpdateGroupRideTask();
 		Timer groupRideTimer = new Timer();
-		groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
+		//groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
 		//groupRideTimer.schedule(updateGroupRideTask, 0);
 
 		TimerTask updateBCCGroupRideTask = new UpdateBCCGroupRideTask();
 		Timer bccGroupRideTimer = new Timer();
-		bccGroupRideTimer.scheduleAtFixedRate(updateBCCGroupRideTask, getRunDate(Calendar.WEDNESDAY, 14), ONCE_PER_WEEK);
+		//bccGroupRideTimer.scheduleAtFixedRate(updateBCCGroupRideTask, getRunDate(Calendar.WEDNESDAY, 14), ONCE_PER_WEEK);
 		//bccGroupRideTimer.schedule(updateBCCGroupRideTask, 0);
 
 		TimerTask updateChallengeWinnerTask = new UpdateChallengeWinnerTask();
 		Timer challengeWinnerTimer = new Timer();
-		challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 14), ONCE_PER_WEEK);
+		//challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 14), ONCE_PER_WEEK);
 		//challengeWinnerTimer.schedule(updateChallengeWinnerTask, 0);
 
 		TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
 		Timer memberYTDTimer = new Timer();
-		memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23,00), ONCE_PER_DAY);
-		//memberYTDTimer.schedule(updateMemberYTDTask, 0);
+		//memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23,00), ONCE_PER_DAY);
+		memberYTDTimer.schedule(updateMemberYTDTask, 0);
 	}
 	
 	private static Date getTomorrow(int hour, int mins){
@@ -317,7 +317,7 @@ public class AppContextListener implements ServletContextListener {
 					    MemberYTDTotalsDAO memberYTDTotalsDAO = new MemberYTDTotalsDAO();
 					    memberYTDTotalsDAO.saveMemberYTDTotals(memberYTDTotal);
 					    
-					    Thread.sleep(60000); // 1 minute			    
+					    Thread.sleep(120000); // 2 minute			    
 					}
 				}
 				System.out.println("UpdateMemberYTDTask -> DONE");
