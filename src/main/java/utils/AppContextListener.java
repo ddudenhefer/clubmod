@@ -266,7 +266,7 @@ public class AppContextListener implements ServletContextListener {
 			try {
 				members = memberDAO.getAllMembers();
 				for (Member member : members) {
-					if (member != null && member.getAccessToken() != null) {
+					if (member != null && member.getAccessToken() != null && (member.getId() == 67 || member.getId() == 68)) {
 						JStravaV3 strava = new JStravaV3(member.getAccessToken());
 					    
 					    // test authentication: if null, continue
@@ -317,7 +317,7 @@ public class AppContextListener implements ServletContextListener {
 					    MemberYTDTotalsDAO memberYTDTotalsDAO = new MemberYTDTotalsDAO();
 					    memberYTDTotalsDAO.saveMemberYTDTotals(memberYTDTotal);
 					    
-					    Thread.sleep(120000); // 2 minute			    
+					    //Thread.sleep(120000); // 2 minute			    
 					}
 				}
 				System.out.println("UpdateMemberYTDTask -> DONE");
