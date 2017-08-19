@@ -388,10 +388,12 @@ public class AppContextListener implements ServletContextListener {
 		    //int segmentID = 791408; //Col d'Nelson
 		    //int segmentID = 721688; //95th street climb
 		    //int segmentID = 6055053;	//Freight Train express
-		    int segmentID = 14530394;	//West on Nelson 65th to 55th 
+		    //int segmentID = 14530394;	//West on Nelson 65th to 55th 
+		    int segmentID = 5223849;	// baseline res climb
 		    
 		    //int bonusSegmentID = 2707469; //Middle Fork Climb
-		    int bonusSegmentID = 641091;	//backside Old Stage 
+		    //int bonusSegmentID = 641091;	//backside Old Stage 
+		    int bonusSegmentID = 0;	 
 			
 			try {
 				List<Member> members = new ArrayList<Member>();
