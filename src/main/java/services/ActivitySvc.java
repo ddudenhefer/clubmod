@@ -477,6 +477,98 @@ public class ActivitySvc {
 		return ret;	    
 	}
 	
+	@GET
+	@Path("/effort/{startDate}/{endDate}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getEffortByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
+		
+		List<ChallengeResult> challengeResults = new ArrayList<ChallengeResult>();
+		
+		DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+		Date sd = null;;
+		Date ed = null;
+
+		try {
+			sd = df.parse(startDate);
+			ed = df.parse(endDate);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		if (sd.before(new Date())) {
+			MemberDAO memberDAO = new MemberDAO();
+			try {
+				List<Member> members = memberDAO.getAllMembers();
+				
+				//ChallengeDAO challengeDAO = new ChallengeDAO();
+				//Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
+				
+				for (Member member : members) {
+					
+					System.out.println("member: " + member.getFirstName() + " " + member.getLastName());
+					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
+					
+						if (member != null && member.getAccessToken() != null) {
+							JStravaV3 strava = new JStravaV3(member.getAccessToken());
+						    
+						    // test authentication: if null, continue
+						    Athlete athlete = strava.getCurrentAthlete();
+						    if (athlete == null)
+						    	continue;
+		
+						    ChallengeResult challengeResult = new ChallengeResult();
+						    challengeResult.setAthleteId(athlete.getId());
+						    challengeResult.setFisrtName(athlete.getFirstname());
+						    challengeResult.setLastName(athlete.getLastname());
+							
+							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
+							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
+						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+						    float elevation = 0;
+						    float totalMiles = 0;	
+						    long extra = 0;
+						    for (Activity activity : activities) {
+						    	if (activity.getType().equals("Ride")) {
+						    		elevation += activity.getTotal_elevation_gain();
+						    		totalMiles += activity.getDistance();
+						    		if (activity.getAchievement_count() > 0)
+						    			extra += activity.getAchievement_count();
+						    		if (activity.getTotal_photo_count() > 0)
+						    			extra += 1;
+						    		if (activity.getPr_count() > 0)
+						    			extra += activity.getPr_count();
+						    		if (activity.getMoving_time() > 0)
+						    			extra += (activity.getMoving_time()/1800);	// 30 mins
+						    	}
+						    }
+						    
+						    if (elevation > 0 && totalMiles > 0) {
+							    float effort = 0;
+							    long feet = (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0);
+							    float miles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0);
+							    effort = (feet/miles) + extra;
+						    	challengeResult.setElevation((long) (Math.round(effort * 10) / 10.0));
+						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0));	
+						    	challengeResults.add(challengeResult);
+						    }
+						}
+					//}
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    Collections.sort(challengeResults, ChallengeResult.Comparators.ELEVATION);
+		}
+	    
+	    Gson gson = new Gson();
+		String ret = "";
+		if (challengeResults != null) {
+			ret = gson.toJson(challengeResults);
+		}		
+		return ret;	    
+	}	
 	
 	@GET
 	@Path("/elevation/{startDate}/{endDate}")

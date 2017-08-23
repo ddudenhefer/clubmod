@@ -48,6 +48,8 @@ public class Activity {
     private float calories;
     private int truncated;
     private boolean has_kudoed;
+    private int pr_count;
+    private int total_photo_count;
     private List<SegmentEffort> segment_efforts;
     private List<SplitsMetric> splits_metric;
     private List<SplitsStandard> splits_standard;
@@ -408,6 +410,22 @@ public class Activity {
 
     public void setHas_kudoed(boolean has_kudoed) {
         this.has_kudoed = has_kudoed;
+    }
+    
+    public int getPr_count() {
+        return pr_count;
+    }
+
+    public void setPr_count(int pr_count) {
+        this.pr_count = pr_count;
+    }
+
+    public int getTotal_photo_count() {
+        return total_photo_count;
+    }
+
+    public void setTotal_photo_count(int total_photo_count) {
+        this.total_photo_count = total_photo_count;
     }
 
     public List<SegmentEffort> getSegment_efforts() {

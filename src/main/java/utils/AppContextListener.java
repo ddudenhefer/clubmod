@@ -156,6 +156,8 @@ public class AppContextListener implements ServletContextListener {
 							results = activitySvc.getMilesByDateRange(sDate, eDate);
 						else if (challenge.getService().equals("speed"))
 							results = activitySvc.getSpeedByDateRange(sDate, eDate);
+						else if (challenge.getService().equals("effort"))
+							results = activitySvc.getEffortByDateRange(sDate, eDate);
 						else if (challenge.getService().equals("elevation"))
 							results = activitySvc.getElevationByDateRange(sDate, eDate);
 						
