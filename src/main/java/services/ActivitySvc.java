@@ -537,19 +537,15 @@ public class ActivitySvc {
 						    		totalMiles += activity.getDistance();
 						    		if (activity.getAchievement_count() > 0) {
 						    			achievement += activity.getAchievement_count();
-						    			System.out.println("achievement: " + activity.getAchievement_count());
 						    		}
 						    		if (activity.getTotal_photo_count() > 0) {
 						    			photo += activity.getTotal_photo_count();
-						    			System.out.println("photo: " + activity.getTotal_photo_count());
 						    		}
 						    		if (activity.getPr_count() > 0) {
 						    			pr += activity.getPr_count();
-						    			System.out.println("pr: " + activity.getPr_count());
 						    		}
 						    		if (activity.getMoving_time() > 0) {
 						    			time += activity.getMoving_time()/1800;	// 30 mins
-						    			System.out.println("moving: " + activity.getMoving_time()/1800);
 						    		}
 						    	}
 						    }
@@ -558,13 +554,22 @@ public class ActivitySvc {
 							    float effort = 0;
 							    long feet = (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0);
 							    float miles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0);
-							    long extra = achievement+photo+pr+time;
 
 							    System.out.println("elevation: " + feet);
 							    System.out.println("miles: " + miles);
+							    effort = feet/miles;
+							    System.out.println("effort: " + effort);
+
+							    System.out.println("achievement: " + achievement);
+							    System.out.println("pr: " + pr);
+							    System.out.println("photo: " + photo);
+							    System.out.println("time: " + time);
+							    long extra = achievement+photo+pr+time;
 							    System.out.println("extra: " + extra);
 							    
-							    effort = (feet/miles) + extra;
+							    effort += extra;
+							    System.out.println("TOTAL: " + effort);
+							    
 						    	challengeResult.setElevation((long) (Math.round(effort * 10) / 10.0));
 						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0));	
 						    	challengeResults.add(challengeResult);
