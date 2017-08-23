@@ -532,16 +532,28 @@ public class ActivitySvc {
 						    	if (activity.getType().equals("Ride")) {
 						    		elevation += activity.getTotal_elevation_gain();
 						    		totalMiles += activity.getDistance();
-						    		if (activity.getAchievement_count() > 0)
+						    		if (activity.getAchievement_count() > 0) {
 						    			extra += activity.getAchievement_count();
-						    		if (activity.getTotal_photo_count() > 0)
-						    			extra += 1;
-						    		if (activity.getPr_count() > 0)
+						    			System.out.println("achievement: " + activity.getAchievement_count());
+						    		}
+						    		if (activity.getTotal_photo_count() > 0) {
+						    			extra += activity.getTotal_photo_count();
+						    			System.out.println("photo: " + activity.getTotal_photo_count());
+						    		}
+						    		if (activity.getPr_count() > 0) {
 						    			extra += activity.getPr_count();
-						    		if (activity.getMoving_time() > 0)
-						    			extra += (activity.getMoving_time()/1800);	// 30 mins
+						    			System.out.println("pr: " + activity.getPr_count());
+						    		}
+						    		if (activity.getMoving_time() > 0) {
+						    			extra += activity.getMoving_time()/1800;	// 30 mins
+						    			System.out.println("moving: " + activity.getMoving_time()/1800);
+						    		}
 						    	}
 						    }
+						    
+						    System.out.println("elevation: " + elevation);
+						    System.out.println("miles: " + totalMiles);
+						    System.out.println("extra: " + extra);
 						    
 						    if (elevation > 0 && totalMiles > 0) {
 							    float effort = 0;
