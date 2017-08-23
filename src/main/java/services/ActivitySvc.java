@@ -527,38 +527,43 @@ public class ActivitySvc {
 						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 						    float elevation = 0;
 						    float totalMiles = 0;	
-						    long extra = 0;
+						    long achievement = 0;
+						    long photo = 0;
+						    long pr = 0;
+						    long time = 0;
 						    for (Activity activity : activities) {
 						    	if (activity.getType().equals("Ride")) {
 						    		elevation += activity.getTotal_elevation_gain();
 						    		totalMiles += activity.getDistance();
 						    		if (activity.getAchievement_count() > 0) {
-						    			extra += activity.getAchievement_count();
+						    			achievement += activity.getAchievement_count();
 						    			System.out.println("achievement: " + activity.getAchievement_count());
 						    		}
 						    		if (activity.getTotal_photo_count() > 0) {
-						    			extra += activity.getTotal_photo_count();
+						    			photo += activity.getTotal_photo_count();
 						    			System.out.println("photo: " + activity.getTotal_photo_count());
 						    		}
 						    		if (activity.getPr_count() > 0) {
-						    			extra += activity.getPr_count();
+						    			pr += activity.getPr_count();
 						    			System.out.println("pr: " + activity.getPr_count());
 						    		}
 						    		if (activity.getMoving_time() > 0) {
-						    			extra += activity.getMoving_time()/1800;	// 30 mins
+						    			time += activity.getMoving_time()/1800;	// 30 mins
 						    			System.out.println("moving: " + activity.getMoving_time()/1800);
 						    		}
 						    	}
 						    }
 						    
-						    System.out.println("elevation: " + elevation);
-						    System.out.println("miles: " + totalMiles);
-						    System.out.println("extra: " + extra);
-						    
 						    if (elevation > 0 && totalMiles > 0) {
 							    float effort = 0;
 							    long feet = (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0);
 							    float miles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0);
+							    long extra = achievement+photo+pr+time;
+
+							    System.out.println("elevation: " + feet);
+							    System.out.println("miles: " + miles);
+							    System.out.println("extra: " + extra);
+							    
 							    effort = (feet/miles) + extra;
 						    	challengeResult.setElevation((long) (Math.round(effort * 10) / 10.0));
 						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0));	
