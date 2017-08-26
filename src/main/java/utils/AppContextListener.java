@@ -36,7 +36,6 @@ import services.ActivitySvc;
 
 public class AppContextListener implements ServletContextListener {
 	
-	
 	private final static long ONCE_PER_DAY = 1000*60*60*24;
 	private final static long ONCE_PER_WEEK = 1000*60*60*24*7;
 	private final static int ZERO_MINUTES = 0;
