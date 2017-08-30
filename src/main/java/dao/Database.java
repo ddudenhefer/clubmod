@@ -17,6 +17,10 @@ public class Database {
 	        String url = "";
 	        Connection con = null;
             try {
+            	System.out.println("user: " + MYSQL_USERNAME);
+            	System.out.println("pass: " + MYSQL_PASSWORD);
+            	System.out.println("host: " + MYSQL_DATABASE_HOST);
+            	System.out.println("port: " + MYSQL_DATABASE_PORT);
                 url = "jdbc:mysql://" + MYSQL_DATABASE_HOST + ":" + MYSQL_DATABASE_PORT + "/" + MYSQL_DATABASE_NAME;
                 Class.forName(MYSQL_DATABASE_DRIVER);
                 con = DriverManager.getConnection(url, MYSQL_USERNAME, MYSQL_PASSWORD);
