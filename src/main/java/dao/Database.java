@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class Database {
 	
-    public static final String MYSQL_USERNAME = System.getenv("MYSQL_USER");
-    public static final String MYSQL_PASSWORD = System.getenv("MYSQL_PASSWORD");
+    public static final String MYSQL_USERNAME = "adminGK9GXfL";	//System.getenv("MYSQL_USER");
+    public static final String MYSQL_PASSWORD = "jLJwZbrJHGQ4";	//System.getenv("MYSQL_PASSWORD");
     public static final String MYSQL_DATABASE_HOST = System.getenv("MYSQL_SERVICE_HOST");
     public static final String MYSQL_DATABASE_PORT = System.getenv("MYSQL_SERVICE_PORT");
     public static final String MYSQL_DATABASE_NAME = "services";
