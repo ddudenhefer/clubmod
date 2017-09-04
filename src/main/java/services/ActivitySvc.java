@@ -87,7 +87,7 @@ public class ActivitySvc {
 							long totalElevation = 0;
 						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 						    for (Activity activity : activities) {
-						    	if (activity.getType().equals("Ride")) {
+						    	if (activity.getType().equalsIgnoreCase("Ride")) {
 						    		totalMeters += activity.getDistance();
 						    		totalElevation += activity.getTotal_elevation_gain();						    		
 						    	}
@@ -170,7 +170,7 @@ public class ActivitySvc {
 							long time = 0;
 						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 						    for (Activity activity : activities) {
-						    	if (activity.getType().equals("Ride")) {
+						    	if (activity.getType().equalsIgnoreCase("Ride")) {
 						    		time += activity.getMoving_time();
 						    		totalMiles += activity.getDistance();						    		
 						    	}
@@ -257,7 +257,7 @@ public class ActivitySvc {
 						    long finishedTime = 0;
 						    
 						    for (Activity activity : activities) {
-						    	if (activity.getType().equals("Ride")) {
+						    	if (activity.getType().equalsIgnoreCase("Ride")) {
 						    		float meters = activity.getDistance();
 						    		float miles = (float) (Math.round(Constants.ConvertMetersToMiles(meters, true) * 10) / 10.0);
 						    		
@@ -350,7 +350,7 @@ public class ActivitySvc {
 							long totalElevation = 0;
 						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 						    for (Activity activity : activities) {
-						    	if (activity.getType().equals("Ride")) {
+						    	if (activity.getType().equalsIgnoreCase("Ride")) {
 						    		totalElevation += activity.getTotal_elevation_gain();
 						    		if (activity.getDistance() > longestMeters)
 						    			longestMeters = activity.getDistance();
@@ -434,7 +434,7 @@ public class ActivitySvc {
 							
 						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 						    for (Activity activity : activities) {
-						    	if (activity.getType().equals("Ride")) {
+						    	if (activity.getType().equalsIgnoreCase("Ride")) {
 						    		float miles = (float) (Math.round(Constants.ConvertMetersToMiles(activity.getDistance(), true) * 10) / 10.0);
 						    		if (miles < 15)
 						    			continue;
@@ -531,8 +531,9 @@ public class ActivitySvc {
 						    long photo = 0;
 						    long pr = 0;
 						    long time = 0;
+						    long ride = 0;
 						    for (Activity activity : activities) {
-						    	if (activity.getType().equals("Ride")) {
+						    	if (activity.getType().equalsIgnoreCase("Ride")) {
 						    		elevation += activity.getTotal_elevation_gain();
 						    		totalMiles += activity.getDistance();
 						    		if (activity.getAchievement_count() > 0) {
@@ -547,28 +548,22 @@ public class ActivitySvc {
 						    		if (activity.getMoving_time() > 0) {
 						    			time += activity.getMoving_time()/1800;	// 30 mins
 						    		}
+						    		if (activity.getName() != null && !activity.getName().equalsIgnoreCase("morning ride")
+						    				&& !activity.getName().equalsIgnoreCase("lunch ride") && !activity.getName().equalsIgnoreCase("evening ride")) {
+						    			ride++;
+						    		}
 						    	}
 						    }
 						    
 						    if (elevation > 0 && totalMiles > 0) {
-							    float effort = 0;
 							    long feet = (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0);
 							    float miles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0);
-
-							    System.out.println("elevation: " + feet);
-							    System.out.println("miles: " + miles);
-							    effort = feet/miles;
-							    System.out.println("effort: " + effort);
-
-							    System.out.println("achievement: " + achievement);
-							    System.out.println("pr: " + pr);
-							    System.out.println("photo: " + photo);
-							    System.out.println("time: " + time);
-							    long extra = achievement+photo+pr+time;
-							    System.out.println("extra: " + extra);
 							    
+					    		long distanceInFeet = (long)(Math.round(5280 * miles * 10) / 10.0);
+					    		float grade = feet/distanceInFeet;
+					    		float effort = miles * (grade*10+1);
+							    long extra = achievement+photo+pr+time+ride;
 							    effort += extra;
-							    System.out.println("TOTAL: " + effort);
 							    
 						    	challengeResult.setElevation((long) (Math.round(effort * 10) / 10.0));
 						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0));	
@@ -643,7 +638,7 @@ public class ActivitySvc {
 						    float elevation = 0;
 						    float totalMiles = 0;						    
 						    for (Activity activity : activities) {
-						    	if (activity.getType().equals("Ride")) {
+						    	if (activity.getType().equalsIgnoreCase("Ride")) {
 						    		elevation += activity.getTotal_elevation_gain();
 						    		totalMiles += activity.getDistance();						    		
 						    	}

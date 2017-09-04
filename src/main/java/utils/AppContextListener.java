@@ -39,6 +39,7 @@ public class AppContextListener implements ServletContextListener {
 	private final static long ONCE_PER_DAY = 1000*60*60*24;
 	private final static long ONCE_PER_WEEK = 1000*60*60*24*7;
 	private final static int ZERO_MINUTES = 0;
+
 	
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
@@ -49,7 +50,6 @@ public class AppContextListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		
 		
 		System.out.println("AppContextListener Listener initialized.");
 		
@@ -341,7 +341,7 @@ public class AppContextListener implements ServletContextListener {
 						long seconds = 0;
 					    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 					    for (Activity activity : activities) {
-					    	if (activity.getType().equals("Ride")) {
+					    	if (activity.getType().equalsIgnoreCase("Ride")) {
 					    		totalMeters += activity.getDistance();
 					    		elevation += activity.getTotal_elevation_gain();
 					    		seconds += activity.getMoving_time();
