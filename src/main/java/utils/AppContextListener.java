@@ -51,6 +51,7 @@ public class AppContextListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 		
+		
 		System.out.println("AppContextListener Listener initialized.");
 		
 		TimerTask updateGroupRideTask = new UpdateGroupRideTask();
