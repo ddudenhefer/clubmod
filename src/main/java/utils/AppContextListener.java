@@ -71,7 +71,7 @@ public class AppContextListener implements ServletContextListener {
 
 		TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
 		Timer memberYTDTimer = new Timer();
-		//memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23,00), ONCE_PER_DAY);
+		memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(23,00), ONCE_PER_DAY);
 		//memberYTDTimer.schedule(updateMemberYTDTask, 0);
 	}
 	
