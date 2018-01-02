@@ -112,7 +112,7 @@ public class MemberActivtySvc {
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Path("/create/{memberId}")
-	public boolean createMemberActivityTotals(@PathParam("{memberId}") int memberId) {
+	public boolean createMemberActivityTotals(@PathParam("memberId") int memberId) {
 		MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();
 		MemberActivityTotal memberActivityTotal = new MemberActivityTotal();
 		boolean ret = false;

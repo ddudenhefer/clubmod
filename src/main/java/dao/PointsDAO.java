@@ -134,25 +134,25 @@ public class PointsDAO {
 			
 			// hard coded for now
 			if (challenge.getMemberId() == memberId)
-				challengePoints += 25;
-			else if (challenge.getMemberId2() == memberId)
 				challengePoints += 20;
+			else if (challenge.getMemberId2() == memberId)
+				challengePoints += 18;
 			else if (challenge.getMemberId3() == memberId)
-				challengePoints += 15;
+				challengePoints += 16;
 			else if (challenge.getMemberId4() == memberId)
-				challengePoints += 12;
+				challengePoints += 14;
 			else if (challenge.getMemberId5() == memberId)
-				challengePoints += 10;
+				challengePoints += 12;
 			else if (challenge.getMemberId6() == memberId)
-				challengePoints += 8;
+				challengePoints += 10;
 			else if (challenge.getMemberId7() == memberId)
-				challengePoints += 6;
+				challengePoints += 8;
 			else if (challenge.getMemberId8() == memberId)
-				challengePoints += 4;
+				challengePoints += 6;
 			else if (challenge.getMemberId9() == memberId)
-				challengePoints += 2;
+				challengePoints += 4;
 			else if (challenge.getMemberId10() == memberId)
-				challengePoints += 1;
+				challengePoints += 2;
 	    }
 		mp.setChallenges(challengePoints);
 		points += challengePoints;
