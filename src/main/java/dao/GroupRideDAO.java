@@ -56,9 +56,8 @@ public class GroupRideDAO {
 				if (groupRideDB != null) {	// update
 					String sql = "update group_ride set segmentId=?, bonusSegmentId=?";
 					preparedStatement = connection.prepareStatement(sql);
-					preparedStatement.setInt(1, groupRide.getId());
-					preparedStatement.setInt(2, groupRide.getSegmentId());
-					preparedStatement.setInt(3, groupRide.getBonusSegmentId());
+					preparedStatement.setInt(1, groupRide.getSegmentId());
+					preparedStatement.setInt(2, groupRide.getBonusSegmentId());
 		
 					int rowsAffected = preparedStatement.executeUpdate();
 					if (rowsAffected > 0)
