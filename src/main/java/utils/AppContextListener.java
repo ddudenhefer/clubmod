@@ -21,10 +21,12 @@ import com.google.gson.Gson;
 
 import connector.JStravaV3;
 import model.Challenge;
+import model.GroupRide;
 import model.Member;
 import model.MemberActivityTotal;
 import model.MemberYTDTotal;
 import dao.ChallengeDAO;
+import dao.GroupRideDAO;
 import dao.MemberActivityTotalsDAO;
 import dao.MemberDAO;
 import dao.MemberYTDTotalsDAO;
@@ -382,64 +384,63 @@ public class AppContextListener implements ServletContextListener {
 			Date endDate = Constants.getNoonOfDay(new Date(cal.getTimeInMillis()));
 		    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
 		    
-		    //int segmentID = 9150556; lyons
-		    //int segmentID = 5179616; nelson
-		    //int segmentID = 1090795; //valmont
-		    //int segmentID = 716757; //valmont roller 
-		    //int segmentID = 1415852; //n 65th climb
-		    //int segmentID = 1045527; //Niwot Rd. Hill
-		    //int segmentID = 791408; //Col d'Nelson
-		    //int segmentID = 721688; //95th street climb
-		    //int segmentID = 6055053;	//Freight Train express
-		    //int segmentID = 14530394;	//West on Nelson 65th to 55th 
-		    int segmentID = 5223849;	// baseline res climb
+		    GroupRideDAO groupRideDAO = new GroupRideDAO();		    
+		    GroupRide groupRide = null;
 		    
-		    //int bonusSegmentID = 2707469; //Middle Fork Climb
-		    //int bonusSegmentID = 641091;	//backside Old Stage 
-		    int bonusSegmentID = 0;	 
-			
-			try {
-				List<Member> members = new ArrayList<Member>();
-				MemberDAO memberDAO = new MemberDAO();
-				members = memberDAO.getAllMembers();
-				for (Member member : members) {
-					if (member != null && member.getAccessToken() != null) {
-						JStravaV3 strava = new JStravaV3(member.getAccessToken());
-					    
-					    // test authentication: if null, continue
-					    Athlete athlete = strava.getCurrentAthlete();
-					    if (athlete == null)
-					    	continue;
-
-					    // group ride segment
-					    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(segmentID,  athlete.getId(), df.format(startDate), df.format(endDate));
-					    if (segmentEfforts.size() > 0) {
-						    System.out.println("UpdateGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
-						    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();	
-						    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
-						    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
-						    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO();
-						    	memberActivityTotal.setGroupRide(memberActivityTotal.getGroupRide()+1);
-						    	
-							    // bonus ride segment
-							    if (bonusSegmentID > 0) {
-								    segmentEfforts = strava.findAthleteSegmentEffort(bonusSegmentID,  athlete.getId(), df.format(startDate), df.format(endDate));
-								    if (segmentEfforts.size() > 0) {
-									    System.out.println("UpdateBonusRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
-									    memberActivityTotal.setEventRide(memberActivityTotal.getEventRide()+1);
+		    try {	
+		    	groupRide = groupRideDAO.getGroupRide();
+		    	if (groupRide != null && groupRide.getSegmentId() > 0) {
+				    int segmentID = groupRide.getSegmentId();
+				    int bonusSegmentID = groupRide.getBonusSegmentId();	
+				    
+					System.out.println("UpdateGroupRideTask Segment: " + segmentID);
+					System.out.println("UpdateGroupRideTask Bonus Segment: " + bonusSegmentID);
+				    
+					List<Member> members = new ArrayList<Member>();
+					MemberDAO memberDAO = new MemberDAO();
+					members = memberDAO.getAllMembers();
+					for (Member member : members) {
+						if (member != null && member.getAccessToken() != null) {
+							JStravaV3 strava = new JStravaV3(member.getAccessToken());
+						    
+						    // test authentication: if null, continue
+						    Athlete athlete = strava.getCurrentAthlete();
+						    if (athlete == null)
+						    	continue;
+	
+						    // group ride segment
+						    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(segmentID, athlete.getId(), df.format(startDate), df.format(endDate));
+						    if (segmentEfforts.size() > 0) {
+							    System.out.println("UpdateGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
+							    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();	
+							    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
+							    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
+							    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO();
+							    	memberActivityTotal.setGroupRide(memberActivityTotal.getGroupRide()+1);
+							    	
+								    // bonus ride segment
+								    if (bonusSegmentID > 0) {
+									    segmentEfforts = strava.findAthleteSegmentEffort(bonusSegmentID,  athlete.getId(), df.format(startDate), df.format(endDate));
+									    if (segmentEfforts.size() > 0) {
+										    System.out.println("UpdateBonusRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
+										    memberActivityTotal.setEventRide(memberActivityTotal.getEventRide()+1);
+									    }
+									    else
+										    System.out.println("UpdateBonusRideTask: segmentEffort " + bonusSegmentID + " NOT found for : " + athlete.getFirstname() + " " + athlete.getLastname());
 								    }
-								    else
-									    System.out.println("UpdateBonusRideTask: segmentEffort NOT found for : " + athlete.getFirstname() + " " + athlete.getLastname());
+							    	memberActivityTotalsDB.saveMemberActivityTotals(memberActivityTotal);
 							    }
-						    	memberActivityTotalsDB.saveMemberActivityTotals(memberActivityTotal);
 						    }
-					    }
-					    else
-						    System.out.println("UpdateGroupRideTask: segmentEffort NOT found for : " + athlete.getFirstname() + " " + athlete.getLastname());
-			        }
-				    Thread.sleep(120000); // 2 minutes			    
-				}
-				System.out.println("UpdateGroupRideTask -> DONE");
+						    else
+							    System.out.println("UpdateGroupRideTask: segmentEffort " + segmentID + " NOT found for : " + athlete.getFirstname() + " " + athlete.getLastname());
+				        }
+					    Thread.sleep(120000); // 2 minutes			    
+					}
+					System.out.println("UpdateGroupRideTask -> DONE");
+		    	}
+		    	else
+					System.out.println("UpdateGroupRideTask -> NO SEGMENT SET");
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
