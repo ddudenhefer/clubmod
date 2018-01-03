@@ -58,7 +58,7 @@ public class GroupRideDAO {
 					preparedStatement = connection.prepareStatement(sql);
 					preparedStatement.setInt(1, groupRide.getSegmentId());
 					preparedStatement.setInt(2, groupRide.getBonusSegmentId());
-					preparedStatement.setInt(3, groupRide.getId());
+					preparedStatement.setLong(3, groupRide.getId());
 		
 					int rowsAffected = preparedStatement.executeUpdate();
 					if (rowsAffected > 0)
