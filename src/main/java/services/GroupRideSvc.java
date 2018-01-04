@@ -42,16 +42,15 @@ public class GroupRideSvc {
 	
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)
-	@Path("/update")
-	public String updateGroupRide(String jsonData) {
+	@Path("/update/{jsonData}")
+	public String updateGroupRide(@PathParam("jsonData") String jsonData) {
 		GroupRideDAO groupRideDAO = new GroupRideDAO();
 		String ret = "success";
 		
 		try {
 			Gson gson = new Gson();
-			GroupRide groupRide = gson.fromJson(jsonData, GroupRide.class); 
-
-			boolean ok = groupRideDAO.saveGroupRide(groupRide);
+			GroupRide[] groupRideArray = gson.fromJson(jsonData, GroupRide[].class); 
+			boolean ok = groupRideDAO.saveGroupRide(groupRideArray[0]);
 			if (! ok)
 				ret = "failed"; 
 		} catch (Exception e) {
