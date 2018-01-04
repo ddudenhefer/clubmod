@@ -42,8 +42,8 @@ public class GroupRideSvc {
 	
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)
-	@Path("/update/{jsonData}")
-	public String updateGroupRide(@PathParam("jsonData") String jsonData) {
+	@Path("/update")
+	public String updateGroupRide(String jsonData) {
 		GroupRideDAO groupRideDAO = new GroupRideDAO();
 		String ret = "success";
 		

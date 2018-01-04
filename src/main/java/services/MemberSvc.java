@@ -14,13 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import model.Member;
-import model.MemberActivityTotal;
-
 import com.google.gson.Gson;
-
-import dao.MemberActivityTotalsDAO;
 import dao.MemberDAO;
-import entities.challenge.ChallengeResult;
 
 @Path("/member")
 public class MemberSvc {

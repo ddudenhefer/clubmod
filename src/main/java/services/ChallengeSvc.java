@@ -103,8 +103,8 @@ public class ChallengeSvc {
 
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)
-	@Path("/update/{jsonData}")
-	public String updateChallenges(@PathParam("jsonData") String jsonData) {
+	@Path("/update")
+	public String updateChallenges(String jsonData) {
 		ChallengeDAO challengeDAO = new ChallengeDAO();
 		String ret = "success";
 		
