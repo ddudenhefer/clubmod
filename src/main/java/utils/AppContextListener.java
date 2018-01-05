@@ -344,7 +344,7 @@ public class AppContextListener implements ServletContextListener {
 						long seconds = 0;
 					    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 					    for (Activity activity : activities) {
-					    	if (activity.getType().equalsIgnoreCase("Ride") || activity.getType().equalsIgnoreCase("Virtual Ride")) {
+					    	if (activity.getType().equalsIgnoreCase("Ride") || activity.getType().equalsIgnoreCase("VirtualRide")) {
 					    		totalMeters += activity.getDistance();
 					    		elevation += activity.getTotal_elevation_gain();
 					    		seconds += activity.getMoving_time();
