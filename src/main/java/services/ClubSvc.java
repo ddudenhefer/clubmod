@@ -223,12 +223,13 @@ public class ClubSvc {
 	@GET
 	@Path("/totals")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getClubTotals()  {
+	public String getClubTotals(@Context HttpServletRequest request)  {
+		HttpSession session = request.getSession();
 		
 		MemberYTDTotal memberYTDTotal = new MemberYTDTotal();
 		
 		try {
-			MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
+			MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO(session);
 			memberYTDTotal = memberYTDTotalsDB.getTotals();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
