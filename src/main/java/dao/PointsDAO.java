@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import model.Challenge;
 import model.MemberActivityTotal;
 import model.MemberPoints;
@@ -13,14 +15,23 @@ import model.Point;
 
 public class PointsDAO {
 	
+	HttpSession session = null;
+
+	public PointsDAO() {
+		
+	}
 	
+	public PointsDAO(HttpSession session) {
+		this.session = session;
+	}
+
 	public Point getPointById(int id)throws Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		Point point = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT id, type, subtype, increment, maxlimit, points FROM points where id=?");
 				preparedStatement.setLong(1,id);
@@ -42,7 +53,7 @@ public class PointsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		return point;
@@ -55,7 +66,7 @@ public class PointsDAO {
 		Point point = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				String sql = "SELECT id, type, subtype, increment, maxlimit, points FROM points";
 				preparedStatement = connection.prepareStatement(sql);
@@ -78,7 +89,7 @@ public class PointsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		return points;
@@ -91,7 +102,7 @@ public class PointsDAO {
 		Point point = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				String sql = "SELECT id, type, subtype, increment, maxlimit, points FROM points where type=? and subtype=?";
 				preparedStatement = connection.prepareStatement(sql);
@@ -115,7 +126,7 @@ public class PointsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		return point;
@@ -242,7 +253,7 @@ public class PointsDAO {
 		PreparedStatement preparedStatement = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				Point pointDB = getPointById(point.getId());
 				if (pointDB != null) {	// update
@@ -264,8 +275,8 @@ public class PointsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
-			connection.close();
+			if (connection != null && session == null)
+				connection.close();
 		}
 		return false;
 	}
@@ -296,7 +307,7 @@ public class PointsDAO {
 		PreparedStatement preparedStatement = null;
 		
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				Point pointDB = getPointById(point.getId());
 				if (pointDB != null) {
@@ -315,7 +326,7 @@ public class PointsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		

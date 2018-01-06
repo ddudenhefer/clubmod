@@ -9,12 +9,22 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import model.Challenge;
 import model.Member;
 
 public class ChallengeDAO {
 	
+	HttpSession session = null;
 	
+	public ChallengeDAO() {
+		
+	}
+	
+	public ChallengeDAO (HttpSession session) {
+		this.session = session;
+	}
 	
 	public boolean saveChallenge(Challenge challenge)throws Exception {
 		
@@ -25,7 +35,7 @@ public class ChallengeDAO {
 		PreparedStatement preparedStatement = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				String sql = "update challenges set memberId=?, memberId2=?, memberId3=?, memberId4=?, memberId5=?, memberId6=?, memberId7=?, memberId8=?, memberId9=?, memberId10=? where id=?";
 				preparedStatement = connection.prepareStatement(sql);
@@ -51,8 +61,8 @@ public class ChallengeDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
-			connection.close();
+			if (connection != null && session == null)
+				connection.close();
 		}
 		return false;
 	}
@@ -64,7 +74,7 @@ public class ChallengeDAO {
 		Challenge challenge = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId, memberId2, memberId3, memberId4, memberId5, memberId6, memberId7, memberId8, memberId9, memberId10 FROM challenges where challengeIndex=? and season like ?";
 				preparedStatement = connection.prepareStatement(sql);
@@ -100,7 +110,7 @@ public class ChallengeDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		return challenge;
@@ -113,7 +123,7 @@ public class ChallengeDAO {
 		Challenge challenge = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId, memberId2, memberId3, memberId4, memberId5, memberId6, memberId7, memberId8, memberId9, memberId10 FROM challenges where (? between startDate and endDate) or ";
 				sql += "(? < startDate and startDate = (select min(startDate) from challenges)) or (? > endDate and endDate = (select max(endDate) from challenges))";
@@ -151,7 +161,7 @@ public class ChallengeDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		return challenge;
@@ -163,7 +173,7 @@ public class ChallengeDAO {
 		Challenge challenge = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId, memberId2, memberId3, memberId4, memberId5, memberId6, memberId7, memberId8, memberId9, memberId10 FROM challenges where id=?";
 				preparedStatement = connection.prepareStatement(sql);
@@ -198,7 +208,7 @@ public class ChallengeDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		return challenge;
@@ -211,7 +221,7 @@ public class ChallengeDAO {
 		Challenge challenge = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId, memberId2, memberId3, memberId4, memberId5, memberId6, memberId7, memberId8, memberId9, memberId10 FROM challenges where startDate=? and endDate=?";
 				preparedStatement = connection.prepareStatement(sql);
@@ -248,7 +258,7 @@ public class ChallengeDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		return challenge;
@@ -262,7 +272,7 @@ public class ChallengeDAO {
 		Challenge challenge = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId, memberId2, memberId3, memberId4, memberId5, memberId6, memberId7, memberId8, memberId9, memberId10 FROM challenges order by id");
 				ResultSet rs = preparedStatement.executeQuery();
@@ -305,7 +315,7 @@ public class ChallengeDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		
@@ -320,7 +330,7 @@ public class ChallengeDAO {
 		Challenge challenge = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				
 				String sql = "SELECT id, challengeIndex, name, season, startDate, endDate, label, service, memberId, memberId2, memberId3, memberId4, memberId5, memberId6, memberId7, memberId8, memberId9, memberId10 FROM challenges where ";
@@ -368,7 +378,7 @@ public class ChallengeDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		
@@ -420,7 +430,7 @@ public class ChallengeDAO {
 		PreparedStatement preparedStatement = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				Challenge challengeDB = getChallengeById(challenge.getId());
 				if (challengeDB != null) {	// update
@@ -441,8 +451,8 @@ public class ChallengeDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
-			connection.close();
+			if (connection != null && session == null)
+				connection.close();
 		}
 		return false;
 	}

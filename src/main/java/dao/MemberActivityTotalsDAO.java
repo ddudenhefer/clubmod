@@ -6,10 +6,22 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import model.MemberActivityTotal;
 
 public class MemberActivityTotalsDAO {
 	
+	HttpSession session = null;
+	
+	public MemberActivityTotalsDAO() {
+		
+	}
+	
+	public MemberActivityTotalsDAO(HttpSession session) {
+		this.session = session;
+	}
+
 	public MemberActivityTotal getMemberData(int memberId)throws Exception {
 		
 		Connection connection = null;
@@ -17,7 +29,7 @@ public class MemberActivityTotalsDAO {
 		MemberActivityTotal memberActivityTotal = new MemberActivityTotal();
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT memberId, fantasy_entry, fantasy_first, fantasy_second, fantasy_third, group_ride, event_ride, home_purchase, home_referral, points_redeemed FROM member_activity_totals where memberId=?");
 				preparedStatement.setLong(1,memberId);
@@ -43,7 +55,7 @@ public class MemberActivityTotalsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		return memberActivityTotal;
@@ -76,7 +88,7 @@ public class MemberActivityTotalsDAO {
 		PreparedStatement preparedStatement = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				MemberActivityTotal memberActivityTotalDB = getMemberData(memberActivityTotal.getMemberId());
 				if (memberActivityTotalDB != null && memberActivityTotalDB.getMemberId() > 0) {	// update
@@ -121,8 +133,8 @@ public class MemberActivityTotalsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
-			connection.close();
+			if (connection != null && session == null)
+				connection.close();
 		}
 		return false;
 	}
@@ -135,7 +147,7 @@ public class MemberActivityTotalsDAO {
 		MemberActivityTotal memberActivityTotal = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				String sql = "SELECT memberId, fantasy_entry, fantasy_first, fantasy_second, fantasy_third, group_ride, event_ride, home_purchase, home_referral, points_redeemed FROM member_activity_totals";
 				preparedStatement = connection.prepareStatement(sql);
@@ -162,7 +174,7 @@ public class MemberActivityTotalsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		return memberActivityTotals;
@@ -178,7 +190,7 @@ public class MemberActivityTotalsDAO {
 		PreparedStatement preparedStatement = null;
 		
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				MemberActivityTotal memberActivityTotalDB = getMemberData(memberActivityTotal.getMemberId());
 				if (memberActivityTotalDB != null) {
@@ -197,7 +209,7 @@ public class MemberActivityTotalsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		

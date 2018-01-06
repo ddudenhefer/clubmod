@@ -6,17 +6,29 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import model.GroupRide;
 
 public class GroupRideDAO {
 	
+	HttpSession session = null;
+	
+	public GroupRideDAO() {
+		
+	}
+	
+	public GroupRideDAO(HttpSession session) {
+		this.session = session;
+	}
+
 	public GroupRide getGroupRide()throws Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		GroupRide groupRide = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT id, segmentId, bonusSegmentId FROM group_ride");
 				ResultSet rs = preparedStatement.executeQuery();
@@ -34,7 +46,7 @@ public class GroupRideDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		return groupRide;
@@ -50,7 +62,7 @@ public class GroupRideDAO {
 		PreparedStatement preparedStatement = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				GroupRide groupRideDB = getGroupRide();
 				if (groupRideDB != null) {	// update
@@ -80,8 +92,8 @@ public class GroupRideDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
-			connection.close();
+			if (connection != null && session == null)
+				connection.close();
 		}
 		return false;
 	}

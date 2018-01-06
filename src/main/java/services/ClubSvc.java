@@ -1,12 +1,17 @@
 package services;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import model.Challenge;
@@ -14,6 +19,7 @@ import model.Member;
 import model.MemberActivityTotal;
 import model.MemberPoints;
 import model.MemberYTDTotal;
+import utils.Constants;
 
 import com.google.gson.Gson;
 
@@ -29,25 +35,26 @@ public class ClubSvc {
 	@GET
 	@Path("/members")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getClubMembers()  {
-		
+	public String getClubMembers(@Context HttpServletRequest request)  {
+		HttpSession session = request.getSession();
 		List<Member> members = new ArrayList<Member>();
-		MemberDAO memberDAO = new MemberDAO();
+
+		MemberDAO memberDAO = new MemberDAO(session);
 		try {
 			members = memberDAO.getAllMembers();
 			for (Member member : members) {
 				if (member != null && member.getAccessToken() != null) {
 
-					MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
+					MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO(session);
 				    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
 				    float milesF = memberYTDTotal != null ? memberYTDTotal.getMilesYTD() : 0;
 				    long elevationL = memberYTDTotal != null ? memberYTDTotal.getElevationYTD() : 0;
 				    
-				    ChallengeDAO challengeDAO = new ChallengeDAO();
+				    ChallengeDAO challengeDAO = new ChallengeDAO(session);
 					List<Challenge> challengeWins = challengeDAO.getChallengesByMemberId(member.getId());			
 					member.setChallengeWins(challengeWins);
 					
-					MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(); 
+					MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(session); 
 					MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
 					if (memberActivityTotal != null) {
 						member.setFantasyEntry(memberActivityTotal.getFantasyEntry());
@@ -60,13 +67,26 @@ public class ClubSvc {
 						member.setPointsRedeemed(memberActivityTotal.getPointsRedeemed());
 					}
 				    
-				    PointsDAO pointsDAO = new PointsDAO();
+				    PointsDAO pointsDAO = new PointsDAO(session);
 				    member.setMemberPoints(pointsDAO.getMemberPoints(member.getId(), milesF, elevationL, challengeWins, memberActivityTotal));
 				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally {
+			 if (session.getAttribute(Constants.DB_CONNECTION) != null) {
+		        Connection con = (Connection) session.getAttribute(Constants.DB_CONNECTION);
+		        if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		        }
+			 }
 		}
 
 		Collections.sort(members, Member.Comparators.POINTS);

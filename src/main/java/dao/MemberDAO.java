@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.PathParam;
 
 import model.Member;
@@ -13,13 +14,22 @@ import model.MemberActivityTotal;
 
 public class MemberDAO {
 	
+	HttpSession session = null;
+	
+	public MemberDAO() {
+	}
+	
+	public MemberDAO(HttpSession session) {
+		this.session = session;
+	}
+	
 	public Member getMemberById(int memberId)throws Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		Member member = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName, pictureURL, city, state, email FROM members where id=?");
 				preparedStatement.setLong(1,memberId);
@@ -44,7 +54,7 @@ public class MemberDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		return member;
@@ -56,7 +66,7 @@ public class MemberDAO {
 		Member member = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName, pictureURL, city, state, email FROM members where athleteId=?");
 				preparedStatement.setLong(1,athleteId);
@@ -81,7 +91,7 @@ public class MemberDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		return member;
@@ -94,7 +104,7 @@ public class MemberDAO {
 		Member member = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName, pictureURL, city, state, email, waiver FROM members");
 				ResultSet rs = preparedStatement.executeQuery();
@@ -120,7 +130,7 @@ public class MemberDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		
@@ -136,7 +146,7 @@ public class MemberDAO {
 		PreparedStatement preparedStatement = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				Member memberDB = getMemberByAthleteId(member.getAthleteId());
 				if (memberDB != null) {	// update
@@ -190,8 +200,8 @@ public class MemberDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
-			connection.close();
+			if (connection != null && session == null)
+				connection.close();
 		}
 		return false;
 	}
@@ -205,7 +215,7 @@ public class MemberDAO {
 		PreparedStatement preparedStatement = null;
 		
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				Member memberDB = getMemberByAthleteId(member.getAthleteId());
 				if (memberDB != null) {
@@ -224,7 +234,7 @@ public class MemberDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
+			if (connection != null && session == null)
 				connection.close();
 		}
 		
@@ -255,7 +265,7 @@ public class MemberDAO {
 		PreparedStatement preparedStatement = null;
 
 		try {
-			connection = Database.getConnection();
+			connection = Database.getConnection(session);
 			if (connection != null) {
 				String sql = "update members set waiver=? where id=?";
 				preparedStatement = connection.prepareStatement(sql);
@@ -272,8 +282,8 @@ public class MemberDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null)
-			connection.close();
+			if (connection != null && session == null)
+				connection.close();
 		}
 		return false;
 	}
