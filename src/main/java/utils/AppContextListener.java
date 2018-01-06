@@ -320,7 +320,6 @@ public class AppContextListener implements ServletContextListener {
 					    if (member.getEmail() != null)
 					    	m_email = member.getEmail();
 					    
-					    
 					    // save member picture
 					    if (! a_profile.equals(m_picture) || 
 					    		! a_first.equals(m_first) ||
