@@ -21,9 +21,8 @@ public class Database {
 	        String url = "";
 	        Connection con = null;
 	        
-	        if (session.getAttribute(Constants.DB_CONNECTION) != null) {
+	        if (session != null && session.getAttribute(Constants.DB_CONNECTION) != null) {
 	        	con = (Connection) session.getAttribute(Constants.DB_CONNECTION);
-	        	System.out.println("Found connection in Session: " + con.toString());
 	        }
 	        else {
 	            try {
@@ -34,7 +33,8 @@ public class Database {
 	                url = "jdbc:mysql://" + MYSQL_DATABASE_HOST + ":" + MYSQL_DATABASE_PORT + "/" + MYSQL_DATABASE_NAME;
 	                Class.forName(MYSQL_DATABASE_DRIVER);
 	                con = DriverManager.getConnection(url, MYSQL_USERNAME, MYSQL_PASSWORD);
-	                session.setAttribute(Constants.DB_CONNECTION, con);
+	                if (session != null)
+	                	session.setAttribute(Constants.DB_CONNECTION, con);
 	            } catch (SQLException e) {
 	                e.printStackTrace();
 	            } catch (ClassNotFoundException e) {
