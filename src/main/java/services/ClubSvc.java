@@ -86,6 +86,7 @@ public class ClubSvc {
 						e.printStackTrace();
 					}
 		        }
+		        session.removeAttribute(Constants.DB_CONNECTION);
 			 }
 		}
 
