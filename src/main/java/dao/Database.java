@@ -34,6 +34,7 @@ public class Database {
 	                url = "jdbc:mysql://" + MYSQL_DATABASE_HOST + ":" + MYSQL_DATABASE_PORT + "/" + MYSQL_DATABASE_NAME;
 	                Class.forName(MYSQL_DATABASE_DRIVER);
 	                con = DriverManager.getConnection(url, MYSQL_USERNAME, MYSQL_PASSWORD);
+	                session.setAttribute(Constants.DB_CONNECTION, con);
 	            } catch (SQLException e) {
 	                e.printStackTrace();
 	            } catch (ClassNotFoundException e) {
