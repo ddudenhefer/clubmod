@@ -3,6 +3,8 @@ package services;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,10 +13,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
@@ -33,10 +38,13 @@ public class ActivitySvc {
 	@GET
 	@Path("/distance/{startDate}/{endDate}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getDistanceByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
+	public String getDistanceByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate, @Context HttpServletRequest request) { 
+		HttpSession session = null;
+		if (request != null)
+			session = request.getSession();
 		
 		List<ChallengeResult> challengeResults = new ArrayList<ChallengeResult>();
-		
+
 		DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 		Date sd = null;;
 		Date ed = null;
@@ -50,12 +58,9 @@ public class ActivitySvc {
 		}
 		
 		if (sd.before(new Date())) {
-			MemberDAO memberDAO = new MemberDAO();
+			MemberDAO memberDAO = new MemberDAO(session);
 			try {
 				List<Member> members = memberDAO.getAllMembers();
-				
-				//ChallengeDAO challengeDAO = new ChallengeDAO();
-				//Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
 				
 				for (Member member : members) {
 					
@@ -101,6 +106,20 @@ public class ActivitySvc {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			finally {
+				 if (session != null && session.getAttribute(Constants.DB_CONNECTION) != null) {
+			        Connection con = (Connection) session.getAttribute(Constants.DB_CONNECTION);
+			        if (con != null) {
+						try {
+							con.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        }
+			        session.removeAttribute(Constants.DB_CONNECTION);
+				 }
+			}			
 		    Collections.sort(challengeResults, ChallengeResult.Comparators.MILES);
 		}
 	    
@@ -116,7 +135,10 @@ public class ActivitySvc {
 	@GET
 	@Path("/time/{startDate}/{endDate}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getTimeByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
+	public String getTimeByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate, @Context HttpServletRequest request) { 
+		HttpSession session = null;
+		if (request != null)
+			session = request.getSession();
 		
 		List<ChallengeResult> challengeResults = new ArrayList<ChallengeResult>();
 		
@@ -133,12 +155,9 @@ public class ActivitySvc {
 		}
 		
 		if (sd.before(new Date())) {
-			MemberDAO memberDAO = new MemberDAO();
+			MemberDAO memberDAO = new MemberDAO(session);
 			try {
 				List<Member> members = memberDAO.getAllMembers();
-				
-				//ChallengeDAO challengeDAO = new ChallengeDAO();
-				//Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
 				
 				for (Member member : members) {
 					
@@ -184,6 +203,20 @@ public class ActivitySvc {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			finally {
+				 if (session != null && session.getAttribute(Constants.DB_CONNECTION) != null) {
+			        Connection con = (Connection) session.getAttribute(Constants.DB_CONNECTION);
+			        if (con != null) {
+						try {
+							con.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        }
+			        session.removeAttribute(Constants.DB_CONNECTION);
+				 }
+			}				
 		    Collections.sort(challengeResults, ChallengeResult.Comparators.TIME);
 		}
 	    
@@ -199,7 +232,10 @@ public class ActivitySvc {
 	@GET
 	@Path("/rides/{startDate}/{endDate}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getRidesByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
+	public String getRidesByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate, @Context HttpServletRequest request) { 
+		HttpSession session = null;
+		if (request != null)
+			session = request.getSession();
 		
 		List<ChallengeResult> challengeResults = new ArrayList<ChallengeResult>();
 		
@@ -219,13 +255,10 @@ public class ActivitySvc {
 		}
 		
 		if (sd.before(new Date())) {
-			MemberDAO memberDAO = new MemberDAO();
+			MemberDAO memberDAO = new MemberDAO(session);
 			try {
 				List<Member> members = memberDAO.getAllMembers();
 
-				//ChallengeDAO challengeDAO = new ChallengeDAO();
-				//Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
-				
 				for (Member member : members) {
 					
 					System.out.println("member: " + member.getFirstName() + " " + member.getLastName());
@@ -283,6 +316,20 @@ public class ActivitySvc {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			finally {
+				 if (session != null && session.getAttribute(Constants.DB_CONNECTION) != null) {
+			        Connection con = (Connection) session.getAttribute(Constants.DB_CONNECTION);
+			        if (con != null) {
+						try {
+							con.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        }
+			        session.removeAttribute(Constants.DB_CONNECTION);
+				 }
+			}				
 		    Collections.sort(challengeResults, ChallengeResult.Comparators.RIDES);
 		}
 	    
@@ -298,7 +345,10 @@ public class ActivitySvc {
 	@GET
 	@Path("/longest/{startDate}/{endDate}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getMilesByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
+	public String getMilesByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate, @Context HttpServletRequest request) { 
+		HttpSession session = null;
+		if (request != null)
+			session = request.getSession();
 		
 		List<ChallengeResult> challengeResults = new ArrayList<ChallengeResult>();
 		
@@ -315,12 +365,9 @@ public class ActivitySvc {
 		}
 		
 		if (sd.before(new Date())) {
-			MemberDAO memberDAO = new MemberDAO();
+			MemberDAO memberDAO = new MemberDAO(session);
 			try {
 				List<Member> members = memberDAO.getAllMembers();
-				
-				//ChallengeDAO challengeDAO = new ChallengeDAO();
-				//Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
 				
 				for (Member member : members) {
 					
@@ -365,6 +412,20 @@ public class ActivitySvc {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			finally {
+				 if (session != null && session.getAttribute(Constants.DB_CONNECTION) != null) {
+			        Connection con = (Connection) session.getAttribute(Constants.DB_CONNECTION);
+			        if (con != null) {
+						try {
+							con.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        }
+			        session.removeAttribute(Constants.DB_CONNECTION);
+				 }
+			}				
 		    Collections.sort(challengeResults, ChallengeResult.Comparators.MILES);
 		}
 	    
@@ -380,7 +441,10 @@ public class ActivitySvc {
 	@GET
 	@Path("/speed/{startDate}/{endDate}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getSpeedByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
+	public String getSpeedByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate, @Context HttpServletRequest request) { 
+		HttpSession session = null;
+		if (request != null)
+			session = request.getSession();
 		
 		List<ChallengeResult> challengeResults = new ArrayList<ChallengeResult>();
 		
@@ -397,12 +461,9 @@ public class ActivitySvc {
 		}
 		
 		if (sd.before(new Date())) {
-			MemberDAO memberDAO = new MemberDAO();
+			MemberDAO memberDAO = new MemberDAO(session);
 			try {
 				List<Member> members = memberDAO.getAllMembers();
-				
-				//ChallengeDAO challengeDAO = new ChallengeDAO();
-				//Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
 				
 				for (Member member : members) {
 					
@@ -462,6 +523,20 @@ public class ActivitySvc {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			finally {
+				 if (session != null && session.getAttribute(Constants.DB_CONNECTION) != null) {
+			        Connection con = (Connection) session.getAttribute(Constants.DB_CONNECTION);
+			        if (con != null) {
+						try {
+							con.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        }
+			        session.removeAttribute(Constants.DB_CONNECTION);
+				 }
+			}				
 			Collections.sort(challengeResults, ChallengeResult.Comparators.SPEED);
 		}
 	    
@@ -476,7 +551,10 @@ public class ActivitySvc {
 	@GET
 	@Path("/effort/{startDate}/{endDate}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getEffortByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
+	public String getEffortByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate, @Context HttpServletRequest request) { 
+		HttpSession session = null;
+		if (request != null)
+			session = request.getSession();
 		
 		List<ChallengeResult> challengeResults = new ArrayList<ChallengeResult>();
 		
@@ -493,12 +571,9 @@ public class ActivitySvc {
 		}
 		
 		if (sd.before(new Date())) {
-			MemberDAO memberDAO = new MemberDAO();
+			MemberDAO memberDAO = new MemberDAO(session);
 			try {
 				List<Member> members = memberDAO.getAllMembers();
-				
-				//ChallengeDAO challengeDAO = new ChallengeDAO();
-				//Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
 				
 				for (Member member : members) {
 					
@@ -572,6 +647,20 @@ public class ActivitySvc {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			finally {
+				 if (session != null && session.getAttribute(Constants.DB_CONNECTION) != null) {
+			        Connection con = (Connection) session.getAttribute(Constants.DB_CONNECTION);
+			        if (con != null) {
+						try {
+							con.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        }
+			        session.removeAttribute(Constants.DB_CONNECTION);
+				 }
+			}				
 		    Collections.sort(challengeResults, ChallengeResult.Comparators.ELEVATION);
 		}
 	    
@@ -586,7 +675,10 @@ public class ActivitySvc {
 	@GET
 	@Path("/elevation/{startDate}/{endDate}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getElevationByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate) { 
+	public String getElevationByDateRange(@PathParam("startDate") String startDate, @PathParam("endDate") String endDate, @Context HttpServletRequest request) { 
+		HttpSession session = null;
+		if (request != null)
+			session = request.getSession();
 		
 		List<ChallengeResult> challengeResults = new ArrayList<ChallengeResult>();
 		
@@ -603,12 +695,9 @@ public class ActivitySvc {
 		}
 		
 		if (sd.before(new Date())) {
-			MemberDAO memberDAO = new MemberDAO();
+			MemberDAO memberDAO = new MemberDAO(session);
 			try {
 				List<Member> members = memberDAO.getAllMembers();
-				
-				//ChallengeDAO challengeDAO = new ChallengeDAO();
-				//Challenge challenge = challengeDAO.getChallengeByDates(sDate, eDate);
 				
 				for (Member member : members) {
 					
@@ -652,6 +741,20 @@ public class ActivitySvc {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			finally {
+				 if (session != null && session.getAttribute(Constants.DB_CONNECTION) != null) {
+			        Connection con = (Connection) session.getAttribute(Constants.DB_CONNECTION);
+			        if (con != null) {
+						try {
+							con.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        }
+			        session.removeAttribute(Constants.DB_CONNECTION);
+				 }
+			}				
 		    Collections.sort(challengeResults, ChallengeResult.Comparators.ELEVATION);
 		}
 	    

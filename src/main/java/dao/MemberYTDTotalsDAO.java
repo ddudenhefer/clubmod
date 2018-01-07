@@ -14,21 +14,23 @@ import model.MemberYTDTotal;
 public class MemberYTDTotalsDAO {
 	
 	HttpSession session = null;
-	
-	public MemberYTDTotalsDAO () {
-	}
-	
+	Connection connection = null;
+
 	public MemberYTDTotalsDAO (HttpSession session) {
 		this.session = session;
 	}
 
+	public MemberYTDTotalsDAO (Connection connection) {
+		this.connection = connection;
+	}
+
 	public MemberYTDTotal getMemberData(int memberId)throws Exception {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		MemberYTDTotal memberYTDTotal = null;
 
 		try {
-			connection = Database.getConnection(session);
+			if (connection == null)
+				connection = Database.getConnection(session);
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT memberId, milesYTD, elevationYTD, movingTimeYTD, ridesYTD FROM member_ytd_totals where memberId=?");
 				preparedStatement.setLong(1,memberId);
@@ -49,8 +51,6 @@ public class MemberYTDTotalsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null && session == null)
-				connection.close();
 		}
 		return memberYTDTotal;
 	}
@@ -61,11 +61,11 @@ public class MemberYTDTotalsDAO {
 		if (memberYTDTotal == null)
 			return false;
 		
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		try {
-			connection = Database.getConnection(session);
+			if (connection == null)
+				connection = Database.getConnection(session);
 			if (connection != null) {
 				MemberYTDTotal memberYTDTotalDB = getMemberData(memberYTDTotal.getMemberId());
 				if (memberYTDTotalDB != null) {	// update
@@ -100,19 +100,17 @@ public class MemberYTDTotalsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null && session == null)
-				connection.close();
 		}
 		return false;
 	}
 	
 	public MemberYTDTotal getTotals()throws Exception {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		MemberYTDTotal memberYTDTotal = null;
 
 		try {
-			connection = Database.getConnection(session);
+			if (connection == null)
+				connection = Database.getConnection(session);
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT sum(milesYTD) as miles, sum(elevationYTD) as elevation, sum(movingTimeYTD) as time, sum(ridesYTD) as rides FROM member_ytd_totals");
 				ResultSet rs = preparedStatement.executeQuery();
@@ -131,8 +129,6 @@ public class MemberYTDTotalsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null && session == null)
-				connection.close();
 		}
 		return memberYTDTotal;
 	}

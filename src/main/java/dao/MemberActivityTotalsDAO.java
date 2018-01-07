@@ -13,23 +13,23 @@ import model.MemberActivityTotal;
 public class MemberActivityTotalsDAO {
 	
 	HttpSession session = null;
-	
-	public MemberActivityTotalsDAO() {
-		
-	}
-	
+	Connection connection = null;
+
 	public MemberActivityTotalsDAO(HttpSession session) {
 		this.session = session;
 	}
 
+	public MemberActivityTotalsDAO(Connection connection) {
+		this.connection = connection;
+	}
+
 	public MemberActivityTotal getMemberData(int memberId)throws Exception {
-		
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		MemberActivityTotal memberActivityTotal = new MemberActivityTotal();
 
 		try {
-			connection = Database.getConnection(session);
+			if (connection == null)
+				connection = Database.getConnection(session);
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT memberId, fantasy_entry, fantasy_first, fantasy_second, fantasy_third, group_ride, event_ride, home_purchase, home_referral, points_redeemed FROM member_activity_totals where memberId=?");
 				preparedStatement.setLong(1,memberId);
@@ -55,8 +55,6 @@ public class MemberActivityTotalsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null && session == null)
-				connection.close();
 		}
 		return memberActivityTotal;
 	}
@@ -84,11 +82,11 @@ public class MemberActivityTotalsDAO {
 		if (memberActivityTotal == null)
 			return false;
 		
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		try {
-			connection = Database.getConnection(session);
+			if (connection == null)
+				connection = Database.getConnection(session);
 			if (connection != null) {
 				MemberActivityTotal memberActivityTotalDB = getMemberData(memberActivityTotal.getMemberId());
 				if (memberActivityTotalDB != null && memberActivityTotalDB.getMemberId() > 0) {	// update
@@ -133,21 +131,19 @@ public class MemberActivityTotalsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null && session == null)
-				connection.close();
 		}
 		return false;
 	}
 	
 	
 	public List<MemberActivityTotal> getAllMemberActivityTotals()throws Exception {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		List<MemberActivityTotal> memberActivityTotals = new ArrayList<MemberActivityTotal>();
 		MemberActivityTotal memberActivityTotal = null;
 
 		try {
-			connection = Database.getConnection(session);
+			if (connection == null)
+				connection = Database.getConnection(session);
 			if (connection != null) {
 				String sql = "SELECT memberId, fantasy_entry, fantasy_first, fantasy_second, fantasy_third, group_ride, event_ride, home_purchase, home_referral, points_redeemed FROM member_activity_totals";
 				preparedStatement = connection.prepareStatement(sql);
@@ -174,8 +170,6 @@ public class MemberActivityTotalsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null && session == null)
-				connection.close();
 		}
 		return memberActivityTotals;
 	}
@@ -186,11 +180,11 @@ public class MemberActivityTotalsDAO {
 		if (memberActivityTotal == null || memberActivityTotal.getMemberId() == 0)
 			return false;
 		
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
 		try {
-			connection = Database.getConnection(session);
+			if (connection == null)
+				connection = Database.getConnection(session);
 			if (connection != null) {
 				MemberActivityTotal memberActivityTotalDB = getMemberData(memberActivityTotal.getMemberId());
 				if (memberActivityTotalDB != null) {
@@ -209,12 +203,9 @@ public class MemberActivityTotalsDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null && session == null)
-				connection.close();
 		}
 		
 		return false;
 	}
-	
 	
 }

@@ -15,21 +15,23 @@ import model.MemberActivityTotal;
 public class MemberDAO {
 	
 	HttpSession session = null;
-	
-	public MemberDAO() {
-	}
+	Connection connection = null;
 	
 	public MemberDAO(HttpSession session) {
 		this.session = session;
 	}
 	
+	public MemberDAO(Connection connection) {
+		this.connection = connection;
+	}
+
 	public Member getMemberById(int memberId)throws Exception {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		Member member = null;
 
 		try {
-			connection = Database.getConnection(session);
+			if (connection == null)
+				connection = Database.getConnection(session);
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName, pictureURL, city, state, email FROM members where id=?");
 				preparedStatement.setLong(1,memberId);
@@ -54,19 +56,17 @@ public class MemberDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null && session == null)
-				connection.close();
 		}
 		return member;
 	}
 	
 	public Member getMemberByAthleteId(int athleteId)throws Exception {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		Member member = null;
 
 		try {
-			connection = Database.getConnection(session);
+			if (connection == null)
+				connection = Database.getConnection(session);
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName, pictureURL, city, state, email FROM members where athleteId=?");
 				preparedStatement.setLong(1,athleteId);
@@ -91,20 +91,18 @@ public class MemberDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null && session == null)
-				connection.close();
 		}
 		return member;
 	}
 
 	public List<Member> getAllMembers()throws Exception {
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		List<Member> members = new ArrayList<Member>();
 		Member member = null;
 
 		try {
-			connection = Database.getConnection(session);
+			if (connection == null)
+				connection = Database.getConnection(session);
 			if (connection != null) {
 				preparedStatement = connection.prepareStatement("SELECT id, athleteId, accessToken, firstName, lastName, pictureURL, city, state, email, waiver FROM members");
 				ResultSet rs = preparedStatement.executeQuery();
@@ -130,8 +128,6 @@ public class MemberDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null && session == null)
-				connection.close();
 		}
 		
 		return members;
@@ -142,11 +138,11 @@ public class MemberDAO {
 		if (member == null)
 			return false;
 		
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		try {
-			connection = Database.getConnection(session);
+			if (connection == null)
+				connection = Database.getConnection(session);
 			if (connection != null) {
 				Member memberDB = getMemberByAthleteId(member.getAthleteId());
 				if (memberDB != null) {	// update
@@ -178,11 +174,14 @@ public class MemberDAO {
 					preparedStatement.setString(8, member.getEmail() != null ? member.getEmail() : "");
 					int rowsAffected = preparedStatement.executeUpdate();
 					if (rowsAffected > 0) {
-						MemberDAO memberDAO = new MemberDAO();
-						MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();
+						MemberActivityTotalsDAO memberActivityTotalsDAO = null;
+						if (connection == null)
+							memberActivityTotalsDAO = new MemberActivityTotalsDAO(session);
+						else
+							memberActivityTotalsDAO = new MemberActivityTotalsDAO(connection);
 						MemberActivityTotal memberActivityTotal = new MemberActivityTotal();
 						try {
-							Member memberLookup = memberDAO.getMemberByAthleteId(member.getAthleteId());
+							Member memberLookup = getMemberByAthleteId(member.getAthleteId());
 							if (memberLookup.getId() > 0) {
 								memberActivityTotal.setMemberId(memberLookup.getId());
 								memberActivityTotalsDAO.saveMemberActivityTotals(memberActivityTotal);
@@ -200,8 +199,6 @@ public class MemberDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null && session == null)
-				connection.close();
 		}
 		return false;
 	}
@@ -211,11 +208,11 @@ public class MemberDAO {
 		if (member == null || member.getId() == 0)
 			return false;
 		
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
 		try {
-			connection = Database.getConnection(session);
+			if (connection == null)
+				connection = Database.getConnection(session);
 			if (connection != null) {
 				Member memberDB = getMemberByAthleteId(member.getAthleteId());
 				if (memberDB != null) {
@@ -234,8 +231,6 @@ public class MemberDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null && session == null)
-				connection.close();
 		}
 		
 		return false;
@@ -261,11 +256,11 @@ public class MemberDAO {
 		if (member == null)
 			return false;
 		
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		try {
-			connection = Database.getConnection(session);
+			if (connection == null)
+				connection = Database.getConnection(session);
 			if (connection != null) {
 				String sql = "update members set waiver=? where id=?";
 				preparedStatement = connection.prepareStatement(sql);
@@ -282,8 +277,6 @@ public class MemberDAO {
 		finally {
 			if (preparedStatement != null)
 				preparedStatement.close();
-			if (connection != null && session == null)
-				connection.close();
 		}
 		return false;
 	}

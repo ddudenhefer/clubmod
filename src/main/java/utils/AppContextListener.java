@@ -1,5 +1,7 @@
 package utils;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,14 +10,12 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.ws.rs.PathParam;
 
 import com.google.gson.Gson;
 
@@ -26,6 +26,7 @@ import model.Member;
 import model.MemberActivityTotal;
 import model.MemberYTDTotal;
 import dao.ChallengeDAO;
+import dao.Database;
 import dao.GroupRideDAO;
 import dao.MemberActivityTotalsDAO;
 import dao.MemberDAO;
@@ -52,7 +53,6 @@ public class AppContextListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		
 		
 		System.out.println("AppContextListener Listener initialized.");
 		
@@ -139,8 +139,10 @@ public class AppContextListener implements ServletContextListener {
 			DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 			ActivitySvc activitySvc = new ActivitySvc();
 			
+			Connection con = Database.getConnection(null);			
+			
 			try {
-				challenges = new ChallengeDAO().getAllChallenges();
+				challenges = new ChallengeDAO(con).getAllChallenges();
 				for (Challenge challenge : challenges) {
 					System.out.println("challenge name: " + challenge.getName());
 					System.out.println("challenge end date: " + challenge.getEndDate());
@@ -152,17 +154,17 @@ public class AppContextListener implements ServletContextListener {
 						String results = "";
 						
 						if (challenge.getService().equals("distance"))
-							results = activitySvc.getDistanceByDateRange(sDate, eDate);
+							results = activitySvc.getDistanceByDateRange(sDate, eDate, null);
 						else if (challenge.getService().equals("time"))
-							results = activitySvc.getTimeByDateRange(sDate, eDate);
+							results = activitySvc.getTimeByDateRange(sDate, eDate, null);
 						else if (challenge.getService().equals("longest"))
-							results = activitySvc.getMilesByDateRange(sDate, eDate);
+							results = activitySvc.getMilesByDateRange(sDate, eDate, null);
 						else if (challenge.getService().equals("speed"))
-							results = activitySvc.getSpeedByDateRange(sDate, eDate);
+							results = activitySvc.getSpeedByDateRange(sDate, eDate, null);
 						else if (challenge.getService().equals("effort"))
-							results = activitySvc.getEffortByDateRange(sDate, eDate);
+							results = activitySvc.getEffortByDateRange(sDate, eDate, null);
 						else if (challenge.getService().equals("elevation"))
-							results = activitySvc.getElevationByDateRange(sDate, eDate);
+							results = activitySvc.getElevationByDateRange(sDate, eDate, null);
 						
 						Gson gson= new Gson();
 						ChallengeResult[]challengeResultsArray= gson.fromJson(results, ChallengeResult[].class);
@@ -171,76 +173,76 @@ public class AppContextListener implements ServletContextListener {
 				        if (challengeResults.size() > 0) {
 					        if (challengeResults.size() > 0) {
 					        	int athleteId = challengeResults.get(0).getAthleteId();
-					        	MemberDAO memberDAO = new MemberDAO();
+					        	MemberDAO memberDAO = new MemberDAO(con);
 					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
 					        	challenge.setMemberId(member.getId());
 								System.out.println("challenge 1st: " + member.getFirstName() + " " +  member.getLastName());
 					        }
 					        if (challengeResults.size() > 1) {
 					        	int athleteId = challengeResults.get(1).getAthleteId();
-					        	MemberDAO memberDAO = new MemberDAO();
+					        	MemberDAO memberDAO = new MemberDAO(con);
 					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
 					        	challenge.setMemberId2(member.getId());
 								System.out.println("challenge 2nd: " + member.getFirstName() + " " +  member.getLastName());
 					        }
 					        if (challengeResults.size() > 2) {
 					        	int athleteId = challengeResults.get(2).getAthleteId();
-					        	MemberDAO memberDAO = new MemberDAO();
+					        	MemberDAO memberDAO = new MemberDAO(con);
 					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
 					        	challenge.setMemberId3(member.getId());
 								System.out.println("challenge 3rd: " + member.getFirstName() + " " +  member.getLastName());
 					        }
 					        if (challengeResults.size() > 3) {
 					        	int athleteId = challengeResults.get(3).getAthleteId();
-					        	MemberDAO memberDAO = new MemberDAO();
+					        	MemberDAO memberDAO = new MemberDAO(con);
 					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
 					        	challenge.setMemberId4(member.getId());
 								System.out.println("challenge 4th: " + member.getFirstName() + " " +  member.getLastName());
 					        }
 					        if (challengeResults.size() > 4) {
 					        	int athleteId = challengeResults.get(4).getAthleteId();
-					        	MemberDAO memberDAO = new MemberDAO();
+					        	MemberDAO memberDAO = new MemberDAO(con);
 					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
 					        	challenge.setMemberId5(member.getId());
 								System.out.println("challenge 5th: " + member.getFirstName() + " " +  member.getLastName());
 					        }
 					        if (challengeResults.size() > 5) {
 					        	int athleteId = challengeResults.get(5).getAthleteId();
-					        	MemberDAO memberDAO = new MemberDAO();
+					        	MemberDAO memberDAO = new MemberDAO(con);
 					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
 					        	challenge.setMemberId6(member.getId());
 								System.out.println("challenge 6th: " + member.getFirstName() + " " +  member.getLastName());
 					        }
 					        if (challengeResults.size() > 6) {
 					        	int athleteId = challengeResults.get(6).getAthleteId();
-					        	MemberDAO memberDAO = new MemberDAO();
+					        	MemberDAO memberDAO = new MemberDAO(con);
 					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
 					        	challenge.setMemberId7(member.getId());
 								System.out.println("challenge 7th: " + member.getFirstName() + " " +  member.getLastName());
 					        }
 					        if (challengeResults.size() > 7) {
 					        	int athleteId = challengeResults.get(7).getAthleteId();
-					        	MemberDAO memberDAO = new MemberDAO();
+					        	MemberDAO memberDAO = new MemberDAO(con);
 					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
 					        	challenge.setMemberId8(member.getId());
 								System.out.println("challenge 8th: " + member.getFirstName() + " " +  member.getLastName());
 					        }
 					        if (challengeResults.size() > 8) {
 					        	int athleteId = challengeResults.get(8).getAthleteId();
-					        	MemberDAO memberDAO = new MemberDAO();
+					        	MemberDAO memberDAO = new MemberDAO(con);
 					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
 					        	challenge.setMemberId9(member.getId());
 								System.out.println("challenge 9th: " + member.getFirstName() + " " +  member.getLastName());
 					        }
 					        if (challengeResults.size() > 9) {
 					        	int athleteId = challengeResults.get(9).getAthleteId();
-					        	MemberDAO memberDAO = new MemberDAO();
+					        	MemberDAO memberDAO = new MemberDAO(con);
 					        	Member member = memberDAO.getMemberByAthleteId(athleteId);
 					        	challenge.setMemberId10(member.getId());
 								System.out.println("challenge 10th: " + member.getFirstName() + " " +  member.getLastName());
 					        }
 				        	
-				        	ChallengeDAO challengeDAO = new ChallengeDAO();
+				        	ChallengeDAO challengeDAO = new ChallengeDAO(con);
 				        	challengeDAO.saveChallenge(challenge);
 				        }
 					    Thread.sleep(120000); // 2 minutes			    
@@ -251,6 +253,16 @@ public class AppContextListener implements ServletContextListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			finally {
+				if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}			
 		}
 	}
 	
@@ -265,9 +277,11 @@ public class AppContextListener implements ServletContextListener {
 		    
 			cal.set(Calendar.DAY_OF_YEAR,1); //first day of the year.	    
 	        long startSeconds = Constants.getStartOfDay(new Date(cal.getTimeInMillis())).getTime() / 1000l;
+	        
+	        Connection con = Database.getConnection(null);
 
 			List<Member> members = new ArrayList<Member>();
-			MemberDAO memberDAO = new MemberDAO();
+			MemberDAO memberDAO = new MemberDAO(con);
 			try {
 				members = memberDAO.getAllMembers();
 				for (Member member : members) {
@@ -327,7 +341,7 @@ public class AppContextListener implements ServletContextListener {
 					    		! a_city.equals(m_city) ||
 					    		! a_state.equals(m_state) ||
 					    		! a_email.equals(m_email)) {
-					    	MemberDAO memberDB = new MemberDAO();
+					    	MemberDAO memberDB = new MemberDAO(con);
 						    member.setFirstName(a_first);
 						    member.setLastName(a_last);
 						    member.setPictureURL(a_profile);
@@ -358,7 +372,7 @@ public class AppContextListener implements ServletContextListener {
 				    	memberYTDTotal.setMovingTimeYTD(seconds);
 				    	memberYTDTotal.setRidesYTD(rides);
 				    	
-					    MemberYTDTotalsDAO memberYTDTotalsDAO = new MemberYTDTotalsDAO();
+					    MemberYTDTotalsDAO memberYTDTotalsDAO = new MemberYTDTotalsDAO(con);
 					    memberYTDTotalsDAO.saveMemberYTDTotals(memberYTDTotal);
 					    
 					    Thread.sleep(120000); // 2 minute			    
@@ -368,6 +382,16 @@ public class AppContextListener implements ServletContextListener {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			finally {
+				if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 	}
@@ -383,7 +407,9 @@ public class AppContextListener implements ServletContextListener {
 			Date endDate = Constants.getNoonOfDay(new Date(cal.getTimeInMillis()));
 		    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
 		    
-		    GroupRideDAO groupRideDAO = new GroupRideDAO();		    
+		    Connection con = Database.getConnection(null);
+		    
+		    GroupRideDAO groupRideDAO = new GroupRideDAO(con);		    
 		    GroupRide groupRide = null;
 		    
 		    try {	
@@ -396,7 +422,7 @@ public class AppContextListener implements ServletContextListener {
 					System.out.println("UpdateGroupRideTask Bonus Segment: " + bonusSegmentID);
 				    
 					List<Member> members = new ArrayList<Member>();
-					MemberDAO memberDAO = new MemberDAO();
+					MemberDAO memberDAO = new MemberDAO(con);
 					members = memberDAO.getAllMembers();
 					for (Member member : members) {
 						if (member != null && member.getAccessToken() != null) {
@@ -411,10 +437,10 @@ public class AppContextListener implements ServletContextListener {
 						    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(segmentID, athlete.getId(), df.format(startDate), df.format(endDate));
 						    if (segmentEfforts.size() > 0) {
 							    System.out.println("UpdateGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
-							    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();	
+							    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(con);	
 							    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
 							    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
-							    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO();
+							    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO(con);
 							    	memberActivityTotal.setGroupRide(memberActivityTotal.getGroupRide()+1);
 							    	
 								    // bonus ride segment
@@ -443,6 +469,16 @@ public class AppContextListener implements ServletContextListener {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			finally {
+				if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 	}	
@@ -551,10 +587,12 @@ public class AppContextListener implements ServletContextListener {
 		    	System.out.println("UpdateBCCGroupRideTask: Segment Not Set");
 		    	return;
 		    }
+		    
+		    Connection con = Database.getConnection(null);
 
 			try {
 				List<Member> members = new ArrayList<Member>();
-				MemberDAO memberDAO = new MemberDAO();
+				MemberDAO memberDAO = new MemberDAO(con);
 				members = memberDAO.getAllMembers();
 				for (Member member : members) {
 					if (member != null && member.getAccessToken() != null) {
@@ -570,10 +608,10 @@ public class AppContextListener implements ServletContextListener {
 					    if (segmentEfforts.size() > 0) {
 						    System.out.println("UpdateBCCGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
 						    
-						    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO();	
+						    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(con);	
 						    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
 						    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
-						    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO();
+						    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO(con);
 						    	memberActivityTotal.setEventRide(memberActivityTotal.getEventRide()+1);
 						    	memberActivityTotalsDB.saveMemberActivityTotals(memberActivityTotal);
 						    }
@@ -587,6 +625,16 @@ public class AppContextListener implements ServletContextListener {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			finally {
+				if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 	}	

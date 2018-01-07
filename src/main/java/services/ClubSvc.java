@@ -103,25 +103,25 @@ public class ClubSvc {
 	@GET
 	@Path("/membersTop3")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getClubMembersTop3()  {
-		
+	public String getClubMembersTop3(@Context HttpServletRequest request)  {
+		HttpSession session = request.getSession();
 		List<Member> members = new ArrayList<Member>();
-		MemberDAO memberDAO = new MemberDAO();
+		MemberDAO memberDAO = new MemberDAO(session);
 		try {
 			members = memberDAO.getAllMembers();
 			for (Member member : members) {
 				if (member != null && member.getAccessToken() != null) {
 
-					MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
+					MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO(session);
 				    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
 				    float milesF = memberYTDTotal != null ? memberYTDTotal.getMilesYTD() : 0;
 				    long elevationL = memberYTDTotal != null ? memberYTDTotal.getElevationYTD() : 0;
 				    
-				    ChallengeDAO challengeDAO = new ChallengeDAO();
+				    ChallengeDAO challengeDAO = new ChallengeDAO(session);
 					List<Challenge> challengeWins = challengeDAO.getChallengesByMemberId(member.getId());			
 					member.setChallengeWins(challengeWins);
 					
-					MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(); 
+					MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(session); 
 					MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
 					if (memberActivityTotal != null) {
 						member.setFantasyEntry(memberActivityTotal.getFantasyEntry());
@@ -135,7 +135,7 @@ public class ClubSvc {
 						member.setHomeReferrals(memberActivityTotal.getHomeReferral());
 					}
 				    
-				    PointsDAO pointsDAO = new PointsDAO();
+				    PointsDAO pointsDAO = new PointsDAO(session);
 				    member.setMemberPoints(pointsDAO.getMemberPoints(member.getId(), milesF, elevationL, challengeWins, memberActivityTotal));
 				}
 			}
@@ -143,7 +143,20 @@ public class ClubSvc {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		finally {
+			 if (session.getAttribute(Constants.DB_CONNECTION) != null) {
+		        Connection con = (Connection) session.getAttribute(Constants.DB_CONNECTION);
+		        if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		        }
+		        session.removeAttribute(Constants.DB_CONNECTION);
+			 }
+		}
 		Collections.sort(members, Member.Comparators.POINTS);
 		
 		List<Member> membersTop3 = new ArrayList<Member>();
@@ -162,15 +175,15 @@ public class ClubSvc {
 	@GET
 	@Path("/memberTotalsByName")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getClubMemberTotalsByName()  {
-		
+	public String getClubMemberTotalsByName(@Context HttpServletRequest request)  {
+		HttpSession session = request.getSession();
 		List<Member> members = new ArrayList<Member>();
-		MemberDAO memberDAO = new MemberDAO();
+		MemberDAO memberDAO = new MemberDAO(session);
 		try {
 			members = memberDAO.getAllMembers();
 			for (Member member : members) {
 				if (member != null && member.getAccessToken() != null) {
-					MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO();
+					MemberYTDTotalsDAO memberYTDTotalsDB = new MemberYTDTotalsDAO(session);
 				    MemberYTDTotal memberYTDTotal = memberYTDTotalsDB.getMemberData(member.getId());
 				    float milesF = memberYTDTotal != null ? memberYTDTotal.getMilesYTD() : 0;
 				    long elevationL = memberYTDTotal != null ? memberYTDTotal.getElevationYTD() : 0;
@@ -183,6 +196,20 @@ public class ClubSvc {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally {
+			 if (session.getAttribute(Constants.DB_CONNECTION) != null) {
+		        Connection con = (Connection) session.getAttribute(Constants.DB_CONNECTION);
+		        if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		        }
+		        session.removeAttribute(Constants.DB_CONNECTION);
+			 }
 		}
 
 		Collections.sort(members, Member.Comparators.NAME);
@@ -199,15 +226,29 @@ public class ClubSvc {
 	@GET
 	@Path("/membersByName")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getClubMembersByName()  {
-		
+	public String getClubMembersByName(@Context HttpServletRequest request)  {
+		HttpSession session = request.getSession();
 		List<Member> members = new ArrayList<Member>();
-		MemberDAO memberDAO = new MemberDAO();
+		MemberDAO memberDAO = new MemberDAO(session);
 		try {
 			members = memberDAO.getAllMembers();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally {
+			 if (session.getAttribute(Constants.DB_CONNECTION) != null) {
+		        Connection con = (Connection) session.getAttribute(Constants.DB_CONNECTION);
+		        if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		        }
+		        session.removeAttribute(Constants.DB_CONNECTION);
+			 }
 		}
 
 		Collections.sort(members, Member.Comparators.NAME);
@@ -235,6 +276,20 @@ public class ClubSvc {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally {
+			 if (session.getAttribute(Constants.DB_CONNECTION) != null) {
+		        Connection con = (Connection) session.getAttribute(Constants.DB_CONNECTION);
+		        if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		        }
+		        session.removeAttribute(Constants.DB_CONNECTION);
+			 }
 		}
 		Gson gson = new Gson();
 		String ret = "";
