@@ -31,12 +31,14 @@ public class JStravaV3 implements JStrava {
     }
 
     
-    public JStravaV3(String access_token){
+    public JStravaV3(String access_token, boolean setCurrentAthlete){
         this.accessToken = access_token;
-        String URL="https://www.strava.com/api/v3/athlete";
-        String result=getResult(URL);
-        Gson gson= new Gson();
-        currentAthlete =gson.fromJson(result,Athlete.class);
+        if (setCurrentAthlete ) {
+	        String URL="https://www.strava.com/api/v3/athlete";
+	        String result=getResult(URL);
+	        Gson gson= new Gson();
+	        currentAthlete =gson.fromJson(result,Athlete.class);
+        }
     }
 
     

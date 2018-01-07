@@ -36,7 +36,7 @@ public class ChallengeResult implements Comparable<ChallengeResult> {
         return firstName;
     }
 
-    public void setFisrtName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 

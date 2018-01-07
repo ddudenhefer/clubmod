@@ -63,24 +63,18 @@ public class ActivitySvc {
 				List<Member> members = memberDAO.getAllMembers();
 				
 				for (Member member : members) {
-					
 					System.out.println("member: " + member.getFirstName() + " " + member.getLastName());
 					//System.out.println("challenge: " + challenge);
 					
 					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 						
 						if (member != null && member.getAccessToken() != null) {
-							JStravaV3 strava = new JStravaV3(member.getAccessToken());
+							JStravaV3 strava = new JStravaV3(member.getAccessToken(), false);
 						    
-						    // test authentication: if null, continue
-						    Athlete athlete = strava.getCurrentAthlete();
-						    if (athlete == null)
-						    	continue;
-		
 						    ChallengeResult challengeResult = new ChallengeResult();
-						    challengeResult.setAthleteId(athlete.getId());
-						    challengeResult.setFisrtName(athlete.getFirstname());
-						    challengeResult.setLastName(athlete.getLastname());
+						    challengeResult.setAthleteId(member.getAthleteId());
+						    challengeResult.setFirstName(member.getFirstName());
+						    challengeResult.setLastName(member.getLastName());
 							
 							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
@@ -167,17 +161,12 @@ public class ActivitySvc {
 					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 						
 						if (member != null && member.getAccessToken() != null) {
-							JStravaV3 strava = new JStravaV3(member.getAccessToken());
+							JStravaV3 strava = new JStravaV3(member.getAccessToken(), false);
 						    
-						    // test authentication: if null, continue
-						    Athlete athlete = strava.getCurrentAthlete();
-						    if (athlete == null)
-						    	continue;
-		
 						    ChallengeResult challengeResult = new ChallengeResult();
-						    challengeResult.setAthleteId(athlete.getId());
-						    challengeResult.setFisrtName(athlete.getFirstname());
-						    challengeResult.setLastName(athlete.getLastname());
+						    challengeResult.setAthleteId(member.getAthleteId());
+						    challengeResult.setFirstName(member.getFirstName());
+						    challengeResult.setLastName(member.getLastName());
 							
 							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
@@ -265,17 +254,12 @@ public class ActivitySvc {
 					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 	
 						if (member != null && member.getAccessToken() != null) {
-							JStravaV3 strava = new JStravaV3(member.getAccessToken());
+							JStravaV3 strava = new JStravaV3(member.getAccessToken(), false);
 						    
-						    // test authentication: if null, continue
-						    Athlete athlete = strava.getCurrentAthlete();
-						    if (athlete == null)
-						    	continue;
-		
 						    ChallengeResult challengeResult = new ChallengeResult();
-						    challengeResult.setAthleteId(athlete.getId());
-						    challengeResult.setFisrtName(athlete.getFirstname());
-						    challengeResult.setLastName(athlete.getLastname());
+						    challengeResult.setAthleteId(member.getAthleteId());
+						    challengeResult.setFirstName(member.getFirstName());
+						    challengeResult.setLastName(member.getLastName());
 							
 							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
@@ -375,17 +359,12 @@ public class ActivitySvc {
 					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 					
 						if (member != null && member.getAccessToken() != null) {
-							JStravaV3 strava = new JStravaV3(member.getAccessToken());
+							JStravaV3 strava = new JStravaV3(member.getAccessToken(), false);
 						    
-						    // test authentication: if null, continue
-						    Athlete athlete = strava.getCurrentAthlete();
-						    if (athlete == null)
-						    	continue;
-		
 						    ChallengeResult challengeResult = new ChallengeResult();
-						    challengeResult.setAthleteId(athlete.getId());
-						    challengeResult.setFisrtName(athlete.getFirstname());
-						    challengeResult.setLastName(athlete.getLastname());
+						    challengeResult.setAthleteId(member.getAthleteId());
+						    challengeResult.setFirstName(member.getFirstName());
+						    challengeResult.setLastName(member.getLastName());
 							
 							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
@@ -471,17 +450,12 @@ public class ActivitySvc {
 					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 					
 						if (member != null && member.getAccessToken() != null) {
-							JStravaV3 strava = new JStravaV3(member.getAccessToken());
+							JStravaV3 strava = new JStravaV3(member.getAccessToken(), false);
 						    
-						    // test authentication: if null, continue
-						    Athlete athlete = strava.getCurrentAthlete();
-						    if (athlete == null)
-						    	continue;
-		
 						    ChallengeResult challengeResult = new ChallengeResult();
-						    challengeResult.setAthleteId(athlete.getId());
-						    challengeResult.setFisrtName(athlete.getFirstname());
-						    challengeResult.setLastName(athlete.getLastname());
+						    challengeResult.setAthleteId(member.getAthleteId());
+						    challengeResult.setFirstName(member.getFirstName());
+						    challengeResult.setLastName(member.getLastName());
 							
 							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
@@ -581,17 +555,12 @@ public class ActivitySvc {
 					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 					
 						if (member != null && member.getAccessToken() != null) {
-							JStravaV3 strava = new JStravaV3(member.getAccessToken());
+							JStravaV3 strava = new JStravaV3(member.getAccessToken(), false);
 						    
-						    // test authentication: if null, continue
-						    Athlete athlete = strava.getCurrentAthlete();
-						    if (athlete == null)
-						    	continue;
-		
 						    ChallengeResult challengeResult = new ChallengeResult();
-						    challengeResult.setAthleteId(athlete.getId());
-						    challengeResult.setFisrtName(athlete.getFirstname());
-						    challengeResult.setLastName(athlete.getLastname());
+						    challengeResult.setAthleteId(member.getAthleteId());
+						    challengeResult.setFirstName(member.getFirstName());
+						    challengeResult.setLastName(member.getLastName());
 							
 							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
@@ -705,17 +674,12 @@ public class ActivitySvc {
 					//if (! challengeDAO.hasMemberWonChallengeOrSeason(member.getId(), challenge.getId(), challenge.getName(), challenge.getSeason())) {				
 					
 						if (member != null && member.getAccessToken() != null) {
-							JStravaV3 strava = new JStravaV3(member.getAccessToken());
+							JStravaV3 strava = new JStravaV3(member.getAccessToken(), false);
 						    
-						    // test authentication: if null, continue
-						    Athlete athlete = strava.getCurrentAthlete();
-						    if (athlete == null)
-						    	continue;
-		
 						    ChallengeResult challengeResult = new ChallengeResult();
-						    challengeResult.setAthleteId(athlete.getId());
-						    challengeResult.setFisrtName(athlete.getFirstname());
-						    challengeResult.setLastName(athlete.getLastname());
+						    challengeResult.setAthleteId(member.getAthleteId());
+						    challengeResult.setFirstName(member.getFirstName());
+						    challengeResult.setLastName(member.getLastName());
 							
 							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;

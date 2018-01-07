@@ -286,7 +286,7 @@ public class AppContextListener implements ServletContextListener {
 				members = memberDAO.getAllMembers();
 				for (Member member : members) {
 					if (member != null && member.getAccessToken() != null) {
-						JStravaV3 strava = new JStravaV3(member.getAccessToken());
+						JStravaV3 strava = new JStravaV3(member.getAccessToken(), true);
 					    
 					    // test authentication: if null, continue
 					    Athlete athlete = strava.getCurrentAthlete();
@@ -426,17 +426,12 @@ public class AppContextListener implements ServletContextListener {
 					members = memberDAO.getAllMembers();
 					for (Member member : members) {
 						if (member != null && member.getAccessToken() != null) {
-							JStravaV3 strava = new JStravaV3(member.getAccessToken());
-						    
-						    // test authentication: if null, continue
-						    Athlete athlete = strava.getCurrentAthlete();
-						    if (athlete == null)
-						    	continue;
+							JStravaV3 strava = new JStravaV3(member.getAccessToken(), false);
 	
 						    // group ride segment
-						    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(segmentID, athlete.getId(), df.format(startDate), df.format(endDate));
+						    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(segmentID, member.getAthleteId(), df.format(startDate), df.format(endDate));
 						    if (segmentEfforts.size() > 0) {
-							    System.out.println("UpdateGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
+							    System.out.println("UpdateGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + member.getFirstName() + " " + member.getLastName());
 							    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(con);	
 							    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
 							    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
@@ -445,19 +440,19 @@ public class AppContextListener implements ServletContextListener {
 							    	
 								    // bonus ride segment
 								    if (bonusSegmentID > 0) {
-									    segmentEfforts = strava.findAthleteSegmentEffort(bonusSegmentID,  athlete.getId(), df.format(startDate), df.format(endDate));
+									    segmentEfforts = strava.findAthleteSegmentEffort(bonusSegmentID,  member.getAthleteId(), df.format(startDate), df.format(endDate));
 									    if (segmentEfforts.size() > 0) {
-										    System.out.println("UpdateBonusRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
+										    System.out.println("UpdateBonusRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + member.getFirstName() + " " + member.getLastName());
 										    memberActivityTotal.setEventRide(memberActivityTotal.getEventRide()+1);
 									    }
 									    else
-										    System.out.println("UpdateBonusRideTask: segmentEffort " + bonusSegmentID + " NOT found for : " + athlete.getFirstname() + " " + athlete.getLastname());
+										    System.out.println("UpdateBonusRideTask: segmentEffort " + bonusSegmentID + " NOT found for : " + member.getFirstName() + " " + member.getLastName());
 								    }
 							    	memberActivityTotalsDB.saveMemberActivityTotals(memberActivityTotal);
 							    }
 						    }
 						    else
-							    System.out.println("UpdateGroupRideTask: segmentEffort " + segmentID + " NOT found for : " + athlete.getFirstname() + " " + athlete.getLastname());
+							    System.out.println("UpdateGroupRideTask: segmentEffort " + segmentID + " NOT found for : " + member.getFirstName() + " " + member.getLastName());
 				        }
 					    Thread.sleep(120000); // 2 minutes			    
 					}
@@ -596,17 +591,12 @@ public class AppContextListener implements ServletContextListener {
 				members = memberDAO.getAllMembers();
 				for (Member member : members) {
 					if (member != null && member.getAccessToken() != null) {
-						JStravaV3 strava = new JStravaV3(member.getAccessToken());
+						JStravaV3 strava = new JStravaV3(member.getAccessToken(), false);
 					    
-					    // test authentication: if null, continue
-					    Athlete athlete = strava.getCurrentAthlete();
-					    if (athlete == null)
-					    	continue;
-
 					    // group ride segment
-					    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(segmentID,  athlete.getId(), df.format(startDate), df.format(endDate));
+					    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(segmentID,  member.getAthleteId(), df.format(startDate), df.format(endDate));
 					    if (segmentEfforts.size() > 0) {
-						    System.out.println("UpdateBCCGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + athlete.getFirstname() + " " + athlete.getLastname());
+						    System.out.println("UpdateBCCGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + member.getFirstName() + " " + member.getLastName());
 						    
 						    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(con);	
 						    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
@@ -617,7 +607,7 @@ public class AppContextListener implements ServletContextListener {
 						    }
 					    }
 					    else 
-						    System.out.println("UpdateBCCGroupRideTask: segmentEffort->" + segmentID + " NOT found for : " + athlete.getFirstname() + " " + athlete.getLastname() + " " + df.format(startDate) + "-->" + df.format(endDate));
+						    System.out.println("UpdateBCCGroupRideTask: segmentEffort->" + segmentID + " NOT found for : " + member.getFirstName() + " " + member.getLastName() + " " + df.format(startDate) + "-->" + df.format(endDate));
 			        }
 				    Thread.sleep(120000); // 2 minutes			    
 				}

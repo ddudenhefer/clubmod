@@ -23,7 +23,7 @@
 	        	member.setState(profile.getAthlete().getState());
 	        	member.setEmail(profile.getAthlete().getEmail());
 	        	MemberSvc memberSvc = new MemberSvc();
-	        	success = memberSvc.saveMember (member);
+	        	success = memberSvc.saveMember (member, request);
 	        }
 		}
 %>
