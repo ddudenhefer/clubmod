@@ -58,17 +58,17 @@ public class AppContextListener implements ServletContextListener {
 		
 		TimerTask updateGroupRideTask = new UpdateGroupRideTask();
 		Timer groupRideTimer = new Timer();
-		//groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
+		groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
 		//groupRideTimer.schedule(updateGroupRideTask, 0);
 
 		TimerTask updateBCCGroupRideTask = new UpdateBCCGroupRideTask();
 		Timer bccGroupRideTimer = new Timer();
-		//bccGroupRideTimer.scheduleAtFixedRate(updateBCCGroupRideTask, getRunDate(Calendar.WEDNESDAY, 12), ONCE_PER_WEEK);
+		bccGroupRideTimer.scheduleAtFixedRate(updateBCCGroupRideTask, getRunDate(Calendar.WEDNESDAY, 12), ONCE_PER_WEEK);
 		//bccGroupRideTimer.schedule(updateBCCGroupRideTask, 0);
 
 		TimerTask updateChallengeWinnerTask = new UpdateChallengeWinnerTask();
 		Timer challengeWinnerTimer = new Timer();
-		//challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 12), ONCE_PER_WEEK);
+		challengeWinnerTimer.scheduleAtFixedRate(updateChallengeWinnerTask, getRunDate(Calendar.MONDAY, 12), ONCE_PER_WEEK);
 		//challengeWinnerTimer.schedule(updateChallengeWinnerTask, 0);
 
 		TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
@@ -498,81 +498,90 @@ public class AppContextListener implements ServletContextListener {
 		    DateFormat tuesdayDF = new SimpleDateFormat("MM/dd/yyyy");
 		    
 		    int segmentID = 0;
-		    ArrayList<Date> tuesday_9038097 = new ArrayList<Date>();
-		    ArrayList<Date> tuesday_1409600 = new ArrayList<Date>();
-		    ArrayList<Date> tuesday_699176 = new ArrayList<Date>();
-		    ArrayList<Date> tuesday_2671433 = new ArrayList<Date>();
-		    ArrayList<Date> tuesday2_1409600 = new ArrayList<Date>();
+		    ArrayList<Date> tuesday_638399 = new ArrayList<Date>();
+		    ArrayList<Date> tuesday_632472 = new ArrayList<Date>();
+		    ArrayList<Date> tuesday_2961741 = new ArrayList<Date>();
+		    ArrayList<Date> tuesday_910641 = new ArrayList<Date>();
+		    ArrayList<Date> tuesday2_641237 = new ArrayList<Date>();
 		    
 		    try {
-		    	tuesday_9038097.add(tuesdayDF.parse("05/09/2017"));
-		    	tuesday_9038097.add(tuesdayDF.parse("06/13/2017"));
-		    	tuesday_9038097.add(tuesdayDF.parse("07/18/2017"));
-		    	tuesday_9038097.add(tuesdayDF.parse("08/22/2017"));
-		    
-		    	tuesday_1409600.add(tuesdayDF.parse("05/16/2017"));
-		    	tuesday_1409600.add(tuesdayDF.parse("06/20/2017"));
-		    	tuesday_1409600.add(tuesdayDF.parse("07/25/2017"));
-		    	tuesday_1409600.add(tuesdayDF.parse("08/29/2017"));
+		    	// morgul - 632472
+		    	tuesday_632472.add(tuesdayDF.parse("05/08/2018"));
+		    	tuesday_632472.add(tuesdayDF.parse("06/12/2018"));
+		    	tuesday_632472.add(tuesdayDF.parse("07/24/2018"));
+		    	tuesday_632472.add(tuesdayDF.parse("08/28/2018"));
 
-		    	tuesday_699176.add(tuesdayDF.parse("05/23/2017"));
-		    	tuesday_699176.add(tuesdayDF.parse("06/27/2017"));
-		    	tuesday_699176.add(tuesdayDF.parse("08/01/2017"));
-		    	tuesday_699176.add(tuesdayDF.parse("09/05/2017"));
+		    	// old stage steep - 2961741
+		    	tuesday_2961741.add(tuesdayDF.parse("05/15/2018"));
+		    	tuesday_2961741.add(tuesdayDF.parse("06/26/2018"));
+		    	tuesday_2961741.add(tuesdayDF.parse("08/01/2018"));
+		    	tuesday_2961741.add(tuesdayDF.parse("09/11/2018"));
 
-		    	tuesday_2671433.add(tuesdayDF.parse("05/30/2017"));
-		    	tuesday_2671433.add(tuesdayDF.parse("07/04/2017"));
-		    	tuesday_2671433.add(tuesdayDF.parse("08/08/2017"));
-		    	tuesday_2671433.add(tuesdayDF.parse("09/12/2017"));
+		    	// ncar - 638399
+		    	tuesday_638399.add(tuesdayDF.parse("05/22/2018"));
+		    	tuesday_638399.add(tuesdayDF.parse("07/03/2018"));
+		    	tuesday_638399.add(tuesdayDF.parse("08/07/2018"));
+		    	tuesday_638399.add(tuesdayDF.parse("09/18/2018"));
 
-		    	tuesday2_1409600.add(tuesdayDF.parse("05/02/2017"));
-		    	tuesday2_1409600.add(tuesdayDF.parse("06/06/2017"));
-		    	tuesday2_1409600.add(tuesdayDF.parse("07/11/2017"));
-		    	tuesday2_1409600.add(tuesdayDF.parse("08/15/2017"));
+		    	// lookout - 910641
+		    	tuesday_910641.add(tuesdayDF.parse("05/29/2018"));
+		    	tuesday_910641.add(tuesdayDF.parse("07/10/2018"));
+		    	tuesday_910641.add(tuesdayDF.parse("08/12/2018"));
+		    	//tuesday_910641.add(tuesdayDF.parse("09/25/2018"));
+
+		    	// 63rd street rollers - 641237
+		    	//tuesday2_1409600.add(tuesdayDF.parse("05/02/2018"));
+		    	tuesday2_641237.add(tuesdayDF.parse("06/05/2018"));
+		    	tuesday2_641237.add(tuesdayDF.parse("07/17/2018"));
+		    	tuesday2_641237.add(tuesdayDF.parse("08/21/2018"));
 
 		    } catch (ParseException e1){// TODO Auto-generated catch block
 		    	e1.printStackTrace();
 		    	return;
 			}
 
-		    for (Date tues : tuesday_9038097) {
+		    // ncar - 638399
+		    for (Date tues : tuesday_638399) {
 		    	if (yesterdayDate.equals(tues)) {
-		    		segmentID = 9038097;
+		    		segmentID = 638399;
 		    		break;
 		    	}
 		    }
 		    
+		    // morgul - 632472
 		    if (segmentID == 0) {
-			    for (Date tues : tuesday_1409600) {
+			    for (Date tues : tuesday_632472) {
 			    	if (yesterdayDate.equals(tues)) {
-			    		segmentID = 1409600;
+			    		segmentID = 632472;
+			    		break;
+			    	}
+			    }
+		    }
+
+		    // old stage steep - 2961741
+		    if (segmentID == 0) {
+			    for (Date tues : tuesday_2961741) {
+			    	if (yesterdayDate.equals(tues)) {
+			    		segmentID = 2961741;
+			    		break;
+			    	}
+			    }
+		    }
+
+		    // lookout - 910641
+		    if (segmentID == 0) {
+			    for (Date tues : tuesday_910641) {
+			    	if (yesterdayDate.equals(tues)) {
+			    		segmentID = 910641;
 			    		break;
 			    	}
 			    }
 		    }
 
 		    if (segmentID == 0) {
-			    for (Date tues : tuesday_699176) {
+			    for (Date tues : tuesday2_641237) {
 			    	if (yesterdayDate.equals(tues)) {
-			    		segmentID = 699176;
-			    		break;
-			    	}
-			    }
-		    }
-
-		    if (segmentID == 0) {
-			    for (Date tues : tuesday_2671433) {
-			    	if (yesterdayDate.equals(tues)) {
-			    		segmentID = 2671433;
-			    		break;
-			    	}
-			    }
-		    }
-
-		    if (segmentID == 0) {
-			    for (Date tues : tuesday2_1409600) {
-			    	if (yesterdayDate.equals(tues)) {
-			    		segmentID = 1409600;
+			    		segmentID = 641237;
 			    		break;
 			    	}
 			    }
