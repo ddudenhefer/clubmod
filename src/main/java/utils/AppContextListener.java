@@ -418,8 +418,8 @@ public class AppContextListener implements ServletContextListener {
 				    int segmentID = groupRide.getSegmentId();
 				    int bonusSegmentID = groupRide.getBonusSegmentId();	
 				    
-					System.out.println("Looking for UpdateGroupRideTask Segment:  " + segmentID);
-					System.out.println("Looking for UpdateGroupRideTask Bonus Segment:  " + bonusSegmentID);
+					System.out.println("Looking for UpdateGroupRideTask Segment: " + segmentID);
+					System.out.println("Looking for UpdateGroupRideTask Bonus Segment: " + bonusSegmentID);
 				    
 					List<Member> members = new ArrayList<Member>();
 					MemberDAO memberDAO = new MemberDAO(con);
