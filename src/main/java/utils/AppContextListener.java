@@ -58,8 +58,8 @@ public class AppContextListener implements ServletContextListener {
 		
 		TimerTask updateGroupRideTask = new UpdateGroupRideTask();
 		Timer groupRideTimer = new Timer();
-		//groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
-		groupRideTimer.schedule(updateGroupRideTask, 0);
+		groupRideTimer.scheduleAtFixedRate(updateGroupRideTask, getRunDate(Calendar.SUNDAY, 20), ONCE_PER_WEEK);
+		//groupRideTimer.schedule(updateGroupRideTask, 0);
 
 		TimerTask updateBCCGroupRideTask = new UpdateBCCGroupRideTask();
 		Timer bccGroupRideTimer = new Timer();
@@ -403,7 +403,6 @@ public class AppContextListener implements ServletContextListener {
 			System.out.println("UpdateGroupRideTask " + new Date().toString());
 			
 			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DATE, -1);
 	        Date startDate = Constants.getStartOfDay(new Date(cal.getTimeInMillis()));
 			Date endDate = Constants.getNoonOfDay(new Date(cal.getTimeInMillis()));
 		    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
