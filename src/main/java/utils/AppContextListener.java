@@ -403,6 +403,7 @@ public class AppContextListener implements ServletContextListener {
 			System.out.println("UpdateGroupRideTask " + new Date().toString());
 			
 			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DATE, -1);
 	        Date startDate = Constants.getStartOfDay(new Date(cal.getTimeInMillis()));
 			Date endDate = Constants.getNoonOfDay(new Date(cal.getTimeInMillis()));
 		    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
