@@ -498,11 +498,11 @@ public class AppContextListener implements ServletContextListener {
 		    DateFormat tuesdayDF = new SimpleDateFormat("MM/dd/yyyy");
 		    
 		    int segmentID = 0;
-		    ArrayList<Date> tuesday_638399 = new ArrayList<Date>();
+		    ArrayList<Date> tuesday_2349538 = new ArrayList<Date>();
 		    ArrayList<Date> tuesday_632472 = new ArrayList<Date>();
-		    ArrayList<Date> tuesday_2961741 = new ArrayList<Date>();
+		    ArrayList<Date> tuesday_2344817 = new ArrayList<Date>();
 		    ArrayList<Date> tuesday_910641 = new ArrayList<Date>();
-		    ArrayList<Date> tuesday2_641237 = new ArrayList<Date>();
+		    //ArrayList<Date> tuesday2_641237 = new ArrayList<Date>();
 		    
 		    try {
 		    	// morgul - 632472
@@ -511,17 +511,17 @@ public class AppContextListener implements ServletContextListener {
 		    	tuesday_632472.add(tuesdayDF.parse("07/24/2018"));
 		    	tuesday_632472.add(tuesdayDF.parse("08/28/2018"));
 
-		    	// old stage steep - 2961741
-		    	tuesday_2961741.add(tuesdayDF.parse("05/15/2018"));
-		    	tuesday_2961741.add(tuesdayDF.parse("06/26/2018"));
-		    	tuesday_2961741.add(tuesdayDF.parse("08/01/2018"));
-		    	tuesday_2961741.add(tuesdayDF.parse("09/11/2018"));
+		    	// 47th - Foothills overpass - 2344817
+		    	tuesday_2344817.add(tuesdayDF.parse("05/15/2018"));
+		    	tuesday_2344817.add(tuesdayDF.parse("06/26/2018"));
+		    	tuesday_2344817.add(tuesdayDF.parse("08/01/2018"));
+		    	tuesday_2344817.add(tuesdayDF.parse("09/11/2018"));
 
-		    	// ncar - 638399
-		    	tuesday_638399.add(tuesdayDF.parse("05/22/2018"));
-		    	tuesday_638399.add(tuesdayDF.parse("07/03/2018"));
-		    	tuesday_638399.add(tuesdayDF.parse("08/07/2018"));
-		    	tuesday_638399.add(tuesdayDF.parse("09/18/2018"));
+		    	// Cherryvale to Baseline Hill - 2349538
+		    	tuesday_2349538.add(tuesdayDF.parse("05/22/2018"));
+		    	tuesday_2349538.add(tuesdayDF.parse("07/03/2018"));
+		    	tuesday_2349538.add(tuesdayDF.parse("08/07/2018"));
+		    	tuesday_2349538.add(tuesdayDF.parse("09/18/2018"));
 
 		    	// lookout - 910641
 		    	tuesday_910641.add(tuesdayDF.parse("05/29/2018"));
@@ -529,21 +529,21 @@ public class AppContextListener implements ServletContextListener {
 		    	tuesday_910641.add(tuesdayDF.parse("08/12/2018"));
 		    	//tuesday_910641.add(tuesdayDF.parse("09/25/2018"));
 
-		    	// 63rd street rollers - 641237
+		    	// 47th - Foothills overpass - 2344817
 		    	//tuesday2_1409600.add(tuesdayDF.parse("05/02/2018"));
-		    	tuesday2_641237.add(tuesdayDF.parse("06/05/2018"));
-		    	tuesday2_641237.add(tuesdayDF.parse("07/17/2018"));
-		    	tuesday2_641237.add(tuesdayDF.parse("08/21/2018"));
+		    	tuesday_2344817.add(tuesdayDF.parse("06/05/2018"));
+		    	tuesday_2344817.add(tuesdayDF.parse("07/17/2018"));
+		    	tuesday_2344817.add(tuesdayDF.parse("08/21/2018"));
 
 		    } catch (ParseException e1){// TODO Auto-generated catch block
 		    	e1.printStackTrace();
 		    	return;
 			}
 
-		    // ncar - 638399
-		    for (Date tues : tuesday_638399) {
+		    // Cherryvale to Baseline Hill - 2349538
+		    for (Date tues : tuesday_2349538) {
 		    	if (yesterdayDate.equals(tues)) {
-		    		segmentID = 638399;
+		    		segmentID = 2349538;
 		    		break;
 		    	}
 		    }
@@ -558,11 +558,11 @@ public class AppContextListener implements ServletContextListener {
 			    }
 		    }
 
-		    // old stage steep - 2961741
+		    // 47th - Foothills overpass - 2344817
 		    if (segmentID == 0) {
-			    for (Date tues : tuesday_2961741) {
+			    for (Date tues : tuesday_2344817) {
 			    	if (yesterdayDate.equals(tues)) {
-			    		segmentID = 2961741;
+			    		segmentID = 2344817;
 			    		break;
 			    	}
 			    }
@@ -578,10 +578,11 @@ public class AppContextListener implements ServletContextListener {
 			    }
 		    }
 
+		    // 47th - Foothills overpass - 2344817
 		    if (segmentID == 0) {
-			    for (Date tues : tuesday2_641237) {
+			    for (Date tues : tuesday_2344817) {
 			    	if (yesterdayDate.equals(tues)) {
-			    		segmentID = 641237;
+			    		segmentID = 2344817;
 			    		break;
 			    	}
 			    }
