@@ -80,19 +80,26 @@ public class ActivitySvc {
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
 							float totalMeters = 0;
 							long totalElevation = 0;
-						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
-						    for (Activity activity : activities) {
-						    	if (activity.getType().equalsIgnoreCase("Ride")) {
-						    		totalMeters += activity.getDistance();
-						    		totalElevation += activity.getTotal_elevation_gain();						    		
-						    	}
-						    }
-						    
-						    if (totalMeters > 0) {
-						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
-						    	challengeResult.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(totalElevation, true) * 10) / 10.0));						    	
-						    	challengeResults.add(challengeResult);
-						    }
+							
+							try {
+							    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+							    for (Activity activity : activities) {
+							    	if (activity.getType().equalsIgnoreCase("Ride")) {
+							    		totalMeters += activity.getDistance();
+							    		totalElevation += activity.getTotal_elevation_gain();						    		
+							    	}
+							    }
+							    
+							    if (totalMeters > 0) {
+							    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
+							    	challengeResult.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(totalElevation, true) * 10) / 10.0));						    	
+							    	challengeResults.add(challengeResult);
+							    }
+							}
+							catch (Exception e ) {
+								System.out.println("Distance Activity: Failed to get member " + member.getFirstName() + " " + member.getLastName() + " data.");
+								e.printStackTrace();
+							}
 						}
 					//}
 				}
@@ -172,19 +179,26 @@ public class ActivitySvc {
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
 						    float totalMiles = 0;						    
 							long time = 0;
-						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
-						    for (Activity activity : activities) {
-						    	if (activity.getType().equalsIgnoreCase("Ride")) {
-						    		time += activity.getMoving_time();
-						    		totalMiles += activity.getDistance();						    		
-						    	}
-						    }
-						    
-						    if (time > 0) {
-						    	challengeResult.setTime(time);
-						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0));	
-						    	challengeResults.add(challengeResult);
-						    }						    
+							
+							try {
+							    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+							    for (Activity activity : activities) {
+							    	if (activity.getType().equalsIgnoreCase("Ride")) {
+							    		time += activity.getMoving_time();
+							    		totalMiles += activity.getDistance();						    		
+							    	}
+							    }
+							    
+							    if (time > 0) {
+							    	challengeResult.setTime(time);
+							    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0));	
+							    	challengeResults.add(challengeResult);
+							    }
+							}
+							catch (Exception e) {
+								System.out.println("Time Activity: Failed to get member " + member.getFirstName() + " " + member.getLastName() + " data.");
+								e.printStackTrace();
+							}
 						}
 					//}
 				}
@@ -265,34 +279,41 @@ public class ActivitySvc {
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
 							int totalRides = 0;
 							float totalMiles = 0;
-						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
-						    Collections.reverse(activities);
-						    long finishedTime = 0;
-						    
-						    for (Activity activity : activities) {
-						    	if (activity.getType().equalsIgnoreCase("Ride")) {
-						    		float meters = activity.getDistance();
-						    		float miles = (float) (Math.round(Constants.ConvertMetersToMiles(meters, true) * 10) / 10.0);
-						    		
-						    		if (miles >= 25) {
-							    		String localStartDate = activity.getStart_date_local();
-							    		Date d = sdf.parse(localStartDate);
-							    		long startTime = d.getTime();
-							    		long elapsedTime = activity.getElapsed_time() * 1000;
+							
+							try {
+							    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+							    Collections.reverse(activities);
+							    long finishedTime = 0;
+							    
+							    for (Activity activity : activities) {
+							    	if (activity.getType().equalsIgnoreCase("Ride")) {
+							    		float meters = activity.getDistance();
+							    		float miles = (float) (Math.round(Constants.ConvertMetersToMiles(meters, true) * 10) / 10.0);
 							    		
-							    		if (finishedTime == 0 || (startTime >= finishedTime + hoursBetween))
-							    			totalRides ++;
-							    		finishedTime = startTime + elapsedTime;
-						    			totalMiles += miles;
-						    		}
-						    	}
-						    }
-						    
-						    if (totalRides > 0) {
-						    	challengeResult.setRides(totalRides);
-						    	challengeResult.setMiles(totalMiles);
-						    	challengeResults.add(challengeResult);
-						    }
+							    		if (miles >= 25) {
+								    		String localStartDate = activity.getStart_date_local();
+								    		Date d = sdf.parse(localStartDate);
+								    		long startTime = d.getTime();
+								    		long elapsedTime = activity.getElapsed_time() * 1000;
+								    		
+								    		if (finishedTime == 0 || (startTime >= finishedTime + hoursBetween))
+								    			totalRides ++;
+								    		finishedTime = startTime + elapsedTime;
+							    			totalMiles += miles;
+							    		}
+							    	}
+							    }
+							    
+							    if (totalRides > 0) {
+							    	challengeResult.setRides(totalRides);
+							    	challengeResult.setMiles(totalMiles);
+							    	challengeResults.add(challengeResult);
+							    }
+							}
+							catch (Exception e) {
+								System.out.println("Ride Activity: Failed to get member " + member.getFirstName() + " " + member.getLastName() + " data.");
+								e.printStackTrace();
+							}
 						}
 					//}
 				}
@@ -370,20 +391,27 @@ public class ActivitySvc {
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
 							float longestMeters = 0;
 							long totalElevation = 0;
-						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
-						    for (Activity activity : activities) {
-						    	if (activity.getType().equalsIgnoreCase("Ride")) {
-						    		totalElevation += activity.getTotal_elevation_gain();
-						    		if (activity.getDistance() > longestMeters)
-						    			longestMeters = activity.getDistance();
-						    	}
-						    }
-						    
-						    if (longestMeters > 0) {
-						    	challengeResult.setMiles((long) (Math.round(Constants.ConvertMetersToMiles(longestMeters, true) * 10) / 10.0));	
-						    	challengeResult.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(totalElevation, true) * 10) / 10.0));						    	
-						    	challengeResults.add(challengeResult);
-						    }
+							
+							try {
+							    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+							    for (Activity activity : activities) {
+							    	if (activity.getType().equalsIgnoreCase("Ride")) {
+							    		totalElevation += activity.getTotal_elevation_gain();
+							    		if (activity.getDistance() > longestMeters)
+							    			longestMeters = activity.getDistance();
+							    	}
+							    }
+							    
+							    if (longestMeters > 0) {
+							    	challengeResult.setMiles((long) (Math.round(Constants.ConvertMetersToMiles(longestMeters, true) * 10) / 10.0));	
+							    	challengeResult.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(totalElevation, true) * 10) / 10.0));						    	
+							    	challengeResults.add(challengeResult);
+							    }
+							}
+							catch (Exception e) {
+								System.out.println("Longest Activity: Failed to get member " + member.getFirstName() + " " + member.getLastName() + " data.");
+								e.printStackTrace();
+							}
 						}
 					//}
 				}
@@ -463,33 +491,39 @@ public class ActivitySvc {
 							float totalMeters = 0;
 							challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));					
 							
-						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
-						    for (Activity activity : activities) {
-						    	if (activity.getType().equalsIgnoreCase("Ride")) {
-						    		float miles = (float) (Math.round(Constants.ConvertMetersToMiles(activity.getDistance(), true) * 10) / 10.0);
-						    		if (miles < 15)
-						    			continue;
-						    		time += activity.getMoving_time();
-						    		totalMeters += activity.getDistance();
-						    	}
-						    }
-						    
-						    if (time > 0) {
-							    float totalMiles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
-							    if (totalMiles >= 50) {
-							    	
-							    	BigDecimal bDistance, bmph, bSec, bHour;
-
-							    	bDistance = new BigDecimal(totalMiles);
-							    	bSec = new BigDecimal(time);
-							    	bHour = bSec.divide(new BigDecimal(3600), 2, RoundingMode.CEILING);
-
-							    	float mph = (float)(Math.round(bDistance.divide(bHour, 2, RoundingMode.CEILING).floatValue() * 10) / 10.0);
-								    challengeResult.setSpeed(mph);
-							    	challengeResult.setMiles(totalMiles);	
-								    challengeResults.add(challengeResult);
+							try {
+							    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+							    for (Activity activity : activities) {
+							    	if (activity.getType().equalsIgnoreCase("Ride")) {
+							    		float miles = (float) (Math.round(Constants.ConvertMetersToMiles(activity.getDistance(), true) * 10) / 10.0);
+							    		if (miles < 15)
+							    			continue;
+							    		time += activity.getMoving_time();
+							    		totalMeters += activity.getDistance();
+							    	}
 							    }
-						    }
+							    
+							    if (time > 0) {
+								    float totalMiles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0);
+								    if (totalMiles >= 50) {
+								    	
+								    	BigDecimal bDistance, bmph, bSec, bHour;
+	
+								    	bDistance = new BigDecimal(totalMiles);
+								    	bSec = new BigDecimal(time);
+								    	bHour = bSec.divide(new BigDecimal(3600), 2, RoundingMode.CEILING);
+	
+								    	float mph = (float)(Math.round(bDistance.divide(bHour, 2, RoundingMode.CEILING).floatValue() * 10) / 10.0);
+									    challengeResult.setSpeed(mph);
+								    	challengeResult.setMiles(totalMiles);	
+									    challengeResults.add(challengeResult);
+								    }
+							    }
+							}
+							catch (Exception e) {
+								System.out.println("Speed Activity: Failed to get member " + member.getFirstName() + " " + member.getLastName() + " data.");
+								e.printStackTrace();
+							}
 						}
 					//}
 				}
@@ -564,51 +598,58 @@ public class ActivitySvc {
 							
 							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
-						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
-						    float elevation = 0;
-						    float totalMiles = 0;	
-						    long achievement = 0;
-						    long photo = 0;
-						    long pr = 0;
-						    long time = 0;
-						    long ride = 0;
-						    for (Activity activity : activities) {
-						    	if (activity.getType().equalsIgnoreCase("Ride")) {
-						    		elevation += activity.getTotal_elevation_gain();
-						    		totalMiles += activity.getDistance();
-						    		if (activity.getAchievement_count() > 0) {
-						    			achievement += activity.getAchievement_count();
-						    		}
-						    		if (activity.getTotal_photo_count() > 0) {
-						    			photo += activity.getTotal_photo_count();
-						    		}
-						    		if (activity.getPr_count() > 0) {
-						    			pr += activity.getPr_count();
-						    		}
-						    		if (activity.getMoving_time() > 0) {
-						    			time += activity.getMoving_time()/1800;	// 30 mins
-						    		}
-						    		if (activity.getName() != null && !activity.getName().equalsIgnoreCase("morning ride")
-						    				&& !activity.getName().equalsIgnoreCase("lunch ride") && !activity.getName().equalsIgnoreCase("evening ride")) {
-						    			ride++;
-						    		}
-						    	}
-						    }
-						    
-						    if (elevation > 0 && totalMiles > 0) {
-							    long feet = (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0);
-							    float miles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0);
+							
+							try {
+							    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+							    float elevation = 0;
+							    float totalMiles = 0;	
+							    long achievement = 0;
+							    long photo = 0;
+							    long pr = 0;
+							    long time = 0;
+							    long ride = 0;
+							    for (Activity activity : activities) {
+							    	if (activity.getType().equalsIgnoreCase("Ride")) {
+							    		elevation += activity.getTotal_elevation_gain();
+							    		totalMiles += activity.getDistance();
+							    		if (activity.getAchievement_count() > 0) {
+							    			achievement += activity.getAchievement_count();
+							    		}
+							    		if (activity.getTotal_photo_count() > 0) {
+							    			photo += activity.getTotal_photo_count();
+							    		}
+							    		if (activity.getPr_count() > 0) {
+							    			pr += activity.getPr_count();
+							    		}
+							    		if (activity.getMoving_time() > 0) {
+							    			time += activity.getMoving_time()/1800;	// 30 mins
+							    		}
+							    		if (activity.getName() != null && !activity.getName().equalsIgnoreCase("morning ride")
+							    				&& !activity.getName().equalsIgnoreCase("lunch ride") && !activity.getName().equalsIgnoreCase("evening ride")) {
+							    			ride++;
+							    		}
+							    	}
+							    }
 							    
-					    		long distanceInFeet = (long)(Math.round(5280 * miles * 10) / 10.0);
-					    		float grade = feet/distanceInFeet;
-					    		float effort = miles * (grade*10+1);
-							    long extra = achievement+photo+pr+time+ride;
-							    effort += extra;
-							    
-						    	challengeResult.setElevation((long) (Math.round(effort * 10) / 10.0));
-						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0));	
-						    	challengeResults.add(challengeResult);
-						    }
+							    if (elevation > 0 && totalMiles > 0) {
+								    long feet = (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0);
+								    float miles = (float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0);
+								    
+						    		long distanceInFeet = (long)(Math.round(5280 * miles * 10) / 10.0);
+						    		float grade = feet/distanceInFeet;
+						    		float effort = miles * (grade*10+1);
+								    long extra = achievement+photo+pr+time+ride;
+								    effort += extra;
+								    
+							    	challengeResult.setElevation((long) (Math.round(effort * 10) / 10.0));
+							    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0));	
+							    	challengeResults.add(challengeResult);
+							    }
+							}
+							catch (Exception e) {
+								System.out.println("Effort Activity: Failed to get member " + member.getFirstName() + " " + member.getLastName() + " data.");
+								e.printStackTrace();
+							}
 						}
 					//}
 				}
@@ -683,21 +724,28 @@ public class ActivitySvc {
 							
 							long startSeconds = Constants.getStartOfDay(df.parse(startDate)).getTime() / 1000l;
 							long endSeconds = Constants.getEndOfDay(df.parse(endDate)).getTime() / 1000l;
-						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
-						    float elevation = 0;
-						    float totalMiles = 0;						    
-						    for (Activity activity : activities) {
-						    	if (activity.getType().equalsIgnoreCase("Ride")) {
-						    		elevation += activity.getTotal_elevation_gain();
-						    		totalMiles += activity.getDistance();						    		
-						    	}
-						    }
-						    
-						    if (elevation > 0) {
-						    	challengeResult.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
-						    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0));	
-						    	challengeResults.add(challengeResult);
-						    }
+							
+							try {
+							    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+							    float elevation = 0;
+							    float totalMiles = 0;						    
+							    for (Activity activity : activities) {
+							    	if (activity.getType().equalsIgnoreCase("Ride")) {
+							    		elevation += activity.getTotal_elevation_gain();
+							    		totalMiles += activity.getDistance();						    		
+							    	}
+							    }
+							    
+							    if (elevation > 0) {
+							    	challengeResult.setElevation((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
+							    	challengeResult.setMiles((float) (Math.round(Constants.ConvertMetersToMiles(totalMiles, true) * 10) / 10.0));	
+							    	challengeResults.add(challengeResult);
+							    }
+							}
+							catch (Exception e) {
+								System.out.println("Elevation Activity: Failed to get member " + member.getFirstName() + " " + member.getLastName() + " data.");
+								e.printStackTrace();
+							}
 						}
 					//}
 				}

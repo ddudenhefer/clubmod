@@ -286,96 +286,101 @@ public class AppContextListener implements ServletContextListener {
 				members = memberDAO.getAllMembers();
 				for (Member member : members) {
 					if (member != null && member.getAccessToken() != null) {
-						JStravaV3 strava = new JStravaV3(member.getAccessToken(), true);
-					    
-					    // test authentication: if null, continue
-					    Athlete athlete = strava.getCurrentAthlete();
-					    if (athlete == null)
-					    	continue;
-					    
-					    System.out.println("UpdateMemberYTDTask: " + athlete.getFirstname() + " " + athlete.getLastname());
-					    String a_first = "";
-					    String a_last = "";
-					    String a_profile = "";
-					    String a_city = "";
-					    String a_state = "";
-					    String a_email = "";
-
-					    String m_first = "";
-					    String m_last = "";
-					    String m_picture = "";
-					    String m_city = "";
-					    String m_state = "";
-					    String m_email = "";
-					    
-					    if (athlete.getFirstname() != null)
-					    	a_first = athlete.getFirstname();
-					    if (athlete.getLastname() != null)
-					    	a_last = athlete.getLastname();
-					    if (athlete.getProfile_medium() != null)
-					    	a_profile = athlete.getProfile_medium();
-					    if (athlete.getCity() != null)
-					    	a_city = athlete.getCity();
-					    if (athlete.getState() != null)
-					    	a_state = athlete.getState();
-					    if (athlete.getEmail() != null)
-					    	a_email = athlete.getEmail();
-
-					    if (member.getFirstName() != null)
-					    	m_first = member.getFirstName();
-					    if (member.getLastName() != null)
-					    	m_last = member.getLastName();
-					    if (member.getPictureURL() != null)
-					    	m_picture = member.getPictureURL();
-					    if (member.getCity() != null)
-					    	m_city = member.getCity();
-					    if (member.getState() != null)
-					    	m_state = member.getState();
-					    if (member.getEmail() != null)
-					    	m_email = member.getEmail();
-					    
-					    // save member picture
-					    if (! a_profile.equals(m_picture) || 
-					    		! a_first.equals(m_first) ||
-					    		! a_last.equals(m_last) ||
-					    		! a_city.equals(m_city) ||
-					    		! a_state.equals(m_state) ||
-					    		! a_email.equals(m_email)) {
-					    	MemberDAO memberDB = new MemberDAO(con);
-						    member.setFirstName(a_first);
-						    member.setLastName(a_last);
-						    member.setPictureURL(a_profile);
-						    member.setCity(a_city);
-						    member.setState(a_state);
-						    member.setEmail(a_email);
-						    memberDB.saveMember(member);
-					    }
-					    
-						float totalMeters = 0;	
-						float elevation = 0;
-						long rides = 0;
-						long seconds = 0;
-					    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
-					    for (Activity activity : activities) {
-					    	if (activity.getType().equalsIgnoreCase("Ride") || activity.getType().equalsIgnoreCase("VirtualRide")) {
-					    		totalMeters += activity.getDistance();
-					    		elevation += activity.getTotal_elevation_gain();
-					    		seconds += activity.getMoving_time();
-					    		rides++;
-					    	}
-					    }
-
-					    MemberYTDTotal memberYTDTotal = new MemberYTDTotal();
-				    	memberYTDTotal.setMemberId(member.getId());
-				    	memberYTDTotal.setMilesYTD((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
-				    	memberYTDTotal.setElevationYTD((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
-				    	memberYTDTotal.setMovingTimeYTD(seconds);
-				    	memberYTDTotal.setRidesYTD(rides);
-				    	
-					    MemberYTDTotalsDAO memberYTDTotalsDAO = new MemberYTDTotalsDAO(con);
-					    memberYTDTotalsDAO.saveMemberYTDTotals(memberYTDTotal);
-					    
-					    Thread.sleep(120000); // 2 minute			    
+						try {
+							JStravaV3 strava = new JStravaV3(member.getAccessToken(), true);
+						    // test authentication: if null, continue
+						    Athlete athlete = strava.getCurrentAthlete();
+						    if (athlete == null)
+						    	continue;
+						    
+						    System.out.println("UpdateMemberYTDTask: " + athlete.getFirstname() + " " + athlete.getLastname());
+						    String a_first = "";
+						    String a_last = "";
+						    String a_profile = "";
+						    String a_city = "";
+						    String a_state = "";
+						    String a_email = "";
+	
+						    String m_first = "";
+						    String m_last = "";
+						    String m_picture = "";
+						    String m_city = "";
+						    String m_state = "";
+						    String m_email = "";
+						    
+						    if (athlete.getFirstname() != null)
+						    	a_first = athlete.getFirstname();
+						    if (athlete.getLastname() != null)
+						    	a_last = athlete.getLastname();
+						    if (athlete.getProfile_medium() != null)
+						    	a_profile = athlete.getProfile_medium();
+						    if (athlete.getCity() != null)
+						    	a_city = athlete.getCity();
+						    if (athlete.getState() != null)
+						    	a_state = athlete.getState();
+						    if (athlete.getEmail() != null)
+						    	a_email = athlete.getEmail();
+	
+						    if (member.getFirstName() != null)
+						    	m_first = member.getFirstName();
+						    if (member.getLastName() != null)
+						    	m_last = member.getLastName();
+						    if (member.getPictureURL() != null)
+						    	m_picture = member.getPictureURL();
+						    if (member.getCity() != null)
+						    	m_city = member.getCity();
+						    if (member.getState() != null)
+						    	m_state = member.getState();
+						    if (member.getEmail() != null)
+						    	m_email = member.getEmail();
+						    
+						    // save member picture
+						    if (! a_profile.equals(m_picture) || 
+						    		! a_first.equals(m_first) ||
+						    		! a_last.equals(m_last) ||
+						    		! a_city.equals(m_city) ||
+						    		! a_state.equals(m_state) ||
+						    		! a_email.equals(m_email)) {
+						    	MemberDAO memberDB = new MemberDAO(con);
+							    member.setFirstName(a_first);
+							    member.setLastName(a_last);
+							    member.setPictureURL(a_profile);
+							    member.setCity(a_city);
+							    member.setState(a_state);
+							    member.setEmail(a_email);
+							    memberDB.saveMember(member);
+						    }
+						    
+							float totalMeters = 0;	
+							float elevation = 0;
+							long rides = 0;
+							long seconds = 0;
+						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+						    for (Activity activity : activities) {
+						    	if (activity.getType().equalsIgnoreCase("Ride") || activity.getType().equalsIgnoreCase("VirtualRide")) {
+						    		totalMeters += activity.getDistance();
+						    		elevation += activity.getTotal_elevation_gain();
+						    		seconds += activity.getMoving_time();
+						    		rides++;
+						    	}
+						    }
+	
+						    MemberYTDTotal memberYTDTotal = new MemberYTDTotal();
+					    	memberYTDTotal.setMemberId(member.getId());
+					    	memberYTDTotal.setMilesYTD((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
+					    	memberYTDTotal.setElevationYTD((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
+					    	memberYTDTotal.setMovingTimeYTD(seconds);
+					    	memberYTDTotal.setRidesYTD(rides);
+					    	
+						    MemberYTDTotalsDAO memberYTDTotalsDAO = new MemberYTDTotalsDAO(con);
+						    memberYTDTotalsDAO.saveMemberYTDTotals(memberYTDTotal);
+						    
+						    Thread.sleep(120000); // 2 minute
+						}
+						catch (Exception e) {
+							System.out.println("UpdateMemberYTDTask: Failed to get member " + member.getFirstName() + " " + member.getLastName() + " data.");
+							e.printStackTrace();
+						}
 					}
 				}
 				System.out.println("UpdateMemberYTDTask -> DONE");
@@ -428,33 +433,39 @@ public class AppContextListener implements ServletContextListener {
 						if (member != null && member.getAccessToken() != null) {
 							JStravaV3 strava = new JStravaV3(member.getAccessToken(), false);
 	
-						    // group ride segment
-						    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(segmentID, member.getAthleteId(), df.format(startDate), df.format(endDate));
-						    if (segmentEfforts.size() > 0) {
-							    System.out.println("UpdateGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + member.getFirstName() + " " + member.getLastName());
-							    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(con);	
-							    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
-							    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
-							    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO(con);
-							    	memberActivityTotal.setGroupRide(memberActivityTotal.getGroupRide()+1);
-							    	
-								    // bonus ride segment
-								    if (bonusSegmentID > 0) {
-									    segmentEfforts = strava.findAthleteSegmentEffort(bonusSegmentID,  member.getAthleteId(), df.format(startDate), df.format(endDate));
-									    if (segmentEfforts.size() > 0) {
-										    System.out.println("UpdateBonusRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + member.getFirstName() + " " + member.getLastName());
-										    memberActivityTotal.setEventRide(memberActivityTotal.getEventRide()+1);
+							try {
+							    // group ride segment
+							    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(segmentID, member.getAthleteId(), df.format(startDate), df.format(endDate));
+							    if (segmentEfforts.size() > 0) {
+								    System.out.println("UpdateGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + member.getFirstName() + " " + member.getLastName());
+								    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(con);	
+								    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
+								    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
+								    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO(con);
+								    	memberActivityTotal.setGroupRide(memberActivityTotal.getGroupRide()+1);
+								    	
+									    // bonus ride segment
+									    if (bonusSegmentID > 0) {
+										    segmentEfforts = strava.findAthleteSegmentEffort(bonusSegmentID,  member.getAthleteId(), df.format(startDate), df.format(endDate));
+										    if (segmentEfforts.size() > 0) {
+											    System.out.println("UpdateBonusRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + member.getFirstName() + " " + member.getLastName());
+											    memberActivityTotal.setEventRide(memberActivityTotal.getEventRide()+1);
+										    }
+										    else
+											    System.out.println("UpdateBonusRideTask: segmentEffort " + bonusSegmentID + " NOT found for : " + member.getFirstName() + " " + member.getLastName());
 									    }
-									    else
-										    System.out.println("UpdateBonusRideTask: segmentEffort " + bonusSegmentID + " NOT found for : " + member.getFirstName() + " " + member.getLastName());
+								    	memberActivityTotalsDB.saveMemberActivityTotals(memberActivityTotal);
 								    }
-							    	memberActivityTotalsDB.saveMemberActivityTotals(memberActivityTotal);
 							    }
-						    }
-						    else
-							    System.out.println("UpdateGroupRideTask: segmentEffort " + segmentID + " NOT found for : " + member.getFirstName() + " " + member.getLastName());
+							    else
+								    System.out.println("UpdateGroupRideTask: segmentEffort " + segmentID + " NOT found for : " + member.getFirstName() + " " + member.getLastName());
+							    Thread.sleep(120000); // 2 minutes			    
+							}
+							catch (Exception e) {
+								System.out.println("UpdateGroupRideTask: Failed to get member " + member.getFirstName() + " " + member.getLastName() + " data.");
+								e.printStackTrace();
+							}
 				        }
-					    Thread.sleep(120000); // 2 minutes			    
 					}
 					System.out.println("UpdateGroupRideTask -> DONE");
 		    	}
@@ -603,23 +614,29 @@ public class AppContextListener implements ServletContextListener {
 					if (member != null && member.getAccessToken() != null) {
 						JStravaV3 strava = new JStravaV3(member.getAccessToken(), false);
 					    
-					    // group ride segment
-					    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(segmentID,  member.getAthleteId(), df.format(startDate), df.format(endDate));
-					    if (segmentEfforts.size() > 0) {
-						    System.out.println("UpdateBCCGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + member.getFirstName() + " " + member.getLastName());
-						    
-						    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(con);	
-						    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
-						    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
-						    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO(con);
-						    	memberActivityTotal.setEventRide(memberActivityTotal.getEventRide()+1);
-						    	memberActivityTotalsDB.saveMemberActivityTotals(memberActivityTotal);
+						try {
+						    // group ride segment
+						    List<SegmentEffort> segmentEfforts = strava.findAthleteSegmentEffort(segmentID,  member.getAthleteId(), df.format(startDate), df.format(endDate));
+						    if (segmentEfforts.size() > 0) {
+							    System.out.println("UpdateBCCGroupRideTask: Found segment: " + segmentEfforts.get(0).getName() + " for " + member.getFirstName() + " " + member.getLastName());
+							    
+							    MemberActivityTotalsDAO memberActivityTotalsDAO = new MemberActivityTotalsDAO(con);	
+							    MemberActivityTotal memberActivityTotal = memberActivityTotalsDAO.getMemberData(member.getId());
+							    if (memberActivityTotal != null && memberActivityTotal.getMemberId() > 0) {
+							    	MemberActivityTotalsDAO memberActivityTotalsDB = new MemberActivityTotalsDAO(con);
+							    	memberActivityTotal.setEventRide(memberActivityTotal.getEventRide()+1);
+							    	memberActivityTotalsDB.saveMemberActivityTotals(memberActivityTotal);
+							    }
 						    }
-					    }
-					    else 
-						    System.out.println("UpdateBCCGroupRideTask: segmentEffort->" + segmentID + " NOT found for : " + member.getFirstName() + " " + member.getLastName() + " " + df.format(startDate) + "-->" + df.format(endDate));
+						    else 
+							    System.out.println("UpdateBCCGroupRideTask: segmentEffort->" + segmentID + " NOT found for : " + member.getFirstName() + " " + member.getLastName() + " " + df.format(startDate) + "-->" + df.format(endDate));
+						    Thread.sleep(120000); // 2 minutes			    
+						}
+						catch (Exception e) {
+							System.out.println("UpdateBCCGroupRideTask: Failed to get member " + member.getFirstName() + " " + member.getLastName() + " data.");
+							e.printStackTrace();
+						}
 			        }
-				    Thread.sleep(120000); // 2 minutes			    
 				}
 				System.out.println("UpdateBCCGroupRideTask -> DONE");
 			} catch (Exception e) {
