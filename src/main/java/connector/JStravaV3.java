@@ -754,8 +754,8 @@ public class JStravaV3 implements JStrava {
         return status;
     }
     
-    public Statistics getStatistics(int athleteId,int page, int per_page) {
-        String URL="https://www.strava.com/api/v3/athletes/"+athleteId+"/stats?page="+page+"&per_page="+per_page;
+    public Statistics getStatistics(int page, int per_page) {
+        String URL="https://www.strava.com/api/v3/athletes/stats?page="+page+"&per_page="+per_page;
         String result=getResult(URL);
         Gson gson= new Gson();
         Statistics statistics= gson.fromJson(result,Statistics.class);
