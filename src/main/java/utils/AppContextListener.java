@@ -74,8 +74,8 @@ public class AppContextListener implements ServletContextListener {
 
 		TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
 		Timer memberYTDTimer = new Timer();
-		//memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(22,00), ONCE_PER_DAY);
-		memberYTDTimer.schedule(updateMemberYTDTask, 0);
+		memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(22,00), ONCE_PER_DAY);
+		//memberYTDTimer.schedule(updateMemberYTDTask, 0);
 	}
 	
 	private static Date getTomorrow(int hour, int mins){
@@ -356,7 +356,9 @@ public class AppContextListener implements ServletContextListener {
 							float elevation = 0;
 							long rides = 0;
 							long seconds = 0;
-						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
+							
+							
+/*						    List<Activity> activities= strava.getAthleteActivitiesBetweenDates(startSeconds,endSeconds);
 						    for (Activity activity : activities) {
 						    	if (activity.getType().equalsIgnoreCase("Ride") || activity.getType().equalsIgnoreCase("VirtualRide")) {
 						    		totalMeters += activity.getDistance();
@@ -365,22 +367,23 @@ public class AppContextListener implements ServletContextListener {
 						    		rides++;
 						    	}
 						    }
-	
-						    MemberYTDTotal memberYTDTotal = new MemberYTDTotal();
-					    	memberYTDTotal.setMemberId(member.getId());
-					    	memberYTDTotal.setMilesYTD((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
-					    	memberYTDTotal.setElevationYTD((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
-					    	memberYTDTotal.setMovingTimeYTD(seconds);
-					    	memberYTDTotal.setRidesYTD(rides);
-					    	
-						    MemberYTDTotalsDAO memberYTDTotalsDAO = new MemberYTDTotalsDAO(con);
-						    memberYTDTotalsDAO.saveMemberYTDTotals(memberYTDTotal);
-							System.out.println("Activities->Miles: " + memberYTDTotal.getMilesYTD() + " Elevation: " + memberYTDTotal.getElevationYTD());
-							
+*/	
 							Statistics statistics = strava.getStatistics(1, 200);
 							totalMeters = statistics.getYtd_Ride_Totals().getDistance();
 							elevation = statistics.getYtd_Ride_Totals().getElevation_Gain();
 							System.out.println("Statistics->Miles: " + (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0) + " Elevation: " + (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
+							
+							if (totalMeters > 0 && elevation > 0) {
+							    MemberYTDTotal memberYTDTotal = new MemberYTDTotal();
+						    	memberYTDTotal.setMemberId(member.getId());
+						    	memberYTDTotal.setMilesYTD((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
+						    	memberYTDTotal.setElevationYTD((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
+						    	memberYTDTotal.setMovingTimeYTD(seconds);
+						    	memberYTDTotal.setRidesYTD(rides);
+						    	
+							    MemberYTDTotalsDAO memberYTDTotalsDAO = new MemberYTDTotalsDAO(con);
+							    memberYTDTotalsDAO.saveMemberYTDTotals(memberYTDTotal);
+							}
 						    
 						    Thread.sleep(120000); // 2 minute
 						}
