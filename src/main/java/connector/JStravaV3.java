@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import entities.activity.*;
 import entities.athlete.Athlete;
 import entities.athlete.Profile;
+import entities.athlete.Statistics;
 import entities.club.Club;
 import entities.gear.Gear;
 import entities.segment.Bound;
@@ -751,6 +752,14 @@ public class JStravaV3 implements JStrava {
         Gson gson= new Gson();
         UploadStatus status=gson.fromJson(result,UploadStatus.class);
         return status;
+    }
+    
+    public Statistics getStatistics(int athleteId,int page, int per_page) {
+        String URL="https://www.strava.com/api/v3/athletes/"+athleteId+"/stats?page="+page+"&per_page="+per_page;
+        String result=getResult(URL);
+        Gson gson= new Gson();
+        Statistics statistics= gson.fromJson(result,Statistics.class);
+        return statistics;
     }
 
 

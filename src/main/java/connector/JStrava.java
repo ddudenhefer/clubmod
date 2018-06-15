@@ -18,6 +18,7 @@ import entities.activity.Photo;
 import entities.activity.UploadStatus;
 import entities.activity.Zone;
 import entities.athlete.Athlete;
+import entities.athlete.Statistics;
 
 public interface JStrava {
 
@@ -80,5 +81,6 @@ public interface JStrava {
     public UploadStatus uploadActivity(String data_type,File file);
     public UploadStatus uploadActivity(String activity_type,String name,String description,int is_private,int trainer,String data_type,String external_id,File file);
     public UploadStatus checkUploadStatus(int uploadId);
+    public Statistics getStatistics(int athleteId,int page, int per_page);
 
 }

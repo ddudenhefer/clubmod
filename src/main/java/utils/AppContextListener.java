@@ -33,6 +33,7 @@ import dao.MemberDAO;
 import dao.MemberYTDTotalsDAO;
 import entities.activity.Activity;
 import entities.athlete.Athlete;
+import entities.athlete.Statistics;
 import entities.challenge.ChallengeResult;
 import entities.segment.SegmentEffort;
 import services.ActivitySvc;
@@ -73,8 +74,8 @@ public class AppContextListener implements ServletContextListener {
 
 		TimerTask updateMemberYTDTask = new UpdateMemberYTDTask();
 		Timer memberYTDTimer = new Timer();
-		memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(22,00), ONCE_PER_DAY);
-		//memberYTDTimer.schedule(updateMemberYTDTask, 0);
+		//memberYTDTimer.scheduleAtFixedRate(updateMemberYTDTask, getTonight(22,00), ONCE_PER_DAY);
+		memberYTDTimer.schedule(updateMemberYTDTask, 0);
 	}
 	
 	private static Date getTomorrow(int hour, int mins){
@@ -374,6 +375,12 @@ public class AppContextListener implements ServletContextListener {
 					    	
 						    MemberYTDTotalsDAO memberYTDTotalsDAO = new MemberYTDTotalsDAO(con);
 						    memberYTDTotalsDAO.saveMemberYTDTotals(memberYTDTotal);
+							System.out.println("Activities->Miles: " + memberYTDTotal.getMilesYTD() + " Elevation: " + memberYTDTotal.getElevationYTD());
+							
+							Statistics statistics = strava.getStatistics(athlete.getId(), 1, 200);
+							totalMeters = statistics.getYtdRideTotals().getDistance();
+							elevation = statistics.getYtdRideTotals().getElevationGain();
+							System.out.println("Statistics->Miles: " + (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0) + " Elevation: " + (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
 						    
 						    Thread.sleep(120000); // 2 minute
 						}
