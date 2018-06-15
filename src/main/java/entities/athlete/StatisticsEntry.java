@@ -2,19 +2,19 @@ package entities.athlete;
 
 public class StatisticsEntry {
 
-	private Integer	count;
-	private Float	distance;
-	private Integer	movingTime;
-	private Integer	elapsedTime;
-	private Float	elevationGain;
-	private Integer	achievementCount;
+	private int	count;
+	private float	distance;
+	private int	moving_time;
+	private int	elapsed_time;
+	private float	elevation_gain;
+	private int	achievement_count;
 
 	public StatisticsEntry() {
 		super();
 	}
 
-	public Integer getAchievementCount() {
-		return this.achievementCount;
+	public Integer getAchievement_Count() {
+		return this.achievement_count;
 	}
 
 	public Integer getCount() {
@@ -25,20 +25,20 @@ public class StatisticsEntry {
 		return this.distance;
 	}
 
-	public Integer getElapsedTime() {
-		return this.elapsedTime;
+	public Integer getElapsed_Time() {
+		return this.elapsed_time;
 	}
 
-	public Float getElevationGain() {
-		return this.elevationGain;
+	public Float getElevation_Gain() {
+		return this.elevation_gain;
 	}
 
-	public Integer getMovingTime() {
-		return this.movingTime;
+	public Integer getMoving_Time() {
+		return this.moving_time;
 	}
 
-	public void setAchievementCount(final Integer achievementCount) {
-		this.achievementCount = achievementCount;
+	public void setAchievement_Count(final Integer achievementCount) {
+		this.achievement_count = achievementCount;
 	}
 
 	public void setCount(final Integer count) {
@@ -49,15 +49,15 @@ public class StatisticsEntry {
 		this.distance = distance;
 	}
 
-	public void setElapsedTime(final Integer elapsedTime) {
-		this.elapsedTime = elapsedTime;
+	public void setElapsed_Time(final Integer elapsedTime) {
+		this.elapsed_time = elapsedTime;
 	}
 
-	public void setElevationGain(final Float elevationGain) {
-		this.elevationGain = elevationGain;
+	public void setElevation_Gain(final Float elevationGain) {
+		this.elevation_gain = elevationGain;
 	}
 
-	public void setMovingTime(final Integer movingTime) {
-		this.movingTime = movingTime;
+	public void setMoving_Time(final Integer movingTime) {
+		this.moving_time = movingTime;
 	}
 }

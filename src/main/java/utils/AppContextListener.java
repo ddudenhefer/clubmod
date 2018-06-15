@@ -378,8 +378,8 @@ public class AppContextListener implements ServletContextListener {
 							System.out.println("Activities->Miles: " + memberYTDTotal.getMilesYTD() + " Elevation: " + memberYTDTotal.getElevationYTD());
 							
 							Statistics statistics = strava.getStatistics(1, 200);
-							totalMeters = statistics.getYtdRideTotals().getDistance();
-							elevation = statistics.getYtdRideTotals().getElevationGain();
+							totalMeters = statistics.getYtd_Ride_Totals().getDistance();
+							elevation = statistics.getYtd_Ride_Totals().getElevation_Gain();
 							System.out.println("Statistics->Miles: " + (float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0) + " Elevation: " + (long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
 						    
 						    Thread.sleep(120000); // 2 minute

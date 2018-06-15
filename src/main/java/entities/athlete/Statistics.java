@@ -2,107 +2,107 @@ package entities.athlete;
 
 public class Statistics {
 
-	private Float biggestRideDistance;
-	private Float biggestClimbElevationGain;
-	private StatisticsEntry recentRideTotals;
-	private StatisticsEntry recentRunTotals;
-	private StatisticsEntry recentSwimTotals;
-	private StatisticsEntry ytdRideTotals;
-	private StatisticsEntry ytdRunTotals;
-	private StatisticsEntry ytdSwimTotals;
-	private StatisticsEntry allRideTotals;
-	private StatisticsEntry allRunTotals;
-	private StatisticsEntry allSwimTotals;
+	private float biggest_ride_distance;
+	private float biggest_climb_elevation_gain;
+	private StatisticsEntry recent_ride_totals;
+	private StatisticsEntry recent_run_totals;
+	private StatisticsEntry recent_swim_totals;
+	private StatisticsEntry ytd_ride_totals;
+	private StatisticsEntry ytd_run_totals;
+	private StatisticsEntry ytd_swim_totals;
+	private StatisticsEntry all_ride_totals;
+	private StatisticsEntry all_run_totals;
+	private StatisticsEntry all_swim_totals;
 
 	public Statistics() {
 	}
 
-	public StatisticsEntry getAllRideTotals() {
-		return this.allRideTotals;
+	public StatisticsEntry getAll_Ride_Totals() {
+		return this.all_ride_totals;
 	}
 
-	public StatisticsEntry getAllRunTotals() {
-		return this.allRunTotals;
+	public StatisticsEntry getAll_Run_Totals() {
+		return this.all_run_totals;
 	}
 
-	public StatisticsEntry getAllSwimTotals() {
-		return this.allSwimTotals;
+	public StatisticsEntry getAll_Swim_Totals() {
+		return this.all_swim_totals;
 	}
 
-	public Float getBiggestClimbElevationGain() {
-		return this.biggestClimbElevationGain;
+	public float getBiggest_Climb_Elevation_Gain() {
+		return this.biggest_climb_elevation_gain;
 	}
 
-	public Float getBiggestRideDistance() {
-		return this.biggestRideDistance;
+	public float getBiggest_Ride_Distance() {
+		return this.biggest_ride_distance;
 	}
 
-	public StatisticsEntry getRecentRideTotals() {
-		return this.recentRideTotals;
+	public StatisticsEntry getRecent_Ride_Totals() {
+		return this.recent_ride_totals;
 	}
 
-	public StatisticsEntry getRecentRunTotals() {
-		return this.recentRunTotals;
+	public StatisticsEntry getRecent_Run_Totals() {
+		return this.recent_run_totals;
 	}
 
-	public StatisticsEntry getRecentSwimTotals() {
-		return this.recentSwimTotals;
+	public StatisticsEntry getRecent_Swim_Totals() {
+		return this.recent_swim_totals;
 	}
 
-	public StatisticsEntry getYtdRideTotals() {
-		return this.ytdRideTotals;
+	public StatisticsEntry getYtd_Ride_Totals() {
+		return this.ytd_ride_totals;
 	}
 
-	public StatisticsEntry getYtdRunTotals() {
-		return this.ytdRunTotals;
+	public StatisticsEntry getYtd_Run_Totals() {
+		return this.ytd_run_totals;
 	}
 
-	public StatisticsEntry getYtdSwimTotals() {
-		return this.ytdSwimTotals;
+	public StatisticsEntry getYtd_Swim_Totals() {
+		return this.ytd_swim_totals;
 	}
 
-	public void setAllRideTotals(final StatisticsEntry allRideTotals) {
-		this.allRideTotals = allRideTotals;
+	public void setAll_Ride_Totals(StatisticsEntry allRideTotals) {
+		this.all_ride_totals = allRideTotals;
 	}
 
-	public void setAllRunTotals(final StatisticsEntry allRunTotals) {
-		this.allRunTotals = allRunTotals;
+	public void setAll_Run_Totals(StatisticsEntry allRunTotals) {
+		this.all_run_totals = allRunTotals;
 	}
 
-	public void setAllSwimTotals(final StatisticsEntry allSwimTotals) {
-		this.allSwimTotals = allSwimTotals;
+	public void setAll_Swim_Totals(StatisticsEntry allSwimTotals) {
+		this.all_swim_totals = allSwimTotals;
 	}
 
-	public void setBiggestClimbElevationGain(final Float biggestClimbElevationGain) {
-		this.biggestClimbElevationGain = biggestClimbElevationGain;
+	public void setBiggest_Climb_Elevation_Gain(float biggestClimbElevationGain) {
+		this.biggest_climb_elevation_gain = biggestClimbElevationGain;
 	}
 
-	public void setBiggestRideDistance(final Float biggestRideDistance) {
-		this.biggestRideDistance = biggestRideDistance;
+	public void setBiggest_Ride_Distance(float biggestRideDistance) {
+		this.biggest_ride_distance = biggestRideDistance;
 	}
 
-	public void setRecentRideTotals(final StatisticsEntry recentRideTotals) {
-		this.recentRideTotals = recentRideTotals;
+	public void setRecent_Ride_Totals(StatisticsEntry recentRideTotals) {
+		this.recent_ride_totals = recentRideTotals;
 	}
 
-	public void setRecentRunTotals(final StatisticsEntry recentRunTotals) {
-		this.recentRunTotals = recentRunTotals;
+	public void setRecent_Run_Totals(StatisticsEntry recentRunTotals) {
+		this.recent_run_totals = recentRunTotals;
 	}
 
-	public void setRecentSwimTotals(final StatisticsEntry recentSwimTotals) {
-		this.recentSwimTotals = recentSwimTotals;
+	public void setRecent_Swim_Totals(StatisticsEntry recentSwimTotals) {
+		this.recent_swim_totals = recentSwimTotals;
 	}
 
-	public void setYtdRideTotals(final StatisticsEntry ytdRideTotals) {
-		this.ytdRideTotals = ytdRideTotals;
+	public void setYtd_Ride_Totals(StatisticsEntry ytdRideTotals) {
+		this.ytd_ride_totals = ytdRideTotals;
 	}
 
-	public void setYtdRunTotals(final StatisticsEntry ytdRunTotals) {
-		this.ytdRunTotals = ytdRunTotals;
+	public void setYtd_Run_Totals(StatisticsEntry ytdRunTotals) {
+		this.ytd_run_totals = ytdRunTotals;
 	}
 
-	public void setYtdSwimTotals(final StatisticsEntry ytdSwimTotals) {
-		this.ytdSwimTotals = ytdSwimTotals;
+	public void setYtd_Swim_Totals(StatisticsEntry ytdSwimTotals) {
+		this.ytd_swim_totals = ytdSwimTotals;
 	}
 
 }
