@@ -378,8 +378,8 @@ public class AppContextListener implements ServletContextListener {
 						    	memberYTDTotal.setMemberId(member.getId());
 						    	memberYTDTotal.setMilesYTD((float) (Math.round(Constants.ConvertMetersToMiles(totalMeters, true) * 10) / 10.0));
 						    	memberYTDTotal.setElevationYTD((long) (Math.round(Constants.ConvertMetersToFeet(elevation, true) * 10) / 10.0));
-						    	memberYTDTotal.setMovingTimeYTD(seconds);
-						    	memberYTDTotal.setRidesYTD(rides);
+						    	memberYTDTotal.setMovingTimeYTD(statistics.getYtd_Ride_Totals().getMoving_Time());
+						    	memberYTDTotal.setRidesYTD(statistics.getYtd_Ride_Totals().getCount());
 						    	
 							    MemberYTDTotalsDAO memberYTDTotalsDAO = new MemberYTDTotalsDAO(con);
 							    memberYTDTotalsDAO.saveMemberYTDTotals(memberYTDTotal);
