@@ -52,7 +52,7 @@ public class Constants {
 	    int year = calendar.get(Calendar.YEAR);
 	    int month = calendar.get(Calendar.MONTH);
 	    int day = calendar.get(Calendar.DATE);
-	    calendar.set(year, month, day, 16, 0, 0);
+	    calendar.set(year, month, day, 15, 0, 0);
 	    return calendar.getTime();
 	}
 
